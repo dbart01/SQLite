@@ -12,6 +12,8 @@ typealias _SQLite3 = OpaquePointer
 
 public class SQLite3 {
     
+    typealias ExecuteRowHandler = (Int, [String?], [String?]) -> Bool
+    
     private let sqlite: _SQLite3
     
     // ----------------------------------
@@ -19,6 +21,9 @@ public class SQLite3 {
     //
     public init(at url: URL) throws {
         let reference = UnsafeMutablePointer<_SQLite3?>.allocate(capacity: 1)
+        defer {
+            reference.deallocate(capacity: 1)
+        }
         
         let status = sqlite3_open(url.path, reference).status
         guard status == .ok else {
@@ -26,7 +31,6 @@ public class SQLite3 {
         }
         
         self.sqlite = reference.pointee!
-        reference.deallocate(capacity: 1)
     }
     
     deinit {

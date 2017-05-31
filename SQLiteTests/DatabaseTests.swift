@@ -22,16 +22,32 @@ class DatabaseTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        try? self.fileManager.removeItem(at: DatabaseTests.databaseURL)
+        self.deleteDatabase()
+        self.copyDatabase()
+    }
+    
+    private func deleteDatabase() {
+        do {
+            try self.fileManager.removeItem(at: DatabaseTests.databaseURL)
+        } catch {
+            print("Failed to delete database: \(error)")
+        }
+    }
+    
+    private func copyDatabase() {
+        let bundle = Bundle(for: type(of: self))
+        let url    = bundle.url(forResource: "test", withExtension: "sqlite")!
+        do {
+            try self.fileManager.copyItem(at: url, to: DatabaseTests.databaseURL)
+        } catch {
+            print("Failed to copy database: \(error)")
+        }
     }
     
     // ----------------------------------
     //  MARK: - Open -
     //
     func testOpenValidConnection() {
-        let exists = self.fileManager.fileExists(atPath: DatabaseTests.databaseURL.path)
-        XCTAssertFalse(exists)
-        
         do {
             let sqlite = try SQLite3(at: DatabaseTests.databaseURL)
             
@@ -55,9 +71,12 @@ class DatabaseTests: XCTestCase {
         }
     }
     
+    // ----------------------------------
+    //  MARK: - Statement -
+    //
     func testPrepareValidStatement() {
         let sqlite = self.openSQLite()
-        let query  = "CREATE TABLE animal (id INTEGER primary key autoincrement, name TEXT, type TEXT);"
+        let query  = "CREATE TABLE vehicle (id INTEGER primary key autoincrement, make TEXT, model TEXT);"
         
         do {
             let statement = try sqlite.prepare(query: query)
@@ -78,6 +97,69 @@ class DatabaseTests: XCTestCase {
         } catch Status.error {
             XCTAssertTrue(true)
         } catch {
+            XCTFail()
+        }
+    }
+    
+    func testParameters() {
+        let sqlite = self.openSQLite()
+        let query  = "SELECT * FROM animal WHERE name = :name AND type = :type"
+        
+        let statement = try! sqlite.prepare(query: query)
+        
+        XCTAssertEqual(statement.parameterCount, 2)
+        XCTAssertEqual(statement.parameterName(for: 0), ":name")
+        XCTAssertEqual(statement.parameterName(for: 1), ":type")
+        
+        XCTAssertEqual(statement.parameterIndex(for: ":name"), 0)
+        XCTAssertEqual(statement.parameterIndex(for: ":type"), 1)
+    }
+    
+    func testInvalidParameters() {
+        let sqlite = self.openSQLite()
+        let query  = "SELECT * FROM animal"
+        
+        let statement = try! sqlite.prepare(query: query)
+        
+        XCTAssertEqual(statement.parameterCount, 0)
+        XCTAssertEqual(statement.parameterName(for: 0), nil)
+        XCTAssertEqual(statement.parameterName(for: 1), nil)
+        
+        XCTAssertEqual(statement.parameterIndex(for: ":name"), nil)
+        XCTAssertEqual(statement.parameterIndex(for: ":type"), nil)
+    }
+    
+    func testBindValidParameters() {
+        let sqlite = self.openSQLite()
+        let query  = "SELECT * FROM animal WHERE id = ? OR name = ? OR length = ? OR image = ?"
+        
+        let statement = try! sqlite.prepare(query: query)
+        
+        // TODO: Bind nil literal values
+        
+        do {
+            try statement.bind(13,        column: 0)
+            try statement.bind("reptile", column: 1)
+            try statement.bind(261.56,    column: 2)
+            try statement.bind(Data(),    column: 3)
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func testBindInvalidParameters() {
+        let sqlite = self.openSQLite()
+        let query  = "SELECT * FROM animal"
+        
+        let statement = try! sqlite.prepare(query: query)
+        
+        do {
+            try statement.bind(25, column: 0)
+            XCTFail()
+        } catch Status.range {
+            XCTAssertTrue(true)
+        } catch {
+            print(error)
             XCTFail()
         }
     }
