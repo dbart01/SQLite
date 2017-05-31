@@ -60,6 +60,6 @@ public class SQLite3 {
     public func prepare(query: String) throws -> Statement {
         let statement: _Statement = try self.prepare(query: query)
         
-        return Statement(query: query, statement: statement)
+        return Statement(statement: statement)
     }
 }

@@ -12,16 +12,24 @@ typealias _Statement = OpaquePointer
 
 public class Statement {
     
-    public let query: String
-    
     let statement: _Statement
     
     // ----------------------------------
     //  MARK: - Init -
     //
-    init(query: String, statement: _Statement) {
-        self.query     = query
+    init(statement: _Statement) {
         self.statement = statement
+    }
+    
+    // ----------------------------------
+    //  MARK: - Query -
+    //
+    public var query: String {
+        return String(cString: sqlite3_sql(self.statement))
+    }
+    
+    public var expandedQuery: String {
+        return String(cString: sqlite3_expanded_sql(self.statement))
     }
     
     // ----------------------------------
@@ -82,6 +90,7 @@ public class Statement {
     //  MARK: - Step -
     //
     public func step() {
-//        sqlite3_ste
+        sqlite3_step(self.statement)
     }
+    
 }
