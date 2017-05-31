@@ -102,10 +102,8 @@ class DatabaseTests: XCTestCase {
     }
     
     func testParameters() {
-        let sqlite = self.openSQLite()
-        let query  = "SELECT * FROM animal WHERE name = :name AND type = :type"
-        
-        let statement = try! sqlite.prepare(query: query)
+        let query     = "SELECT * FROM animal WHERE name = :name AND type = :type"
+        let statement = self.prepared(query: query)
         
         XCTAssertEqual(statement.parameterCount, 2)
         XCTAssertEqual(statement.parameterName(for: 0), ":name")
@@ -116,10 +114,8 @@ class DatabaseTests: XCTestCase {
     }
     
     func testInvalidParameters() {
-        let sqlite = self.openSQLite()
-        let query  = "SELECT * FROM animal"
-        
-        let statement = try! sqlite.prepare(query: query)
+        let query     = "SELECT * FROM animal"
+        let statement = self.prepared(query: query)
         
         XCTAssertEqual(statement.parameterCount, 0)
         XCTAssertEqual(statement.parameterName(for: 0), nil)
@@ -130,10 +126,8 @@ class DatabaseTests: XCTestCase {
     }
     
     func testBindValidParameters() {
-        let sqlite = self.openSQLite()
-        let query  = "SELECT * FROM animal WHERE id = ? OR name = ? OR length = ? OR image = ?"
-        
-        let statement = try! sqlite.prepare(query: query)
+        let query     = "SELECT * FROM animal WHERE id = ? OR name = ? OR length = ? OR image = ?"
+        let statement = self.prepared(query: query)
         
         // TODO: Bind nil literal values
         
@@ -148,10 +142,8 @@ class DatabaseTests: XCTestCase {
     }
     
     func testBindInvalidParameters() {
-        let sqlite = self.openSQLite()
-        let query  = "SELECT * FROM animal"
-        
-        let statement = try! sqlite.prepare(query: query)
+        let query     = "SELECT * FROM animal"
+        let statement = self.prepared(query: query)
         
         do {
             try statement.bind(25, column: 0)
@@ -169,5 +161,10 @@ class DatabaseTests: XCTestCase {
     //
     private func openSQLite() -> SQLite3 {
         return try! SQLite3(at: DatabaseTests.databaseURL)
+    }
+    
+    private func prepared(query: String) -> Statement {
+        let sqlite = self.openSQLite()
+        return try! sqlite.prepare(query: query)
     }
 }
