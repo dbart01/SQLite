@@ -75,11 +75,10 @@ public class Statement {
             case .double(let double):
                 status = sqlite3_bind_double(self.statement, columnIndex, double).status
             case .string(let string):
-                let bridgedString = (string as NSString)
-                status = sqlite3_bind_text(self.statement, columnIndex, bridgedString.utf8String, -1, nil).status
+                status = sqlite3_bind_text(self.statement, columnIndex, string.cString(using: .utf8), -1, Destructor.transient).status
             case .blob(let data):
                 status = data.withUnsafeBytes {
-                    return sqlite3_bind_blob(self.statement, columnIndex, $0, Int32(data.count), nil).status
+                    return sqlite3_bind_blob(self.statement, columnIndex, $0, Int32(data.count), Destructor.transient).status
                 }
             }
             

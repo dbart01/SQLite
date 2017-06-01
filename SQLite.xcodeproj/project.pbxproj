@@ -30,6 +30,7 @@
 		9A736DFF1ED1B8E100A0B389 /* DatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A736DFE1ED1B8E100A0B389 /* DatabaseTests.swift */; };
 		9ACCEB021ED30A8600DFAE41 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACCEB011ED30A8600DFAE41 /* Status.swift */; };
 		9ACCEB041EDAF63C00DFAE41 /* Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACCEB031EDAF63C00DFAE41 /* Statement.swift */; };
+		9AD2D59B1EE038BC002E9C67 /* Destructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD2D59A1EE038BC002E9C67 /* Destructor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		9A736DFE1ED1B8E100A0B389 /* DatabaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseTests.swift; sourceTree = "<group>"; };
 		9ACCEB011ED30A8600DFAE41 /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		9ACCEB031EDAF63C00DFAE41 /* Statement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statement.swift; sourceTree = "<group>"; };
+		9AD2D59A1EE038BC002E9C67 /* Destructor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Destructor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				9A5EF5D11EDE3FC800CB16A0 /* Serializable.swift */,
+				9AD2D59A1EE038BC002E9C67 /* Destructor.swift */,
 				9ACCEB011ED30A8600DFAE41 /* Status.swift */,
 				9A5EF5CF1EDE3FAF00CB16A0 /* Value.swift */,
 				9ACCEB031EDAF63C00DFAE41 /* Statement.swift */,
@@ -316,6 +319,7 @@
 			files = (
 				9A5EF5D21EDE3FC800CB16A0 /* Serializable.swift in Sources */,
 				9A5C46FF1ED0C49E00CE3627 /* SQLite.swift in Sources */,
+				9AD2D59B1EE038BC002E9C67 /* Destructor.swift in Sources */,
 				9ACCEB021ED30A8600DFAE41 /* Status.swift in Sources */,
 				9ACCEB041EDAF63C00DFAE41 /* Statement.swift in Sources */,
 				9A4C7C8B1EDC468B004FE2C9 /* extensions.m in Sources */,
