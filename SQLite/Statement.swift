@@ -12,6 +12,11 @@ typealias _Statement = OpaquePointer
 
 public class Statement {
     
+    public enum Result {
+        case done
+        case row
+    }
+    
     let statement: _Statement
     
     // ----------------------------------
@@ -70,7 +75,8 @@ public class Statement {
             case .double(let double):
                 status = sqlite3_bind_double(self.statement, columnIndex, double).status
             case .string(let string):
-                status = sqlite3_bind_text(self.statement, columnIndex, string, -1, nil).status
+                let bridgedString = (string as NSString)
+                status = sqlite3_bind_text(self.statement, columnIndex, bridgedString.utf8String, -1, nil).status
             case .blob(let data):
                 status = data.withUnsafeBytes {
                     return sqlite3_bind_blob(self.statement, columnIndex, $0, Int32(data.count), nil).status
@@ -89,8 +95,14 @@ public class Statement {
     // ----------------------------------
     //  MARK: - Step -
     //
-    public func step() {
-        sqlite3_step(self.statement)
+    public func step() throws -> Result {
+        let status = sqlite3_step(self.statement).status
+        switch status {
+        case .done: fallthrough
+        case .ok:   return .done
+        case .row:  return .row
+        default:
+            throw status
+        }
     }
-    
 }

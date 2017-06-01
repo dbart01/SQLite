@@ -24,6 +24,8 @@ class DatabaseTests: XCTestCase {
         
         self.deleteDatabase()
         self.copyDatabase()
+        
+        print("Database path: \(DatabaseTests.databaseURL.path)")
     }
     
     private func deleteDatabase() {
@@ -101,6 +103,9 @@ class DatabaseTests: XCTestCase {
         }
     }
     
+    // ----------------------------------
+    //  MARK: - Parameters -
+    //
     func testParameters() {
         let query     = "SELECT * FROM animal WHERE name = :name AND type = :type"
         let statement = self.prepared(query: query)
@@ -136,6 +141,9 @@ class DatabaseTests: XCTestCase {
             try statement.bind("reptile", column: 1)
             try statement.bind(261.56,    column: 2)
             try statement.bind(Data(),    column: 3)
+            
+            let expanded = "SELECT * FROM animal WHERE id = 13 OR name = 'reptile' OR length = 261.56 OR image = x''"
+            XCTAssertEqual(statement.expandedQuery, expanded)
         } catch {
             XCTFail()
         }
@@ -152,6 +160,49 @@ class DatabaseTests: XCTestCase {
             XCTAssertTrue(true)
         } catch {
             print(error)
+            XCTFail()
+        }
+    }
+    
+    // ----------------------------------
+    //  MARK: - Step -
+    //
+    func testStepRow() {
+        let query     = "SELECT * FROM animal"
+        let statement = self.prepared(query: query)
+        
+        do {
+            let result = try statement.step()
+            XCTAssertEqual(result, .row)
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func testStepDone() {
+        let query     = "INSERT INTO animal (name, type) VALUES (?, ?)"
+        let statement = self.prepared(query: query)
+        
+        do {
+            try statement.bind("hedgehog", column: 0)
+            try statement.bind("rodent",   column: 1)
+            let result = try statement.step()
+            XCTAssertEqual(result, .done)
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func testStepError() {
+        let query     = "ROLLBACK;"
+        let statement = self.prepared(query: query)
+        
+        do {
+            _ = try statement.step()
+            XCTFail()
+        } catch Status.error {
+            XCTAssertTrue(true)
+        } catch {
             XCTFail()
         }
     }
