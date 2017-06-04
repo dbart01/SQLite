@@ -9,8 +9,8 @@
 import Foundation
 
 public enum Value {
-    case integer(Int)
-    case double(Double)
-    case string(String)
-    case blob(Data)
+    case integer(Int?)
+    case double(Double?)
+    case string(String?)
+    case blob(Data?)
 }

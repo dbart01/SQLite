@@ -130,20 +130,40 @@ class DatabaseTests: XCTestCase {
         XCTAssertEqual(statement.parameterIndex(for: ":type"), nil)
     }
     
+    func testBindNilParameters() {
+        let query     = "SELECT * FROM animal WHERE id = ? OR name = ? OR length = ? OR image = ?"
+        let statement = self.prepared(query: query)
+        
+        do {
+            try statement.bind(integer: nil, to: 0)
+            try statement.bind(string:  nil, to: 1)
+            try statement.bind(double:  nil, to: 2)
+            try statement.bind(blob:    nil, to: 3)
+            
+            let expanded = "SELECT * FROM animal WHERE id = NULL OR name = NULL OR length = NULL OR image = NULL"
+            XCTAssertEqual(statement.expandedQuery, expanded)
+        } catch {
+            XCTFail()
+        }
+    }
+    
     func testBindValidParameters() {
         let query     = "SELECT * FROM animal WHERE id = ? OR name = ? OR length = ? OR image = ?"
         let statement = self.prepared(query: query)
         
-        // TODO: Bind nil literal values
-        
         do {
-            try statement.bind(13,        column: 0)
-            try statement.bind("reptile", column: 1)
-            try statement.bind(261.56,    column: 2)
-            try statement.bind(Data(),    column: 3)
+            try statement.bind(integer: 13,        to: 0)
+            try statement.bind(string:  "reptile", to: 1)
+            try statement.bind(double:  261.56,    to: 2)
+            try statement.bind(blob:    Data(),    to: 3)
             
             let expanded = "SELECT * FROM animal WHERE id = 13 OR name = 'reptile' OR length = 261.56 OR image = x''"
             XCTAssertEqual(statement.expandedQuery, expanded)
+            
+            try statement.clearBindings()
+            
+            let cleared = "SELECT * FROM animal WHERE id = NULL OR name = NULL OR length = NULL OR image = NULL"
+            XCTAssertEqual(statement.expandedQuery, cleared)
         } catch {
             XCTFail()
         }
@@ -153,14 +173,24 @@ class DatabaseTests: XCTestCase {
         let query     = "SELECT * FROM animal"
         let statement = self.prepared(query: query)
         
-        do {
-            try statement.bind(25, column: 0)
-            XCTFail()
-        } catch Status.range {
-            XCTAssertTrue(true)
-        } catch {
-            print(error)
-            XCTFail()
+        self.assertWillThrow(Status.range) {
+            try statement.bind(integer: 25, to: 0)
+        }
+        
+        self.assertWillThrow(Status.range) {
+            try statement.bind(double: 25, to: 0)
+        }
+        
+        self.assertWillThrow(Status.range) {
+            try statement.bind(string: "25", to: 0)
+        }
+        
+        self.assertWillThrow(Status.range) {
+            try statement.bind(blob: Data(), to: 0)
+        }
+        
+        self.assertWillThrow(Status.range) {
+            try statement.bindNull(to: 0)
         }
     }
     
@@ -184,8 +214,8 @@ class DatabaseTests: XCTestCase {
         let statement = self.prepared(query: query)
         
         do {
-            try statement.bind("hedgehog", column: 0)
-            try statement.bind("rodent",   column: 1)
+            try statement.bind(string: "hedgehog", to: 0)
+            try statement.bind(string: "rodent",   to: 1)
             let result = try statement.step()
             XCTAssertEqual(result, .done)
         } catch {
@@ -205,6 +235,61 @@ class DatabaseTests: XCTestCase {
         } catch {
             XCTFail()
         }
+        
+        do {
+            try statement.reset()
+            XCTFail()
+        } catch Status.error {
+            XCTAssertTrue(true)
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    // ----------------------------------
+    //  MARK: - Columns -
+    //
+    func testColumnCount() {
+        let query     = "SELECT * FROM animal"
+        let statement = self.prepared(query: query)
+        
+        if case .row = try! statement.step() {
+            XCTAssertEqual(statement.columnCount, 5)
+        } else {
+            XCTFail()
+        }
+    }
+    
+    func testColumnTypes() {
+        let query     = "SELECT * FROM animal"
+        let statement = self.prepared(query: query)
+        
+        if case .row = try! statement.step() {
+            XCTAssertEqual(statement.type(at: 0), .integer)
+            XCTAssertEqual(statement.type(at: 1), .text)
+            XCTAssertEqual(statement.type(at: 2), .text)
+            XCTAssertEqual(statement.type(at: 3), .float)
+            XCTAssertEqual(statement.type(at: 4), .null)
+        } else {
+            XCTFail()
+        }
+    }
+    
+    func testColumnValues() {
+        let query     = "SELECT id, name, type, length FROM animal WHERE type = ?"
+        let statement = self.prepared(query: query)
+        
+        try! statement.bind(string: "mammal", to: 0)
+        
+        if case .row = try! statement.step() {
+            XCTAssertEqual(statement.integer(at: 0), 3)
+            XCTAssertEqual(statement.string(at: 1),  nil)
+            XCTAssertEqual(statement.string(at: 2),  "mammal")
+            XCTAssertEqual(statement.double(at: 3),  4279.281)
+            XCTAssertEqual(statement.blob(at: 4),    nil)
+        } else {
+            XCTFail()
+        }
     }
     
     // ----------------------------------
@@ -217,5 +302,17 @@ class DatabaseTests: XCTestCase {
     private func prepared(query: String) -> Statement {
         let sqlite = self.openSQLite()
         return try! sqlite.prepare(query: query)
+    }
+    
+    // ----------------------------------
+    //  MARK: - Assertions -
+    //
+    private func assertWillThrow(_ expectedStatus: Status, _ block: () throws -> Void) {
+        do {
+            try block()
+            XCTFail()
+        } catch {
+            XCTAssertEqual(error as? Status, expectedStatus)
+        }
     }
 }

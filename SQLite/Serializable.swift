@@ -35,3 +35,37 @@ extension Data: Serializable {
         return .blob(self)
     }
 }
+
+//public protocol Deserializable {
+//    static var type: Value { get }
+//    
+//    static func from(value: Value) throws -> Self
+//}
+//
+//extension String: Deserializable {
+//    public static var valueType: ValueType {
+//        return .string
+//    }
+//    
+//    public static func from(value: Value) throws -> String {
+//        return serialized
+//    }
+//}
+//
+//extension Int: Deserializable {
+//    public static func from(value: Value) throws -> Int {
+//        return serialized
+//    }
+//}
+//
+//extension Double: Deserializable {
+//    public static func from(value: Value) throws -> Double {
+//        return serialized
+//    }
+//}
+//
+//extension Data: Deserializable {
+//    public static func from(value: Value) throws -> Data {
+//        return serialized
+//    }
+//}
