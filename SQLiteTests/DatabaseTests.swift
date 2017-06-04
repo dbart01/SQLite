@@ -63,13 +63,8 @@ class DatabaseTests: XCTestCase {
     }
     
     func testOpenInvalidConnection() {
-        do {
+        self.assertWillThrow(.cantOpen) {
             let _ = try SQLite3(at: URL(fileURLWithPath: "/invalid.sqlite"))
-            XCTFail()
-        } catch Status.cantOpen {
-            XCTAssertTrue(true)
-        } catch {
-            XCTFail()
         }
     }
     
@@ -93,13 +88,8 @@ class DatabaseTests: XCTestCase {
         let sqlite = self.openSQLite()
         let query  = "SELECT * FROM vehicle"
         
-        do {
+        self.assertWillThrow(.error) {
             let _ = try sqlite.prepare(query: query)
-            XCTFail()
-        } catch Status.error {
-            XCTAssertTrue(true)
-        } catch {
-            XCTFail()
         }
     }
     
@@ -173,23 +163,23 @@ class DatabaseTests: XCTestCase {
         let query     = "SELECT * FROM animal"
         let statement = self.prepared(query: query)
         
-        self.assertWillThrow(Status.range) {
+        self.assertWillThrow(.range) {
             try statement.bind(integer: 25, to: 0)
         }
         
-        self.assertWillThrow(Status.range) {
+        self.assertWillThrow(.range) {
             try statement.bind(double: 25, to: 0)
         }
         
-        self.assertWillThrow(Status.range) {
+        self.assertWillThrow(.range) {
             try statement.bind(string: "25", to: 0)
         }
         
-        self.assertWillThrow(Status.range) {
+        self.assertWillThrow(.range) {
             try statement.bind(blob: Data(), to: 0)
         }
         
-        self.assertWillThrow(Status.range) {
+        self.assertWillThrow(.range) {
             try statement.bindNull(to: 0)
         }
     }
@@ -227,22 +217,12 @@ class DatabaseTests: XCTestCase {
         let query     = "ROLLBACK;"
         let statement = self.prepared(query: query)
         
-        do {
+        self.assertWillThrow(.error) {
             _ = try statement.step()
-            XCTFail()
-        } catch Status.error {
-            XCTAssertTrue(true)
-        } catch {
-            XCTFail()
         }
         
-        do {
+        self.assertWillThrow(.error) {
             try statement.reset()
-            XCTFail()
-        } catch Status.error {
-            XCTAssertTrue(true)
-        } catch {
-            XCTFail()
         }
     }
     
@@ -254,39 +234,39 @@ class DatabaseTests: XCTestCase {
         let statement = self.prepared(query: query)
         
         if case .row = try! statement.step() {
-            XCTAssertEqual(statement.columnCount, 5)
+            XCTAssertEqual(statement.columnCount, 6)
         } else {
             XCTFail()
         }
     }
     
     func testColumnTypes() {
-        let query     = "SELECT * FROM animal"
+        let query     = "SELECT * FROM animal WHERE id = 3"
         let statement = self.prepared(query: query)
         
         if case .row = try! statement.step() {
             XCTAssertEqual(statement.type(at: 0), .integer)
-            XCTAssertEqual(statement.type(at: 1), .text)
+            XCTAssertEqual(statement.type(at: 1), .null)
             XCTAssertEqual(statement.type(at: 2), .text)
             XCTAssertEqual(statement.type(at: 3), .float)
-            XCTAssertEqual(statement.type(at: 4), .null)
+            XCTAssertEqual(statement.type(at: 4), .blob)
+            XCTAssertEqual(statement.type(at: 5), .null)
         } else {
             XCTFail()
         }
     }
     
     func testColumnValues() {
-        let query     = "SELECT id, name, type, length FROM animal WHERE type = ?"
+        let query     = "SELECT * FROM animal WHERE id = 3"
         let statement = self.prepared(query: query)
-        
-        try! statement.bind(string: "mammal", to: 0)
         
         if case .row = try! statement.step() {
             XCTAssertEqual(statement.integer(at: 0), 3)
             XCTAssertEqual(statement.string(at: 1),  nil)
             XCTAssertEqual(statement.string(at: 2),  "mammal")
             XCTAssertEqual(statement.double(at: 3),  4279.281)
-            XCTAssertEqual(statement.blob(at: 4),    nil)
+            XCTAssertEqual(statement.blob(at: 4),    Data(bytes: [0xfe, 0xed, 0xbe, 0xef])) // feedbeef
+            XCTAssertEqual(statement.blob(at: 5),    nil)
         } else {
             XCTFail()
         }
