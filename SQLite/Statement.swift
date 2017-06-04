@@ -80,23 +80,7 @@ public class Statement {
     
     // ----------------------------------
     //  MARK: - Bind -
-    //
-//    public func bind<T: Serializable>(_ value: T?, to column: Int) throws {
-//        let columnIndex = column + 1
-//        if let value = value {
-//            
-//            switch value.value {
-//            case .integer(let int):   try self.bind(integer: int,    to: columnIndex)
-//            case .double(let double): try self.bind(double:  double, to: columnIndex)
-//            case .string(let string): try self.bind(string:  string, to: columnIndex)
-//            case .blob(let data):     try self.bind(blob:    data,   to: columnIndex)
-//            }
-//            
-//        } else {
-//            try self.bindNull(to: columnIndex)
-//        }
-//    }
-    
+    //    
     public func bind(integer: Int?, to column: Int) throws {
         guard let integer = integer else {
             try self.bindNull(to: column)

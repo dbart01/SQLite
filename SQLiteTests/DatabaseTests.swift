@@ -272,6 +272,27 @@ class DatabaseTests: XCTestCase {
     }
     
     // ----------------------------------
+    //  MARK: - Execute -
+    //
+    func testExecute() {
+        let sqlite = self.openSQLite()
+        
+        var ids = [Int]()
+        do {
+            let result = try sqlite.execute(query: "SELECT id FROM animal WHERE type = ?", arguments: "feline") { statement in
+                
+                ids.append(statement.integer(at: 0))
+            }
+            
+            XCTAssertEqual(result, .done)
+            XCTAssertEqual(ids, [4, 5, 6])
+            
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    // ----------------------------------
     //  MARK: - Columns -
     //
     func testColumnCount() {
