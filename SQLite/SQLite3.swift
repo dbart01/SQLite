@@ -1,5 +1,5 @@
 //
-//  Database.swift
+//  SQLite3.swift
 //  SQLite
 //
 //  Created by Dima Bart on 2017-05-20.
@@ -12,9 +12,10 @@ typealias _SQLite3 = OpaquePointer
 
 public class SQLite3 {
     
-    typealias ExecuteRowHandler = (Int, [String?], [String?]) -> Bool
+    public var isCacheEnabled = false
     
     private let sqlite: _SQLite3
+    private var cachedStatements: [String: Statement] = [:]
     
     // ----------------------------------
     //  MARK: - Init -
@@ -43,7 +44,7 @@ public class SQLite3 {
     // ----------------------------------
     //  MARK: - Statement -
     //
-    private func prepare(query: String) throws -> _Statement {
+    private func _prepare(query: String) throws -> _Statement {
         let reference = UnsafeMutablePointer<_Statement?>.allocate(capacity: 1)
         defer {
             reference.deallocate(capacity: 1)
@@ -58,8 +59,32 @@ public class SQLite3 {
     }
     
     public func prepare(query: String) throws -> Statement {
-        let statement: _Statement = try self.prepare(query: query)
+        if let cachedStatement = try self.cachedStatementFor(query), self.isCacheEnabled {
+            return cachedStatement
+        }
         
-        return Statement(statement: statement)
+        let statement = Statement(statement: try self._prepare(query: query))
+        if self.isCacheEnabled {
+            self.cacheStatement(statement, for: query)
+        }
+        
+        return statement
+    }
+    
+    // ----------------------------------
+    //  MARK: - Statement Cache -
+    //
+    private func cachedStatementFor(_ key: String) throws -> Statement? {
+        if let statement = self.cachedStatements[key] {
+            try statement.reset()
+            try statement.clearBindings()
+            
+            return statement
+        }
+        return nil
+    }
+    
+    private func cacheStatement(_ statement: Statement, for key: String) {
+        self.cachedStatements[key] = statement
     }
 }

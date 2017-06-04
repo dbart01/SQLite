@@ -93,6 +93,51 @@ class DatabaseTests: XCTestCase {
         }
     }
     
+    func testStatementReadOnly() {
+        let readonlyStatement = self.prepared(query: "SELECT * FROM animal")
+        XCTAssertTrue(readonlyStatement.isReadOnly)
+        
+        let mutatingStatement = self.prepared(query: "INSERT INTO animal (name) VALUES (?)")
+        XCTAssertFalse(mutatingStatement.isReadOnly)
+    }
+    
+    // ----------------------------------
+    //  MARK: - Statement Cache -
+    //
+    func testStatementCachingEnabled() {
+        let query  = "SELECT * FROM animal WHERE type = ?"
+        let sqlite = self.openSQLite()
+        
+        sqlite.isCacheEnabled = true
+        
+        let statement1 = try! sqlite.prepare(query: query)
+        try! statement1.bind(string: "feline", to: 0)
+        try! statement1.step()
+        
+        XCTAssertTrue(statement1.isBusy)
+        
+        let statement1Query = statement1.expandedQuery
+        
+        let statement2      = try! sqlite.prepare(query: query)
+        let statement2Query = statement2.expandedQuery
+        
+        XCTAssertFalse(statement2.isBusy)
+        XCTAssertTrue(statement1 === statement2)
+        XCTAssertNotEqual(statement1Query, statement2Query)
+    }
+    
+    func testStatementCachingDisabled() {
+        let query  = "SELECT * FROM animal WHERE type = ?"
+        let sqlite = self.openSQLite()
+        
+        sqlite.isCacheEnabled = false
+        
+        let statement1 = try! sqlite.prepare(query: query)
+        let statement2 = try! sqlite.prepare(query: query)
+        
+        XCTAssertFalse(statement1 === statement2)
+    }
+    
     // ----------------------------------
     //  MARK: - Parameters -
     //
@@ -279,8 +324,10 @@ class DatabaseTests: XCTestCase {
         return try! SQLite3(at: DatabaseTests.databaseURL)
     }
     
-    private func prepared(query: String) -> Statement {
+    private func prepared(query: String, configuration: ((SQLite3) -> Void)? = nil) -> Statement {
         let sqlite = self.openSQLite()
+        configuration?(sqlite)
+        
         return try! sqlite.prepare(query: query)
     }
     

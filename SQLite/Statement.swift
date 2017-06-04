@@ -12,6 +12,14 @@ typealias _Statement = OpaquePointer
 
 public class Statement {
     
+    public var isBusy: Bool {
+        return sqlite3_stmt_busy(self.statement) != 0
+    }
+    
+    public var isReadOnly: Bool {
+        return sqlite3_stmt_readonly(self.statement) != 0
+    }
+    
     let statement: _Statement
     
     // ----------------------------------
@@ -200,6 +208,7 @@ public class Statement {
     // ----------------------------------
     //  MARK: - Step -
     //
+    @discardableResult
     public func step() throws -> Result {
         let status = sqlite3_step(self.statement).status
         switch status {
