@@ -145,7 +145,11 @@ public class Statement {
         return Int(sqlite3_column_count(self.statement))
     }
     
-    public func type(at column: Int) -> ColumnType? {
+    public func columnName(at column: Int) -> String {
+        return String(cString: sqlite3_column_name(self.statement, Int32(column)))
+    }
+    
+    public func columnType(at column: Int) -> ColumnType? {
         return sqlite3_column_type(self.statement, Int32(column)).columnType
     }
     
