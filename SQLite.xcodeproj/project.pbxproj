@@ -44,6 +44,9 @@
 		9ACCEB021ED30A8600DFAE41 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACCEB011ED30A8600DFAE41 /* Status.swift */; };
 		9ACCEB041EDAF63C00DFAE41 /* Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACCEB031EDAF63C00DFAE41 /* Statement.swift */; };
 		9AD2D59B1EE038BC002E9C67 /* Destructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD2D59A1EE038BC002E9C67 /* Destructor.swift */; };
+		9AF46A0A1EE71E1000513F25 /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5EF5D11EDE3FC800CB16A0 /* Serializable.swift */; };
+		9AF46A0B1EE71E1400513F25 /* Destructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD2D59A1EE038BC002E9C67 /* Destructor.swift */; };
+		9AF46A0C1EE71E1900513F25 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5EF5CF1EDE3FAF00CB16A0 /* Value.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -394,9 +397,12 @@
 				9A4C7C931EDC46C4004FE2C9 /* Status.swift in Sources */,
 				9A616CB81EE6D36000827C5E /* UnsafePointer+String.swift in Sources */,
 				9A4C7C941EDC46C4004FE2C9 /* Statement.swift in Sources */,
+				9AF46A0A1EE71E1000513F25 /* Serializable.swift in Sources */,
+				9AF46A0B1EE71E1400513F25 /* Destructor.swift in Sources */,
 				9A8A793A1EE449B400C547BF /* SQLite3+Execute.swift in Sources */,
 				9A616CB21EE6C6FC00827C5E /* ColumnMetadata.swift in Sources */,
 				9A616CA91EE5796E00827C5E /* Statement+Serializable.swift in Sources */,
+				9AF46A0C1EE71E1900513F25 /* Value.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
