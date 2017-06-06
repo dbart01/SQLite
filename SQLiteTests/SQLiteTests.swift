@@ -66,6 +66,41 @@ class SQLiteTests: XCTestCase {
     }
     
     // ----------------------------------
+    //  MARK: - Metadata -
+    //
+    func testMetadataWithDefaultDatabase() {
+        let sqlite = openSQLite()
+        
+        do {
+            let columns  = ["id", "name", "type", "length", "image", "thumb"]
+            let expected = [
+                ColumnMetadata(type: "INTEGER", collation: "BINARY", isNotNull: false, isPrimaryKey: true,  isAutoIncrement: true),
+                ColumnMetadata(type: "TEXT",    collation: "BINARY", isNotNull: false, isPrimaryKey: false, isAutoIncrement: false),
+                ColumnMetadata(type: "TEXT",    collation: "BINARY", isNotNull: false, isPrimaryKey: false, isAutoIncrement: false),
+                ColumnMetadata(type: "REAL",    collation: "BINARY", isNotNull: false, isPrimaryKey: false, isAutoIncrement: false),
+                ColumnMetadata(type: "BLOB",    collation: "BINARY", isNotNull: false, isPrimaryKey: false, isAutoIncrement: false),
+                ColumnMetadata(type: "BLOB",    collation: "BINARY", isNotNull: false, isPrimaryKey: false, isAutoIncrement: false),
+            ]
+            
+            for (index, column) in columns.enumerated() {
+                let metadata = try sqlite.columnMetadataFor(column: column, table: "animal")
+                XCTAssertEqual(metadata, expected[index])
+            }
+            
+        } catch {
+            XCTFail()
+        }
+    }
+    
+    func testMetadataWithInvalidDatabase() {
+        let sqlite = openSQLite()
+        
+        XCTAssertWillThrow(.error) {
+            _ = try sqlite.columnMetadataFor(column: "id", table: "animal", database: "invalid_database")
+        }
+    }
+    
+    // ----------------------------------
     //  MARK: - Statement -
     //
     func testPrepareValidStatement() {

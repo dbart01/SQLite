@@ -8,7 +8,9 @@
 
 import Foundation
 
-typealias _SQLite3 = OpaquePointer
+typealias _SQLite3       = OpaquePointer
+typealias _StringPointer = UnsafeMutablePointer<UnsafePointer<Int8>?>
+typealias _Int32Pointer  = UnsafeMutablePointer<Int32>
 
 public class SQLite3 {
     
@@ -39,6 +41,50 @@ public class SQLite3 {
         if status != .ok {
             print("Failed to close database connection: \(status.description)")
         }
+    }
+    
+    // ----------------------------------
+    //  MARK: - Metadata -
+    //
+    public func columnMetadataFor(column: String, table: String, database: String? = nil) throws -> ColumnMetadata {
+        
+        let typePointer          = _StringPointer.allocate(capacity: 1)
+        let collationPointer     = _StringPointer.allocate(capacity: 1)
+        let notNullPointer       = _Int32Pointer.allocate(capacity: 1)
+        let primaryKeyPointer    = _Int32Pointer.allocate(capacity: 1)
+        let autoIncrementPointer = _Int32Pointer.allocate(capacity: 1)
+        
+        defer {
+            typePointer.deallocate(capacity: 1)
+            collationPointer.deallocate(capacity: 1)
+            notNullPointer.deallocate(capacity: 1)
+            primaryKeyPointer.deallocate(capacity: 1)
+            autoIncrementPointer.deallocate(capacity: 1)
+        }
+        
+        let status = sqlite3_table_column_metadata(
+            self.sqlite,
+            database,
+            table,
+            column,
+            typePointer,
+            collationPointer,
+            notNullPointer,
+            primaryKeyPointer,
+            autoIncrementPointer
+        ).status
+        
+        guard status == .ok else {
+            throw status
+        }
+        
+        return ColumnMetadata(
+            type:            typePointer.pointee!.string,
+            collation:       collationPointer.pointee!.string,
+            isNotNull:       notNullPointer.pointee > 0,
+            isPrimaryKey:    primaryKeyPointer.pointee > 0,
+            isAutoIncrement: autoIncrementPointer.pointee > 0
+        )
     }
     
     // ----------------------------------

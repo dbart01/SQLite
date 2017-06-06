@@ -38,11 +38,11 @@ public class Statement {
     //  MARK: - Query -
     //
     public var query: String {
-        return String(cString: sqlite3_sql(self.statement))
+        return sqlite3_sql(self.statement).string
     }
     
     public var expandedQuery: String {
-        return String(cString: sqlite3_expanded_sql(self.statement))
+        return sqlite3_expanded_sql(self.statement).string
     }
     
     // ----------------------------------
@@ -62,7 +62,7 @@ public class Statement {
     
     public func parameterName(for index: Int) -> String? {
         if let name = sqlite3_bind_parameter_name(self.statement, self.convert(toOneBased: index)) {
-            return String(cString: name)
+            return name.string
         }
         return nil
     }
@@ -146,7 +146,7 @@ public class Statement {
     }
     
     public func columnName(at column: Int) -> String {
-        return String(cString: sqlite3_column_name(self.statement, Int32(column)))
+        return sqlite3_column_name(self.statement, Int32(column)).string
     }
     
     public func columnType(at column: Int) -> ColumnType? {
@@ -183,8 +183,8 @@ public class Statement {
     }
     
     public func string(at column: Int) -> String? {
-        if let pointer = sqlite3_column_text(self.statement, Int32(column)) {
-            return String(cString: pointer)
+        if let text = sqlite3_column_text(self.statement, Int32(column)) {
+            return text.string
         }
         return nil
     }
