@@ -213,6 +213,18 @@ class StatementTests: XCTestCase {
         }
     }
     
+    func testColumnByteCount() {
+        let query     = "SELECT image FROM animal WHERE id = 3"
+        let statement = prepared(query: query)
+        
+        if case .row = try! statement.step() {
+            let byteCount = statement.columnByteCount(at: 0)
+            XCTAssertEqual(byteCount, 4)
+        } else {
+            XCTFail()
+        }
+    }
+    
     func testColumnValues() {
         let query     = "SELECT * FROM animal WHERE id = 3"
         let statement = prepared(query: query)

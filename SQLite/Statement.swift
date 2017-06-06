@@ -153,6 +153,10 @@ public class Statement {
         return sqlite3_column_type(self.statement, Int32(column)).columnType
     }
     
+    public func columnByteCount(at column: Int) -> Int {
+        return Int(sqlite3_column_bytes(self.statement, Int32(column)))
+    }
+    
 //    public func value<T: Deserializable>(at column: Int) throws -> T? {
 //        assert(column < self.columnCount)
 //        
