@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import SQLite
+@testable import SQLite
 
 class StatementTests: XCTestCase {
     
@@ -64,7 +64,7 @@ class StatementTests: XCTestCase {
         let expanded  = "SELECT * FROM animal WHERE id = NULL OR name = NULL OR length = NULL OR image = NULL"
         let statement = prepared(query: query)
         
-        do {
+        XCTAssertWontThrow {
             try statement.bind(integer: nil, to: 0)
             try statement.bind(string:  nil, to: 1)
             try statement.bind(double:  nil, to: 2)
@@ -72,8 +72,6 @@ class StatementTests: XCTestCase {
             
             XCTAssertEqual(statement.expandedQuery, expanded)
             XCTAssertEqual(statement.query, query)
-        } catch {
-            XCTFail()
         }
     }
     
@@ -81,7 +79,7 @@ class StatementTests: XCTestCase {
         let query     = "SELECT * FROM animal WHERE id = ? OR name = ? OR length = ? OR image = ?"
         let statement = prepared(query: query)
         
-        do {
+        XCTAssertWontThrow {
             try statement.bind(integer: 13,        to: 0)
             try statement.bind(string:  "reptile", to: 1)
             try statement.bind(double:  261.56,    to: 2)
@@ -95,8 +93,6 @@ class StatementTests: XCTestCase {
             let cleared = "SELECT * FROM animal WHERE id = NULL OR name = NULL OR length = NULL OR image = NULL"
             XCTAssertEqual(statement.expandedQuery, cleared)
             XCTAssertEqual(statement.query, query)
-        } catch {
-            XCTFail()
         }
     }
     
@@ -132,11 +128,9 @@ class StatementTests: XCTestCase {
         let query     = "SELECT * FROM animal"
         let statement = prepared(query: query)
         
-        do {
+        XCTAssertWontThrow {
             let result = try statement.step()
             XCTAssertEqual(result, .row)
-        } catch {
-            XCTFail()
         }
     }
     
@@ -144,13 +138,11 @@ class StatementTests: XCTestCase {
         let query     = "INSERT INTO animal (name, type) VALUES (?, ?)"
         let statement = prepared(query: query)
         
-        do {
+        XCTAssertWontThrow {
             try statement.bind(string: "hedgehog", to: 0)
             try statement.bind(string: "rodent",   to: 1)
             let result = try statement.step()
             XCTAssertEqual(result, .done)
-        } catch {
-            XCTFail()
         }
     }
     
@@ -164,6 +156,58 @@ class StatementTests: XCTestCase {
         
         XCTAssertWillThrow(.error) {
             try statement.reset()
+        }
+    }
+    
+    // ----------------------------------
+    //  MARK: - Reset -
+    //
+    func testReset() {
+        let query     = "SELECT id FROM animal WHERE id = 1 OR id = 2"
+        let statement = prepared(query: query)
+        
+        _ = try? statement.step()
+        
+        let id1 = statement.integer(at: 0)
+        XCTAssertEqual(id1, 1)
+        
+        XCTAssertWontThrow {
+            try statement.reset()
+            _ = try? statement.step()
+            
+            let id1 = statement.integer(at: 0)
+            XCTAssertEqual(id1, 1)
+        }
+    }
+    
+    func testResetError() {
+        let query     = "ROLLBACK;"
+        let statement = prepared(query: query)
+        
+        _ = try? statement.step()
+        
+        XCTAssertWillThrow(.error) {
+            try statement.reset()
+        }
+    }
+    
+    func testFinalize() {
+        let query     = "SELECT id FROM animal"
+        let statement = prepared(query: query)
+        
+        XCTAssertWontThrow {
+            try statement.finalize()
+        }
+    }
+    
+    func testFinalizeError() {
+        let query     = "ROLLBACK;"
+        let statement = prepared(query: query)
+        
+        _ = try? statement.step()
+        
+        XCTAssertWillThrow(.error) {
+            try statement.finalize()
         }
     }
 

@@ -34,3 +34,11 @@ internal func XCTAssertWillThrow(_ expectedStatus: Status, _ block: () throws ->
         XCTAssertEqual(error as? Status, expectedStatus)
     }
 }
+
+internal func XCTAssertWontThrow( _ block: () throws -> Void) {
+    do {
+        try block()
+    } catch {
+        XCTFail()
+    }
+}

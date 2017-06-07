@@ -20,7 +20,7 @@ class Statement_SerializableTests: XCTestCase {
         
         let data = Data(bytes: [0xbe, 0xee])
         
-        do {
+        XCTAssertWontThrow {
             try statement.bind(serializable: 100,   to: 0)
             try statement.bind(serializable: "bee", to: 1)
             try statement.bind(serializable: nil,   to: 2)
@@ -31,8 +31,6 @@ class Statement_SerializableTests: XCTestCase {
             XCTAssertEqual(statement.expandedQuery, expanded)
             XCTAssertEqual(statement.query, query)
             
-        } catch {
-            XCTFail()
         }
     }
     
@@ -42,7 +40,7 @@ class Statement_SerializableTests: XCTestCase {
     func testStepThroughRows() {
         let statement = prepared(query: "SELECT id, name FROM animal WHERE type = 'reptile' ORDER BY id ASC")
         
-        do {
+        XCTAssertWontThrow {
             var names = [String]()
             try statement.stepRows { row in
                 if let name = row.string(at: 1) {
@@ -50,16 +48,13 @@ class Statement_SerializableTests: XCTestCase {
                 }
             }
             XCTAssertEqual(names, ["aligator", "crocodile", "iguana"])
-            
-        } catch {
-            
         }
     }
     
     func testStepThroughDictionary() {
         let statement = prepared(query: "SELECT * FROM animal WHERE id = 3")
         
-        do {
+        XCTAssertWontThrow {
             var dictionaries = [[String: Any]]()
             try statement.stepDictionary { dictionary in
                 dictionaries.append(dictionary)
@@ -73,8 +68,6 @@ class Statement_SerializableTests: XCTestCase {
             XCTAssertEqual(dictionary["length"] as! Double, 4279.281)
             XCTAssertEqual(dictionary["image"]  as! Data,   Data(bytes: [0xfe, 0xed, 0xbe, 0xef]))
             
-        } catch {
-            XCTFail()
         }
     }
 }

@@ -25,9 +25,3 @@ extension UnsafePointer where Pointee == UInt8 {
         return String(cString: self)
     }
 }
-
-extension UnsafeMutablePointer where Pointee == UInt8 {
-    var string: String {
-        return String(cString: self)
-    }
-}

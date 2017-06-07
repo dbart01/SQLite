@@ -22,6 +22,8 @@ public class Statement {
     
     let statement: _Statement
     
+    private var isFinalized = false
+    
     // ----------------------------------
     //  MARK: - Init -
     //
@@ -215,7 +217,12 @@ public class Statement {
     // ----------------------------------
     //  MARK: - Reset -
     //
-    private func finalize() throws {
+    internal func finalize() throws {
+        guard !self.isFinalized else {
+            return
+        }
+        self.isFinalized = true
+        
         let status = sqlite3_finalize(self.statement).status
         if status != .ok {
             throw status
@@ -244,36 +251,5 @@ extension Statement {
     public enum Result {
         case done
         case row
-    }
-}
-
-// ----------------------------------
-//  MARK: - Column Type -
-//
-extension Statement {
-    public enum ColumnType {
-        case integer
-        case float
-        case text
-        case blob
-        case null
-        
-        public init?(type: Int32) {
-            switch type {
-            case SQLITE_INTEGER: self = .integer
-            case SQLITE_FLOAT:   self = .float
-            case SQLITE_TEXT:    self = .text
-            case SQLITE_BLOB:    self = .blob
-            case SQLITE_NULL:    self = .null
-            default:
-                return nil
-            }
-        }
-    }
-}
-
-extension Int32 {
-    var columnType: Statement.ColumnType? {
-        return Statement.ColumnType(type: self)
     }
 }

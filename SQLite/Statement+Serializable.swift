@@ -48,10 +48,8 @@ extension Statement {
             
             var dictionary = [String: Any]()
             for index in 0..<statement.columnCount {
-                guard let type = statement.columnType(at: index) else {
-                    fatalError("Invalid column type.")
-                }
                 
+                let type = statement.columnType(at: index)!
                 let name = statement.columnName(at: index)
                 
                 switch type {

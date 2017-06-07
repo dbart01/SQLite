@@ -47,15 +47,12 @@ class SQLiteTests: XCTestCase {
     //  MARK: - Open -
     //
     func testOpenValidConnection() {
-        do {
+        XCTAssertWontThrow {
             let sqlite = try SQLite3(at: DatabaseURL)
             
             XCTAssertNotNil(sqlite)
             let sqliteExists = self.fileManager.fileExists(atPath: DatabaseURL.path)
             XCTAssertTrue(sqliteExists)
-            
-        } catch {
-            XCTFail()
         }
     }
     
@@ -71,7 +68,7 @@ class SQLiteTests: XCTestCase {
     func testMetadataWithDefaultDatabase() {
         let sqlite = openSQLite()
         
-        do {
+        XCTAssertWontThrow {
             let columns  = ["id", "name", "type", "length", "image", "thumb"]
             let expected = [
                 ColumnMetadata(type: "INTEGER", collation: "BINARY", isNotNull: false, isPrimaryKey: true,  isAutoIncrement: true),
@@ -87,8 +84,6 @@ class SQLiteTests: XCTestCase {
                 XCTAssertEqual(metadata, expected[index])
             }
             
-        } catch {
-            XCTFail()
         }
     }
     
@@ -107,12 +102,10 @@ class SQLiteTests: XCTestCase {
         let sqlite = openSQLite()
         let query  = "CREATE TABLE vehicle (id INTEGER primary key autoincrement, make TEXT, model TEXT);"
         
-        do {
+        XCTAssertWontThrow {
             let statement = try sqlite.prepare(query: query)
             XCTAssertNotNil(statement)
             XCTAssertEqual(statement.query, query)
-        } catch {
-            XCTFail()
         }
     }
     

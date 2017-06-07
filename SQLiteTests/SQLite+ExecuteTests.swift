@@ -18,7 +18,7 @@ class SQLite_ExecuteTests: XCTestCase {
         let sqlite = openSQLite()
         
         var ids = [Int]()
-        do {
+        XCTAssertWontThrow {
             let result = try sqlite.execute(query: "SELECT id FROM animal WHERE type = ?", arguments: "feline") { statement in
                 
                 ids.append(statement.integer(at: 0))
@@ -27,8 +27,6 @@ class SQLite_ExecuteTests: XCTestCase {
             XCTAssertEqual(result, .done)
             XCTAssertEqual(ids, [4, 5, 6])
             
-        } catch {
-            XCTFail()
         }
     }
 }
