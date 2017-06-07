@@ -210,6 +210,21 @@ class StatementTests: XCTestCase {
             try statement.finalize()
         }
     }
+    
+    func testClearBindings() {
+        let query     = "SELECT * FROM animal WHERE id = ?"
+        let statement = prepared(query: query)
+        
+        try! statement.bind(integer: 3, to: 0)
+        
+        XCTAssertEqual(statement.expandedQuery, "SELECT * FROM animal WHERE id = 3")
+        
+        XCTAssertWontThrow {
+            try statement.clearBindings()
+            
+            XCTAssertEqual(statement.expandedQuery, "SELECT * FROM animal WHERE id = NULL")
+        }
+    }
 
     // ----------------------------------
     //  MARK: - Columns -
