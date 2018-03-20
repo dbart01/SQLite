@@ -96,7 +96,7 @@ public class SQLite3 {
             reference.deallocate(capacity: 1)
         }
         
-        let status = sqlite3_prepare_v2(self.sqlite, query, Int32(query.characters.count), reference, nil).status
+        let status = sqlite3_prepare_v2(self.sqlite, query, Int32(query.lengthOfBytes(using: .utf8)), reference, nil).status
         if status != .ok {
             throw status
         }

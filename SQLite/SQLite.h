@@ -33,4 +33,4 @@ FOUNDATION_EXPORT double SQLiteVersionNumber;
 FOUNDATION_EXPORT const unsigned char SQLiteVersionString[];
 
 #import <SQLite/sqlite3.h>
-//#import <SQLite/extensions.h>
+#import <SQLite/sqlite3ext.h>
