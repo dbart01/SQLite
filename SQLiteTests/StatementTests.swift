@@ -229,6 +229,16 @@ class StatementTests: XCTestCase {
     // ----------------------------------
     //  MARK: - Columns -
     //
+    func testDataCount() {
+        let query     = "SELECT * FROM animal WHERE id = 99"
+        let statement = SQLite3.prepared(query: query)
+        
+        try! statement.step()
+        
+        XCTAssertEqual(statement.dataCount, 0)
+        XCTAssertEqual(statement.columnCount, 6)
+    }
+    
     func testColumnCount() {
         let query     = "SELECT * FROM animal"
         let statement = SQLite3.prepared(query: query)

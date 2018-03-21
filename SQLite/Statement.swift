@@ -143,6 +143,10 @@ public class Statement {
     // ----------------------------------
     //  MARK: - Columns -
     //
+    public var dataCount: Int {
+        return Int(sqlite3_data_count(self.statement))
+    }
+    
     public var columnCount: Int {
         return Int(sqlite3_column_count(self.statement))
     }
