@@ -12,6 +12,8 @@ typealias _Statement = OpaquePointer
 
 public class Statement {
     
+    public private(set) weak var sqlite: SQLite3?
+    
     public var isBusy: Bool {
         return sqlite3_stmt_busy(self.statement) != 0
     }
@@ -27,7 +29,8 @@ public class Statement {
     // ----------------------------------
     //  MARK: - Init -
     //
-    init(statement: _Statement) {
+    init(sqlite: SQLite3, statement: _Statement) {
+        self.sqlite    = sqlite
         self.statement = statement
     }
     
@@ -197,8 +200,7 @@ public class Statement {
     
     public func blob(at column: Int) -> Data? {
         if let pointer = sqlite3_column_blob(self.statement, Int32(column)) {
-            let bytes  = sqlite3_column_bytes(self.statement, Int32(column))
-            return Data(bytes: pointer, count: Int(bytes))
+            return Data(bytes: pointer, count: self.columnByteCount(at: column))
         }
         return nil
     }

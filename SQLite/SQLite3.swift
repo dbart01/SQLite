@@ -31,7 +31,7 @@ public class SQLite3 {
     // ----------------------------------
     //  MARK: - Init -
     //
-    public init(location: Location = .temporary, options: OpenOptions = [.readWrite, .create]) throws {
+    public convenience init(location: Location = .temporary, options: OpenOptions = [.readWrite, .create]) throws {
         let reference = UnsafeMutablePointer<_SQLite3?>.allocate(capacity: 1)
         defer {
             reference.deallocate(capacity: 1)
@@ -42,7 +42,11 @@ public class SQLite3 {
             throw status
         }
         
-        self.sqlite = reference.pointee!
+        self.init(sqlite3: reference.pointee!)
+    }
+    
+    internal init(sqlite3: _SQLite3) {
+        self.sqlite = sqlite3
     }
     
     deinit {
@@ -118,7 +122,7 @@ public class SQLite3 {
             return cachedStatement
         }
         
-        let statement = Statement(statement: try self._prepare(query: query))
+        let statement = Statement(sqlite: self, statement: try self._prepare(query: query))
         if self.isCacheEnabled {
             self.cacheStatement(statement, for: query)
         }

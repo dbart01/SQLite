@@ -12,6 +12,16 @@ import XCTest
 class StatementTests: XCTestCase {
     
     // ----------------------------------
+    //  MARK: - Reference -
+    //
+    func testSqliteReference() {
+        let sqlite    = SQLite3.local()
+        let statement = try! sqlite.prepare(query: "SELECT * FROM animal")
+        
+        XCTAssertTrue(statement.sqlite === sqlite)
+    }
+    
+    // ----------------------------------
     //  MARK: - State -
     //
     func testIsBusy() {
