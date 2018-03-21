@@ -244,6 +244,36 @@ public class Statement {
     }
 }
 
+#if SQLITE_ENABLE_COLUMN_METADATA
+
+// --------------------------------------
+//  MARK: - Column Metadata Extension -
+//
+extension Statement {
+    public func columnTableName(at column: Int) -> String? {
+        if let name = sqlite3_column_table_name(self.statement, Int32(column)) {
+            return name.string
+        }
+        return nil
+    }
+    
+    public func columnDatabaseName(at column: Int) -> String? {
+        if let name = sqlite3_column_database_name(self.statement, Int32(column)) {
+            return name.string
+        }
+        return nil
+    }
+    
+    public func columnOriginName(at column: Int) -> String? {
+        if let name = sqlite3_column_origin_name(self.statement, Int32(column)) {
+            return name.string
+        }
+        return nil
+    }
+}
+    
+#endif
+
 // ----------------------------------
 //  MARK: - Result -
 //

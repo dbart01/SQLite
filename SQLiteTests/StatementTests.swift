@@ -299,4 +299,27 @@ class StatementTests: XCTestCase {
             XCTFail()
         }
     }
+    
+    // ----------------------------------
+    //  MARK: - Column Metadata -
+    //
+    func testColumnMetadata() {
+        let query     = "SELECT id as identifier FROM animal WHERE id = 3"
+        let statement = SQLite3.prepared(query: query)
+        
+        XCTAssertEqual(statement.columnDatabaseName(at: 0), "main")
+        XCTAssertEqual(statement.columnTableName(at: 0),    "animal")
+        
+        XCTAssertEqual(statement.columnName(at: 0),       "identifier")
+        XCTAssertEqual(statement.columnOriginName(at: 0), "id")
+    }
+    
+    func testColumnMetadataInvalid() {
+        let query     = "SELECT id as identifier FROM animal WHERE id = 3"
+        let statement = SQLite3.prepared(query: query)
+        
+        XCTAssertNil(statement.columnDatabaseName(at: 99))
+        XCTAssertNil(statement.columnTableName(at: 99))
+        XCTAssertNil(statement.columnOriginName(at: 99))
+    }
 }
