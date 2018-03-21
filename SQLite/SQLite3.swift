@@ -19,16 +19,25 @@ public class SQLite3 {
     private let sqlite: _SQLite3
     private var cachedStatements: [String: Statement] = [:]
     
+    public var lastInsertID: Int {
+        get {
+            return Int(sqlite3_last_insert_rowid(self.sqlite))
+        }
+        set {
+            sqlite3_set_last_insert_rowid(self.sqlite, sqlite3_int64(newValue))
+        }
+    }
+    
     // ----------------------------------
     //  MARK: - Init -
     //
-    public init(at url: URL) throws {
+    public init(location: Location = .temporary, options: OpenOptions = [.readWrite, .create]) throws {
         let reference = UnsafeMutablePointer<_SQLite3?>.allocate(capacity: 1)
         defer {
             reference.deallocate(capacity: 1)
         }
         
-        let status = sqlite3_open(url.path, reference).status
+        let status = sqlite3_open_v2(location.path, reference, options.rawValue, nil).status
         guard status == .ok else {
             throw status
         }

@@ -15,7 +15,7 @@ class StatementTests: XCTestCase {
     //  MARK: - State -
     //
     func testIsBusy() {
-        let statement = prepared(query: "SELECT * FROM animal")
+        let statement = SQLite3.prepared(query: "SELECT * FROM animal")
         
         XCTAssertFalse(statement.isBusy)
         
@@ -25,10 +25,10 @@ class StatementTests: XCTestCase {
     }
     
     func testIsReadOnly() {
-        let statement1 = prepared(query: "SELECT * FROM animal")
+        let statement1 = SQLite3.prepared(query: "SELECT * FROM animal")
         XCTAssertTrue(statement1.isReadOnly)
         
-        let statement2 = prepared(query: "UPDATE animal SET name = 'dog' WHERE id = 3")
+        let statement2 = SQLite3.prepared(query: "UPDATE animal SET name = 'dog' WHERE id = 3")
         XCTAssertFalse(statement2.isReadOnly)
     }
 
@@ -37,7 +37,7 @@ class StatementTests: XCTestCase {
     //
     func testParameters() {
         let query     = "SELECT * FROM animal WHERE name = :name AND type = :type"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         XCTAssertEqual(statement.parameterCount, 2)
         XCTAssertEqual(statement.parameterName(for: 0), ":name")
@@ -49,7 +49,7 @@ class StatementTests: XCTestCase {
     
     func testInvalidParameters() {
         let query     = "SELECT * FROM animal"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         XCTAssertEqual(statement.parameterCount, 0)
         XCTAssertEqual(statement.parameterName(for: 0), nil)
@@ -62,7 +62,7 @@ class StatementTests: XCTestCase {
     func testBindNilParameters() {
         let query     = "SELECT * FROM animal WHERE id = ? OR name = ? OR length = ? OR image = ?"
         let expanded  = "SELECT * FROM animal WHERE id = NULL OR name = NULL OR length = NULL OR image = NULL"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         XCTAssertWontThrow {
             try statement.bind(integer: nil, to: 0)
@@ -77,7 +77,7 @@ class StatementTests: XCTestCase {
     
     func testBindValidParameters() {
         let query     = "SELECT * FROM animal WHERE id = ? OR name = ? OR length = ? OR image = ?"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         XCTAssertWontThrow {
             try statement.bind(integer: 13,        to: 0)
@@ -98,7 +98,7 @@ class StatementTests: XCTestCase {
     
     func testBindInvalidParameters() {
         let query     = "SELECT * FROM animal"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         XCTAssertWillThrow(.range) {
             try statement.bind(integer: 25, to: 0)
@@ -126,7 +126,7 @@ class StatementTests: XCTestCase {
     //
     func testStepRow() {
         let query     = "SELECT * FROM animal"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         XCTAssertWontThrow {
             let result = try statement.step()
@@ -136,7 +136,7 @@ class StatementTests: XCTestCase {
     
     func testStepDone() {
         let query     = "INSERT INTO animal (name, type) VALUES (?, ?)"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         XCTAssertWontThrow {
             try statement.bind(string: "hedgehog", to: 0)
@@ -148,7 +148,7 @@ class StatementTests: XCTestCase {
     
     func testStepError() {
         let query     = "ROLLBACK;"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         XCTAssertWillThrow(.error) {
             _ = try statement.step()
@@ -164,7 +164,7 @@ class StatementTests: XCTestCase {
     //
     func testReset() {
         let query     = "SELECT id FROM animal WHERE id = 1 OR id = 2"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         _ = try? statement.step()
         
@@ -182,7 +182,7 @@ class StatementTests: XCTestCase {
     
     func testResetError() {
         let query     = "ROLLBACK;"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         _ = try? statement.step()
         
@@ -193,7 +193,7 @@ class StatementTests: XCTestCase {
     
     func testFinalize() {
         let query     = "SELECT id FROM animal"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         XCTAssertWontThrow {
             try statement.finalize()
@@ -202,7 +202,7 @@ class StatementTests: XCTestCase {
     
     func testFinalizeError() {
         let query     = "ROLLBACK;"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         _ = try? statement.step()
         
@@ -213,7 +213,7 @@ class StatementTests: XCTestCase {
     
     func testClearBindings() {
         let query     = "SELECT * FROM animal WHERE id = ?"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         try! statement.bind(integer: 3, to: 0)
         
@@ -231,7 +231,7 @@ class StatementTests: XCTestCase {
     //
     func testColumnCount() {
         let query     = "SELECT * FROM animal"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         if case .row = try! statement.step() {
             XCTAssertEqual(statement.columnCount, 6)
@@ -242,7 +242,7 @@ class StatementTests: XCTestCase {
     
     func testColumnNames() {
         let query     = "SELECT * FROM animal WHERE id = 3"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         if case .row = try! statement.step() {
             XCTAssertEqual(statement.columnName(at: 0), "id")
@@ -258,7 +258,7 @@ class StatementTests: XCTestCase {
     
     func testColumnTypes() {
         let query     = "SELECT * FROM animal WHERE id = 3"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         if case .row = try! statement.step() {
             XCTAssertEqual(statement.columnType(at: 0), .integer)
@@ -274,7 +274,7 @@ class StatementTests: XCTestCase {
     
     func testColumnByteCount() {
         let query     = "SELECT image FROM animal WHERE id = 3"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         if case .row = try! statement.step() {
             let byteCount = statement.columnByteCount(at: 0)
@@ -286,7 +286,7 @@ class StatementTests: XCTestCase {
     
     func testColumnValues() {
         let query     = "SELECT * FROM animal WHERE id = 3"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         if case .row = try! statement.step() {
             XCTAssertEqual(statement.integer(at: 0), 3)

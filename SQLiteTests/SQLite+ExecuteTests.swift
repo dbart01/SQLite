@@ -15,7 +15,7 @@ class SQLite_ExecuteTests: XCTestCase {
     //  MARK: - Execute -
     //
     func testExecute() {
-        let sqlite = openSQLite()
+        let sqlite = SQLite3.local()
         
         var ids = [Int]()
         XCTAssertWontThrow {
@@ -25,8 +25,7 @@ class SQLite_ExecuteTests: XCTestCase {
             }
             
             XCTAssertEqual(result, .done)
-            XCTAssertEqual(ids, [4, 5, 6])
-            
+            XCTAssertEqual(ids, [4, 5, 6])            
         }
     }
 }

@@ -22,12 +22,12 @@ class SQLiteTests: XCTestCase {
         self.deleteDatabase()
         self.copyDatabase()
         
-        print("Database path: \(DatabaseURL.path)")
+        print("Database path: \(SQLite3.localURL.path)")
     }
     
     private func deleteDatabase() {
         do {
-            try self.fileManager.removeItem(at: DatabaseURL)
+            try self.fileManager.removeItem(at: SQLite3.localURL)
         } catch {
             print("Failed to delete database: \(error)")
         }
@@ -37,7 +37,7 @@ class SQLiteTests: XCTestCase {
         let bundle = Bundle(for: type(of: self))
         let url    = bundle.url(forResource: "test", withExtension: "sqlite")!
         do {
-            try self.fileManager.copyItem(at: url, to: DatabaseURL)
+            try self.fileManager.copyItem(at: url, to: SQLite3.localURL)
         } catch {
             print("Failed to copy database: \(error)")
         }
@@ -48,25 +48,53 @@ class SQLiteTests: XCTestCase {
     //
     func testOpenValidConnection() {
         XCTAssertWontThrow {
-            let sqlite = try SQLite3(at: DatabaseURL)
+            let sqlite = try SQLite3(location: .disk(SQLite3.localURL))
             
             XCTAssertNotNil(sqlite)
-            let sqliteExists = self.fileManager.fileExists(atPath: DatabaseURL.path)
+            let sqliteExists = self.fileManager.fileExists(atPath: SQLite3.localURL.path)
             XCTAssertTrue(sqliteExists)
         }
     }
     
     func testOpenInvalidConnection() {
         XCTAssertWillThrow(.cantOpen) {
-            let _ = try SQLite3(at: URL(fileURLWithPath: "/invalid.sqlite"))
+            let url = URL(fileURLWithPath: "/invalid.sqlite")
+            let _   = try SQLite3(location: .disk(url))
         }
+    }
+    
+    // ----------------------------------
+    //  MARK: - Last Inserted ID -
+    //
+    func testGetLastInsertedID() {
+        let sqlite = SQLite3.local()
+        
+        XCTAssertEqual(sqlite.lastInsertID, 0)
+        
+        let result = try! sqlite.execute(
+            query: "INSERT INTO animal (id, name, type) VALUES (?, ?, ?)",
+            arguments: 16, "octopus", "cephalopod"
+        )
+        
+        XCTAssertEqual(result, .done)
+        XCTAssertEqual(sqlite.lastInsertID, 16)
+    }
+    
+    func testSetLastInsertedID() {
+        let sqlite = SQLite3.local()
+        
+        XCTAssertEqual(sqlite.lastInsertID, 0)
+        
+        sqlite.lastInsertID = 64
+        
+        XCTAssertEqual(sqlite.lastInsertID, 64)
     }
     
     // ----------------------------------
     //  MARK: - Metadata -
     //
     func testMetadataWithDefaultDatabase() {
-        let sqlite = openSQLite()
+        let sqlite = SQLite3.local()
         
         XCTAssertWontThrow {
             let columns  = ["id", "name", "type", "length", "image", "thumb"]
@@ -88,7 +116,7 @@ class SQLiteTests: XCTestCase {
     }
     
     func testMetadataWithInvalidDatabase() {
-        let sqlite = openSQLite()
+        let sqlite = SQLite3.local()
         
         XCTAssertWillThrow(.error) {
             _ = try sqlite.columnMetadataFor(column: "id", table: "animal", database: "invalid_database")
@@ -99,7 +127,7 @@ class SQLiteTests: XCTestCase {
     //  MARK: - Statement -
     //
     func testPrepareValidStatement() {
-        let sqlite = openSQLite()
+        let sqlite = SQLite3.local()
         let query  = "CREATE TABLE vehicle (id INTEGER primary key autoincrement, make TEXT, model TEXT);"
         
         XCTAssertWontThrow {
@@ -110,7 +138,7 @@ class SQLiteTests: XCTestCase {
     }
     
     func testPrepareInvalidStatement() {
-        let sqlite = openSQLite()
+        let sqlite = SQLite3.local()
         let query  = "SELECT * FROM vehicle"
         
         XCTAssertWillThrow(.error) {
@@ -123,7 +151,7 @@ class SQLiteTests: XCTestCase {
     //
     func testStatementCachingEnabled() {
         let query  = "SELECT * FROM animal WHERE type = ?"
-        let sqlite = openSQLite()
+        let sqlite = SQLite3.local()
         
         sqlite.isCacheEnabled = true
         
@@ -145,7 +173,7 @@ class SQLiteTests: XCTestCase {
     
     func testStatementCachingDisabled() {
         let query  = "SELECT * FROM animal WHERE type = ?"
-        let sqlite = openSQLite()
+        let sqlite = SQLite3.local()
         
         sqlite.isCacheEnabled = false
         

@@ -16,7 +16,7 @@ class Statement_SerializableTests: XCTestCase {
     //
     func testBindSerializable() {
         let query     = "INSERT INTO animal (id, name, type, length, image) VALUES (?, ?, ?, ?, ?)"
-        let statement = prepared(query: query)
+        let statement = SQLite3.prepared(query: query)
         
         let data = Data(bytes: [0xbe, 0xee])
         
@@ -38,7 +38,7 @@ class Statement_SerializableTests: XCTestCase {
     //  MARK: - Step -
     //
     func testStepThroughRows() {
-        let statement = prepared(query: "SELECT id, name FROM animal WHERE type = 'reptile' ORDER BY id ASC")
+        let statement = SQLite3.prepared(query: "SELECT id, name FROM animal WHERE type = 'reptile' ORDER BY id ASC")
         
         XCTAssertWontThrow {
             var names = [String]()
@@ -52,7 +52,7 @@ class Statement_SerializableTests: XCTestCase {
     }
     
     func testStepThroughDictionary() {
-        let statement = prepared(query: "SELECT * FROM animal WHERE id = 3")
+        let statement = SQLite3.prepared(query: "SELECT * FROM animal WHERE id = 3")
         
         XCTAssertWontThrow {
             var dictionaries = [[String: Any]]()
