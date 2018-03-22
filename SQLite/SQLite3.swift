@@ -146,4 +146,40 @@ public class SQLite3 {
     private func cacheStatement(_ statement: Statement, for key: String) {
         self.cachedStatements[key] = statement
     }
+    
+    // ----------------------------------
+    //  MARK: - Execute -
+    //
+    @discardableResult
+    public func execute(query: String, arguments: Any...) throws -> Statement.Result {
+        let statement = try self.statement(for: query, bindingTo: arguments
+        )
+        return try statement.step()
+    }
+    
+    public func execute(query: String, arguments: Any..., rowHandler: Statement.StepRowHandler? = nil) throws {
+        let statement = try self.statement(for: query, bindingTo: arguments)
+        
+        return try statement.stepRows { result, statement in
+            rowHandler?(result, statement)
+        }
+    }
+    
+    public func execute(query: String, arguments: Any..., dictionaryHandler: Statement.StepDictionaryHandler? = nil) throws {
+        let statement = try self.statement(for: query, bindingTo: arguments)
+        
+        return try statement.stepDictionaries { result, statement in
+            dictionaryHandler?(result, statement)
+        }
+    }
+    
+    private func statement(for query: String, bindingTo arguments: [Any]) throws -> Statement {
+        let statement = try self.prepare(query: query)
+        
+        for (index, argument) in arguments.enumerated() {
+            try statement.bind(argument, to: index)
+        }
+        
+        return statement
+    }
 }

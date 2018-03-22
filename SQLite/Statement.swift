@@ -11,6 +11,9 @@ import Foundation
 typealias _Statement = OpaquePointer
 
 public class Statement {
+
+    public typealias StepRowHandler        = (Result, Statement) -> Void
+    public typealias StepDictionaryHandler = (Result, [String: Any]) -> Void
     
     public private(set) weak var sqlite: SQLite3?
     
@@ -85,7 +88,53 @@ public class Statement {
     
     // ----------------------------------
     //  MARK: - Bind -
-    //    
+    //
+    public func bind<T>(_ value: T?, to column: Int) throws {
+        guard let value = value else {
+            return try self.bindNull(to: column)
+        }
+        
+        switch value {
+            
+        case let integer as Int:
+            return try self.bind(integer: integer, to: column)
+        case let integer as Int8:
+            return try self.bind(integer: Int(integer), to: column)
+        case let integer as Int16:
+            return try self.bind(integer: Int(integer), to: column)
+        case let integer as Int32:
+            return try self.bind(integer: Int(integer), to: column)
+        case let integer as Int64:
+            return try self.bind(integer: Int(integer), to: column)
+            
+        // TODO: UInt64 won't fit into Int
+        case let integer as UInt:
+            return try self.bind(integer: Int(integer), to: column)
+        case let integer as UInt8:
+            return try self.bind(integer: Int(integer), to: column)
+        case let integer as UInt16:
+            return try self.bind(integer: Int(integer), to: column)
+        case let integer as UInt32:
+            return try self.bind(integer: Int(integer), to: column)
+        case let integer as UInt64:
+            return try self.bind(integer: Int(integer), to: column)
+            
+        case let string as String:
+            return try self.bind(string: string, to: column)
+            
+        case let float as Float:
+            return try self.bind(double: Double(float), to: column)
+        case let float as Double:
+            return try self.bind(double: float, to: column)
+            
+        case let data as Data:
+            return try self.bind(blob: data, to: column)
+            
+        default:
+            throw Error.invalidType
+        }
+    }
+    
     public func bind(integer: Int?, to column: Int) throws {
         guard let integer = integer else {
             try self.bindNull(to: column)
@@ -166,22 +215,42 @@ public class Statement {
         return Int(sqlite3_column_bytes(self.statement, Int32(column)))
     }
     
-//    public func value<T: Deserializable>(at column: Int) throws -> T? {
-//        assert(column < self.columnCount)
-//        
-//        let columnIndex = column + 1
-//        
-//        let value: Value
-//        
-//        switch T.type {
-//        case .integer: value = .integer( self.integer(at: columnIndex) )
-//        case .double:  value = .double(  self.double(at: columnIndex)  )
-//        case .string:  value = .string(  self.string(at: columnIndex)  )
-//        case .blob:    value = .blob(    self.blob(at: columnIndex)    )
-//        }
-//        
-//        return try T.from(value: value)
-//    }
+    // ----------------------------------
+    //  MARK: - Values -
+    //
+    public func value<T>(at column: Int) throws -> T? {
+        
+        if T.self == Int.self   { return (Int(self.integer(at: column))   as! T) }
+        if T.self == Int8.self  { return (Int8(self.integer(at: column))  as! T) }
+        if T.self == Int16.self { return (Int16(self.integer(at: column)) as! T) }
+        if T.self == Int32.self { return (Int32(self.integer(at: column)) as! T) }
+        if T.self == Int64.self { return (Int64(self.integer(at: column)) as! T) }
+        
+        if T.self == UInt.self   { return (UInt(self.integer(at: column))   as! T) }
+        if T.self == UInt8.self  { return (UInt8(self.integer(at: column))  as! T) }
+        if T.self == UInt16.self { return (UInt16(self.integer(at: column)) as! T) }
+        if T.self == UInt32.self { return (UInt32(self.integer(at: column)) as! T) }
+        if T.self == UInt64.self { return (UInt64(self.integer(at: column)) as! T) }
+        
+        if T.self == String.self {
+            if let string = self.string(at: column) {
+                return (string as! T)
+            }
+            return nil
+        }
+        
+        if T.self == Float.self   { return (Float(self.double(at: column))   as! T) }
+        if T.self == Double.self  { return (Double(self.double(at: column))  as! T) }
+        
+        if T.self == Data.self {
+            if let data = self.blob(at: column) {
+                return (data as! T)
+            }
+            return nil
+        }
+        
+        throw Error.invalidType
+    }
     
     public func integer(at column: Int) -> Int {
         return Int(sqlite3_column_int64(self.statement, Int32(column)))
@@ -217,6 +286,44 @@ public class Statement {
         case .row:  return .row
         default:
             throw status
+        }
+    }
+    
+    public func stepRows(using rowHandler: StepRowHandler) throws {
+        var result = Result.done
+        
+        repeat {
+            result = try self.step()
+            if result == .row {
+                rowHandler(result, self)
+            }
+        } while result == .row
+    }
+    
+    public func stepDictionaries(using dictionaryHandler: StepDictionaryHandler) throws {
+        try self.stepRows { result, statement in
+            
+            var dictionary = [String: Any]()
+            for index in 0..<statement.columnCount {
+                
+                let type = statement.columnType(at: index)!
+                let name = statement.columnName(at: index)
+                
+                switch type {
+                case .integer:
+                    dictionary[name] = statement.integer(at: index)
+                case .float:
+                    dictionary[name] = statement.double(at: index)
+                case .text:
+                    dictionary[name] = statement.string(at: index)
+                case .blob:
+                    dictionary[name] = statement.blob(at: index)
+                case .null:
+                    break
+                }
+            }
+            
+            dictionaryHandler(result, dictionary)
         }
     }
     
@@ -279,6 +386,15 @@ extension Statement {
 }
     
 #endif
+
+// ----------------------------------
+//  MARK: - Error -
+//
+extension Statement {
+    public enum Error: Swift.Error {
+        case invalidType
+    }
+}
 
 // ----------------------------------
 //  MARK: - Result -

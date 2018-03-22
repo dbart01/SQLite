@@ -9,12 +9,12 @@
 import XCTest
 import SQLite
 
-func XCTAssertWillThrow(_ expectedStatus: Status, _ block: () throws -> Void) {
+func XCTAssertWillThrow<T>(_ expectedError: T, _ block: () throws -> Void) where T: Error, T: Equatable {
     do {
         try block()
         XCTFail()
     } catch {
-        XCTAssertEqual(error as? Status, expectedStatus)
+        XCTAssertEqual(error as? T, expectedError)
     }
 }
 

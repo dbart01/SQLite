@@ -16,48 +16,57 @@ class SQLiteTests: XCTestCase {
     // ----------------------------------
     //  MARK: - Setup -
     //
-    override func setUp() {
-        super.setUp()
-        
-        self.deleteDatabase()
-        self.copyDatabase()
-        
-        print("Database path: \(SQLite3.localURL.path)")
-    }
-    
-    private func deleteDatabase() {
-        do {
-            try self.fileManager.removeItem(at: SQLite3.localURL)
-        } catch {
-            print("Failed to delete database: \(error)")
-        }
-    }
-    
-    private func copyDatabase() {
-        let bundle = Bundle(for: type(of: self))
-        let url    = bundle.url(forResource: "test", withExtension: "sqlite")!
-        do {
-            try self.fileManager.copyItem(at: url, to: SQLite3.localURL)
-        } catch {
-            print("Failed to copy database: \(error)")
-        }
-    }
+//    override func setUp() {
+//        super.setUp()
+//
+//        self.deleteDatabase()
+//        self.copyDatabase()
+//
+//        print("Database path: \(SQLite3.localURL.path)")
+//    }
+//
+//    override func tearDown() {
+//        super.tearDown()
+//
+//        self.deleteDatabase()
+//    }
+//
+//    private func deleteDatabase() {
+//        do {
+//            try self.fileManager.removeItem(at: SQLite3.localURL)
+//        } catch {
+//            print("Failed to delete database: \(error)")
+//        }
+//    }
+//
+//    private func copyDatabase() {
+//        let bundle = Bundle(for: type(of: self))
+//        let url    = bundle.url(forResource: "test", withExtension: "sqlite")!
+//        do {
+//            try self.fileManager.copyItem(at: url, to: SQLite3.localURL)
+//        } catch {
+//            print("Failed to copy database: \(error)")
+//        }
+//    }
     
     // ----------------------------------
     //  MARK: - Open -
     //
     func testOpenValidConnection() {
         XCTAssertWontThrow {
-            let sqlite = try SQLite3(location: .disk(SQLite3.localURL))
+            let localURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("test.sqlite")
+            try? self.fileManager.removeItem(at: localURL)
+            
+            let sqlite = try SQLite3(location: .disk(localURL))
             
             XCTAssertNotNil(sqlite)
-            let sqliteExists = self.fileManager.fileExists(atPath: SQLite3.localURL.path)
+            let sqliteExists = self.fileManager.fileExists(atPath: localURL.path)
             XCTAssertTrue(sqliteExists)
         }
     }
     
     func testOpenInvalidConnection() {
-        XCTAssertWillThrow(.cantOpen) {
+        XCTAssertWillThrow(Status.cantOpen) {
             let url = URL(fileURLWithPath: "/invalid.sqlite")
             let _   = try SQLite3(location: .disk(url))
         }
@@ -118,7 +127,7 @@ class SQLiteTests: XCTestCase {
     func testMetadataWithInvalidDatabase() {
         let sqlite = SQLite3.local()
         
-        XCTAssertWillThrow(.error) {
+        XCTAssertWillThrow(Status.error) {
             _ = try sqlite.columnMetadataFor(column: "id", table: "animal", database: "invalid_database")
         }
     }
@@ -141,7 +150,7 @@ class SQLiteTests: XCTestCase {
         let sqlite = SQLite3.local()
         let query  = "SELECT * FROM vehicle"
         
-        XCTAssertWillThrow(.error) {
+        XCTAssertWillThrow(Status.error) {
             let _ = try sqlite.prepare(query: query)
         }
     }
@@ -181,5 +190,43 @@ class SQLiteTests: XCTestCase {
         let statement2 = try! sqlite.prepare(query: query)
         
         XCTAssertFalse(statement1 === statement2)
+    }
+    
+    // ----------------------------------
+    //  MARK: - Execute -
+    //
+    func testExecuteNoReturnValue() {
+        let sqlite = SQLite3.local()
+        
+        XCTAssertWontThrow {
+            let result = try sqlite.execute(query: "INSERT INTO animal (id, name, type) VALUES (?, ?, ?)", arguments: 99, "dragon", "mythical")
+            
+            XCTAssertEqual(result, .done)
+            
+            var results = 0
+            try sqlite.execute(query: "SELECT id, name, type FROM animal WHERE id = ?", arguments: 99, dictionaryHandler: { result, dictionary in
+                XCTAssertEqual(dictionary["id"]   as! Int,    99)
+                XCTAssertEqual(dictionary["name"] as! String, "dragon")
+                XCTAssertEqual(dictionary["type"] as! String, "mythical")
+                results += 1
+            })
+            
+            XCTAssertEqual(results, 1)
+        }
+    }
+    
+    func testExecuteRows() {
+        let sqlite = SQLite3.local()
+        
+        var ids = [Int]()
+        XCTAssertWontThrow {
+            try sqlite.execute(query: "SELECT id FROM animal WHERE type = ?", arguments: "feline", rowHandler: { result, statement in
+                
+                XCTAssertEqual(result, .row)
+                ids.append(statement.integer(at: 0))
+            })
+            
+            XCTAssertEqual(ids, [4, 5, 6])
+        }
     }
 }

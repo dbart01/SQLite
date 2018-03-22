@@ -106,35 +106,145 @@ class StatementTests: XCTestCase {
         }
     }
     
+    func testBindGenericParameters() {
+        XCTAssertWontThrow {
+            let query     = "SELECT * FROM animal WHERE id = ?"
+            let expanded  = "SELECT * FROM animal WHERE id = NULL"
+            let statement = SQLite3.prepared(query: query)
+            
+            let value: Int? = nil
+            
+            try statement.bind(value, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+        }
+        
+        XCTAssertWontThrow {
+            let query     = "SELECT * FROM animal WHERE id = ?"
+            let expanded  = "SELECT * FROM animal WHERE id = 13"
+            let statement = SQLite3.prepared(query: query)
+            
+            try statement.bind(13 as Int, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+            
+            try statement.bind(13 as Int8, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+            
+            try statement.bind(13 as Int16, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+            
+            try statement.bind(13 as Int32, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+            
+            try statement.bind(13 as Int64, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+        }
+        
+        XCTAssertWontThrow {
+            let query     = "SELECT * FROM animal WHERE id = ?"
+            let expanded  = "SELECT * FROM animal WHERE id = 13"
+            let statement = SQLite3.prepared(query: query)
+            
+            try statement.bind(13 as UInt, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+            
+            try statement.bind(13 as UInt8, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+            
+            try statement.bind(13 as UInt16, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+            
+            try statement.bind(13 as UInt32, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+            
+            try statement.bind(13 as UInt64, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+        }
+        
+        XCTAssertWontThrow {
+            let query     = "SELECT * FROM animal WHERE name = ?"
+            let expanded  = "SELECT * FROM animal WHERE name = 'bulldog'"
+            let statement = SQLite3.prepared(query: query)
+            
+            try statement.bind("bulldog", to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+        }
+        
+        XCTAssertWontThrow {
+            let query     = "SELECT * FROM animal WHERE length = ?"
+            let expanded  = "SELECT * FROM animal WHERE length = 261.5"
+            let statement = SQLite3.prepared(query: query)
+            
+            try statement.bind(261.5 as Float, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+            
+            try statement.bind(261.5 as Double, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+        }
+        
+        XCTAssertWontThrow {
+            let query     = "SELECT * FROM animal WHERE image = ?"
+            let expanded  = "SELECT * FROM animal WHERE image = x''"
+            let statement = SQLite3.prepared(query: query)
+            
+            try statement.bind(Data(), to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+        }
+    }
+    
     func testBindInvalidParameters() {
         let query     = "SELECT * FROM animal"
         let statement = SQLite3.prepared(query: query)
         
-        XCTAssertWillThrow(.range) {
+        XCTAssertWillThrow(Status.range) {
             try statement.bind(integer: 25, to: 0)
         }
         
-        XCTAssertWillThrow(.range) {
+        XCTAssertWillThrow(Status.range) {
             try statement.bind(double: 25, to: 0)
         }
         
-        XCTAssertWillThrow(.range) {
+        XCTAssertWillThrow(Status.range) {
             try statement.bind(string: "25", to: 0)
         }
         
-        XCTAssertWillThrow(.range) {
+        XCTAssertWillThrow(Status.range) {
             try statement.bind(blob: Data(), to: 0)
         }
         
-        XCTAssertWillThrow(.range) {
+        XCTAssertWillThrow(Status.range) {
             try statement.bindNull(to: 0)
+        }
+    }
+    
+    func testBindInvalidGenericParameters() {
+        let query     = "SELECT * FROM animal WHERE name = ?"
+        let statement = SQLite3.prepared(query: query)
+        
+        XCTAssertWillThrow(Statement.Error.invalidType) {
+            let array = [13]
+            try statement.bind(array, to: 0)
         }
     }
     
     // ----------------------------------
     //  MARK: - Step -
     //
-    func testStepRow() {
+    func testStepResultRow() {
         let query     = "SELECT * FROM animal"
         let statement = SQLite3.prepared(query: query)
         
@@ -144,7 +254,7 @@ class StatementTests: XCTestCase {
         }
     }
     
-    func testStepDone() {
+    func testStepResultDone() {
         let query     = "INSERT INTO animal (name, type) VALUES (?, ?)"
         let statement = SQLite3.prepared(query: query)
         
@@ -160,12 +270,46 @@ class StatementTests: XCTestCase {
         let query     = "ROLLBACK;"
         let statement = SQLite3.prepared(query: query)
         
-        XCTAssertWillThrow(.error) {
+        XCTAssertWillThrow(Status.error) {
             _ = try statement.step()
         }
         
-        XCTAssertWillThrow(.error) {
+        XCTAssertWillThrow(Status.error) {
             try statement.reset()
+        }
+    }
+    
+    func testStepIterateRows() {
+        let statement = SQLite3.prepared(query: "SELECT id, name FROM animal WHERE type = 'reptile' ORDER BY id ASC")
+        
+        XCTAssertWontThrow {
+            var names = [String]()
+            try statement.stepRows { result, row in
+                if let name = row.string(at: 1) {
+                    names.append(name)
+                }
+            }
+            XCTAssertEqual(names, ["aligator", "crocodile", "iguana"])
+        }
+    }
+    
+    func testStepIterateDictionaries() {
+        let statement = SQLite3.prepared(query: "SELECT * FROM animal WHERE id = 3")
+        
+        XCTAssertWontThrow {
+            var dictionaries = [[String: Any]]()
+            try statement.stepDictionaries { result, dictionary in
+                dictionaries.append(dictionary)
+            }
+            
+            XCTAssertEqual(dictionaries.count, 1)
+            let dictionary = dictionaries[0]
+            
+            XCTAssertEqual(dictionary["id"]     as! Int,    3)
+            XCTAssertEqual(dictionary["type"]   as! String, "mammal")
+            XCTAssertEqual(dictionary["length"] as! Double, 4279.281)
+            XCTAssertEqual(dictionary["image"]  as! Data,   Data(bytes: [0xfe, 0xed, 0xbe, 0xef]))
+            
         }
     }
     
@@ -196,7 +340,7 @@ class StatementTests: XCTestCase {
         
         _ = try? statement.step()
         
-        XCTAssertWillThrow(.error) {
+        XCTAssertWillThrow(Status.error) {
             try statement.reset()
         }
     }
@@ -216,7 +360,7 @@ class StatementTests: XCTestCase {
         
         _ = try? statement.step()
         
-        XCTAssertWillThrow(.error) {
+        XCTAssertWillThrow(Status.error) {
             try statement.finalize()
         }
     }
@@ -315,6 +459,53 @@ class StatementTests: XCTestCase {
             XCTAssertEqual(statement.double(at: 3),  4279.281)
             XCTAssertEqual(statement.blob(at: 4),    Data(bytes: [0xfe, 0xed, 0xbe, 0xef])) // feedbeef
             XCTAssertEqual(statement.blob(at: 5),    nil)
+        } else {
+            XCTFail()
+        }
+    }
+    
+    func testColumnGenericValues() {
+        let query     = "SELECT * FROM animal WHERE id = 3"
+        let statement = SQLite3.prepared(query: query)
+        
+        let name:  String? = nil
+        let thumb: Data?   = nil
+        
+        if case .row = try! statement.step() {
+            
+            XCTAssertEqual(try statement.value(at: 0), 3 as Int)
+            XCTAssertEqual(try statement.value(at: 0), 3 as Int8)
+            XCTAssertEqual(try statement.value(at: 0), 3 as Int16)
+            XCTAssertEqual(try statement.value(at: 0), 3 as Int32)
+            XCTAssertEqual(try statement.value(at: 0), 3 as Int64)
+            
+            XCTAssertEqual(try statement.value(at: 0), 3 as UInt)
+            XCTAssertEqual(try statement.value(at: 0), 3 as UInt8)
+            XCTAssertEqual(try statement.value(at: 0), 3 as UInt16)
+            XCTAssertEqual(try statement.value(at: 0), 3 as UInt32)
+            XCTAssertEqual(try statement.value(at: 0), 3 as UInt64)
+            
+            XCTAssertEqual(try statement.value(at: 1), name)
+            XCTAssertEqual(try statement.value(at: 2), "mammal")
+            
+            XCTAssertEqual(try statement.value(at: 3), 4279.281 as Float)
+            XCTAssertEqual(try statement.value(at: 3), 4279.281 as Double)
+            
+            XCTAssertEqual(try statement.value(at: 4), Data(bytes: [0xfe, 0xed, 0xbe, 0xef])) // feedbeef
+            XCTAssertEqual(try statement.value(at: 5), thumb)
+        } else {
+            XCTFail()
+        }
+    }
+    
+    func testColumnInvalidGenericValues() {
+        let query     = "SELECT * FROM animal WHERE id = 3"
+        let statement = SQLite3.prepared(query: query)
+        
+        if case .row = try! statement.step() {
+            XCTAssertWillThrow(Statement.Error.invalidType) {
+                let _: [Int]? = try statement.value(at: 0)
+            }
         } else {
             XCTFail()
         }
