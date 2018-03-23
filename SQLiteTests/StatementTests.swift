@@ -108,6 +108,32 @@ class StatementTests: XCTestCase {
     
     func testBindGenericParameters() {
         XCTAssertWontThrow {
+            let query     = "SELECT * FROM animal WHERE name = ?"
+            let expanded  = "SELECT * FROM animal WHERE name = 'tiger'"
+            let statement = SQLite3.prepared(query: query)
+            
+            let tiger: String? = "tiger"
+            let anyTiger: Any  = tiger as Any
+            
+            try statement.bind(anyTiger, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+        }
+        
+        XCTAssertWontThrow {
+            let query     = "SELECT * FROM animal WHERE name = ?"
+            let expanded  = "SELECT * FROM animal WHERE name = NULL"
+            let statement = SQLite3.prepared(query: query)
+            
+            let bear: String? = nil
+            let anyBear: Any  = bear as Any
+            
+            try statement.bind(anyBear, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+        }
+        
+        XCTAssertWontThrow {
             let query     = "SELECT * FROM animal WHERE id = ?"
             let expanded  = "SELECT * FROM animal WHERE id = 1"
             let statement = SQLite3.prepared(query: query)

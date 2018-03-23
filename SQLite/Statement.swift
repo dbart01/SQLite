@@ -94,44 +94,59 @@ public class Statement {
             return try self.bindNull(to: column)
         }
         
+        /* -------------------------------------
+         ** We're dealing with `Any` types here.
+         ** In order to extract boxed optionals
+         ** that we're cast as `Any`, we have to
+         ** do some protocol trickery here.
+         */
+        if let optional = value as? OptionalProtocol {
+            if optional.hasSome {
+                try self.bind(optional.some, to: column)
+            } else {
+                try self.bind(nil as Optional<String>, to: column) // String could be any type
+            }
+            return
+        }
+        
         switch value {
             
         case let bool as Bool:
-            return try self.bind(integer: bool ? 1 : 0, to: column)
+            try self.bind(integer: bool ? 1 : 0, to: column)
             
         case let integer as Int:
-            return try self.bind(integer: integer, to: column)
+            try self.bind(integer: integer, to: column)
         case let integer as Int8:
-            return try self.bind(integer: Int(integer), to: column)
+            try self.bind(integer: Int(integer), to: column)
         case let integer as Int16:
-            return try self.bind(integer: Int(integer), to: column)
+            try self.bind(integer: Int(integer), to: column)
         case let integer as Int32:
-            return try self.bind(integer: Int(integer), to: column)
+            try self.bind(integer: Int(integer), to: column)
         case let integer as Int64:
-            return try self.bind(integer: Int(integer), to: column)
+            try self.bind(integer: Int(integer), to: column)
             
         // TODO: UInt64 won't fit into Int
         case let integer as UInt:
-            return try self.bind(integer: Int(integer), to: column)
+            try self.bind(integer: Int(integer), to: column)
         case let integer as UInt8:
-            return try self.bind(integer: Int(integer), to: column)
+            try self.bind(integer: Int(integer), to: column)
         case let integer as UInt16:
-            return try self.bind(integer: Int(integer), to: column)
+            try self.bind(integer: Int(integer), to: column)
         case let integer as UInt32:
-            return try self.bind(integer: Int(integer), to: column)
+            try self.bind(integer: Int(integer), to: column)
         case let integer as UInt64:
-            return try self.bind(integer: Int(integer), to: column)
+            try self.bind(integer: Int(integer), to: column)
             
         case let string as String:
-            return try self.bind(string: string, to: column)
+            try self.bind(string: string, to: column)
             
         case let float as Float:
-            return try self.bind(double: Double(float), to: column)
+            try self.bind(double: Double(float), to: column)
         case let float as Double:
-            return try self.bind(double: float, to: column)
+            try self.bind(double: float, to: column)
             
         case let data as Data:
-            return try self.bind(blob: data, to: column)
+            try self.bind(blob: data, to: column)
             
         default:
             throw Error.invalidType
@@ -417,5 +432,29 @@ extension Statement {
 extension Int {
     var boolValue: Bool {
         return self > 0
+    }
+}
+
+private protocol OptionalProtocol {
+    var hasSome: Bool { get }
+    var some:    Any  { get }
+}
+
+extension Optional: OptionalProtocol {
+    
+    var hasSome: Bool {
+        switch self {
+        case .some: return true
+        case .none: return false
+        }
+    }
+    
+    var some: Any {
+        switch self {
+        case .some(let value):
+            return value
+        case .none:
+            return self!
+        }
     }
 }
