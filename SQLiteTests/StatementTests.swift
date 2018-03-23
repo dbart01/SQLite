@@ -106,7 +106,7 @@ class StatementTests: XCTestCase {
         }
     }
     
-    func testBindGenericParameters() {
+    func testBindGenericAny() {
         XCTAssertWontThrow {
             let query     = "SELECT * FROM animal WHERE name = ?"
             let expanded  = "SELECT * FROM animal WHERE name = 'tiger'"
@@ -132,7 +132,9 @@ class StatementTests: XCTestCase {
             XCTAssertEqual(statement.expandedQuery, expanded)
             try statement.clearBindings()
         }
-        
+    }
+    
+    func testBindGenericBool() {
         XCTAssertWontThrow {
             let query     = "SELECT * FROM animal WHERE id = ?"
             let expanded  = "SELECT * FROM animal WHERE id = 1"
@@ -152,7 +154,9 @@ class StatementTests: XCTestCase {
             XCTAssertEqual(statement.expandedQuery, expanded)
             try statement.clearBindings()
         }
-        
+    }
+    
+    func testBindGenericOptional() {
         XCTAssertWontThrow {
             let query     = "SELECT * FROM animal WHERE id = ?"
             let expanded  = "SELECT * FROM animal WHERE id = NULL"
@@ -164,7 +168,9 @@ class StatementTests: XCTestCase {
             XCTAssertEqual(statement.expandedQuery, expanded)
             try statement.clearBindings()
         }
-        
+    }
+    
+    func testBindGenericInt() {
         XCTAssertWontThrow {
             let query     = "SELECT * FROM animal WHERE id = ?"
             let expanded  = "SELECT * FROM animal WHERE id = 13"
@@ -190,7 +196,9 @@ class StatementTests: XCTestCase {
             XCTAssertEqual(statement.expandedQuery, expanded)
             try statement.clearBindings()
         }
-        
+    }
+    
+    func testBindGenericUnsignedInt() {
         XCTAssertWontThrow {
             let query     = "SELECT * FROM animal WHERE id = ?"
             let expanded  = "SELECT * FROM animal WHERE id = 13"
@@ -216,7 +224,9 @@ class StatementTests: XCTestCase {
             XCTAssertEqual(statement.expandedQuery, expanded)
             try statement.clearBindings()
         }
-        
+    }
+    
+    func testBindGenericString() {
         XCTAssertWontThrow {
             let query     = "SELECT * FROM animal WHERE name = ?"
             let expanded  = "SELECT * FROM animal WHERE name = 'bulldog'"
@@ -226,7 +236,21 @@ class StatementTests: XCTestCase {
             XCTAssertEqual(statement.expandedQuery, expanded)
             try statement.clearBindings()
         }
-        
+    }
+    
+    func testBindGenericDecimal() {
+        XCTAssertWontThrow {
+            let query     = "SELECT * FROM animal WHERE length = ?"
+            let expanded  = "SELECT * FROM animal WHERE length = '261.5'"
+            let statement = SQLite3.prepared(query: query)
+            
+            try statement.bind(261.5 as Decimal, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+        }
+    }
+    
+    func testBindGenericFloat() {
         XCTAssertWontThrow {
             let query     = "SELECT * FROM animal WHERE length = ?"
             let expanded  = "SELECT * FROM animal WHERE length = 261.5"
@@ -240,7 +264,9 @@ class StatementTests: XCTestCase {
             XCTAssertEqual(statement.expandedQuery, expanded)
             try statement.clearBindings()
         }
-        
+    }
+    
+    func testBindGenericData() {
         XCTAssertWontThrow {
             let query     = "SELECT * FROM animal WHERE image = ?"
             let expanded  = "SELECT * FROM animal WHERE image = x''"
@@ -538,6 +564,7 @@ class StatementTests: XCTestCase {
             
             XCTAssertEqual(try statement.value(at: 3), 4279.281 as Float)
             XCTAssertEqual(try statement.value(at: 3), 4279.281 as Double)
+            XCTAssertEqual(try statement.value(at: 3), 4279.281 as Decimal)
             
             XCTAssertEqual(try statement.value(at: 4), Data(bytes: [0xfe, 0xed, 0xbe, 0xef])) // feedbeef
             XCTAssertEqual(try statement.value(at: 5), thumb)

@@ -140,6 +140,9 @@ public class Statement {
         case let string as String:
             try self.bind(string: string, to: column)
             
+        case let decimal as Decimal:
+            try self.bind(string: decimal.description, to: column)
+            
         case let float as Float:
             try self.bind(double: Double(float), to: column)
         case let float as Double:
@@ -258,6 +261,8 @@ public class Statement {
             }
             return nil
         }
+        
+        if T.self == Decimal.self { return (Decimal(self.string(at: column))   as! T) }
         
         if T.self == Float.self   { return (Float(self.double(at: column))   as! T) }
         if T.self == Double.self  { return (Double(self.double(at: column))  as! T) }
@@ -435,11 +440,24 @@ extension Int {
     }
 }
 
+extension Decimal {
+    init?(_ string: String?) {
+        guard let string = string else {
+            return nil
+        }
+        self.init(string: string)
+    }
+}
+
+// ----------------------------------
+//  MARK: - OptionalProtocol -
+//
 private protocol OptionalProtocol {
     var hasSome: Bool { get }
     var some:    Any  { get }
 }
 
+// TODO: Extract and write tests
 extension Optional: OptionalProtocol {
     
     var hasSome: Bool {
