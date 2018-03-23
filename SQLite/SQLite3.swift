@@ -185,6 +185,7 @@ public class SQLite3 {
     // ----------------------------------
     //  MARK: - Transactions -
     //
+    @discardableResult
     public func performTransaction(_ type: Transaction = .deferred, transaction: TransactionOperation) throws -> Transaction.Result {
         try self.execute(query: "BEGIN \(type.sqlRepresentation) TRANSACTION;")
         do {

@@ -10,6 +10,7 @@ import Foundation
 
 extension SQLite3 {
     
+    @discardableResult
     public func insert<T: Encodable>(into table: String, value encodable: T) throws -> Statement.Result {
         let encoder = JSONEncoder()
         let data    = try encoder.encode(encodable)

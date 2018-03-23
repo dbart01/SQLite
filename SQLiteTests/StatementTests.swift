@@ -109,6 +109,26 @@ class StatementTests: XCTestCase {
     func testBindGenericParameters() {
         XCTAssertWontThrow {
             let query     = "SELECT * FROM animal WHERE id = ?"
+            let expanded  = "SELECT * FROM animal WHERE id = 1"
+            let statement = SQLite3.prepared(query: query)
+            
+            try statement.bind(true, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+        }
+        
+        XCTAssertWontThrow {
+            let query     = "SELECT * FROM animal WHERE id = ?"
+            let expanded  = "SELECT * FROM animal WHERE id = 0"
+            let statement = SQLite3.prepared(query: query)
+            
+            try statement.bind(false, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+        }
+        
+        XCTAssertWontThrow {
+            let query     = "SELECT * FROM animal WHERE id = ?"
             let expanded  = "SELECT * FROM animal WHERE id = NULL"
             let statement = SQLite3.prepared(query: query)
             
@@ -472,6 +492,8 @@ class StatementTests: XCTestCase {
         let thumb: Data?   = nil
         
         if case .row = try! statement.step() {
+            
+            XCTAssertEqual(try statement.value(at: 0), true)
             
             XCTAssertEqual(try statement.value(at: 0), 3 as Int)
             XCTAssertEqual(try statement.value(at: 0), 3 as Int8)

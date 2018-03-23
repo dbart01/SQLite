@@ -96,6 +96,9 @@ public class Statement {
         
         switch value {
             
+        case let bool as Bool:
+            return try self.bind(integer: bool ? 1 : 0, to: column)
+            
         case let integer as Int:
             return try self.bind(integer: integer, to: column)
         case let integer as Int8:
@@ -219,6 +222,8 @@ public class Statement {
     //  MARK: - Values -
     //
     public func value<T>(at column: Int) throws -> T? {
+        
+        if T.self == Bool.self   { return (self.integer(at: column).boolValue as! T) }
         
         if T.self == Int.self   { return (Int(self.integer(at: column))   as! T) }
         if T.self == Int8.self  { return (Int8(self.integer(at: column))  as! T) }
@@ -403,5 +408,14 @@ extension Statement {
     public enum Result {
         case done
         case row
+    }
+}
+
+// ----------------------------------
+//  MARK: - Private -
+//
+extension Int {
+    var boolValue: Bool {
+        return self > 0
     }
 }
