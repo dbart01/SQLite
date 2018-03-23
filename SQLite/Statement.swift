@@ -139,6 +139,8 @@ public class Statement {
             
         case let string as String:
             try self.bind(string: string, to: column)
+        case let url as URL:
+            try self.bind(string: url.absoluteString, to: column)
             
         case let decimal as Decimal:
             try self.bind(string: decimal.description, to: column)
@@ -262,8 +264,16 @@ public class Statement {
             return nil
         }
         
-        if T.self == Decimal.self { return (Decimal(self.string(at: column))   as! T) }
+        if T.self == URL.self {
+            if let string = self.string(at: column),
+                let url = URL(string: string) {
+                
+                return (url as! T)
+            }
+            return nil
+        }
         
+        if T.self == Decimal.self { return (Decimal(self.string(at: column)) as! T) }
         if T.self == Float.self   { return (Float(self.double(at: column))   as! T) }
         if T.self == Double.self  { return (Double(self.double(at: column))  as! T) }
         

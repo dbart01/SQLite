@@ -238,6 +238,20 @@ class StatementTests: XCTestCase {
         }
     }
     
+    func testBindGenericURL() {
+        XCTAssertWontThrow {
+            let query     = "SELECT * FROM animal WHERE name = ?"
+            let expanded  = "SELECT * FROM animal WHERE name = 'http://www.google.com'"
+            let statement = SQLite3.prepared(query: query)
+            
+            let url = URL(string: "http://www.google.com")!
+            
+            try statement.bind(url, to: 0)
+            XCTAssertEqual(statement.expandedQuery, expanded)
+            try statement.clearBindings()
+        }
+    }
+    
     func testBindGenericDecimal() {
         XCTAssertWontThrow {
             let query     = "SELECT * FROM animal WHERE length = ?"
@@ -541,6 +555,7 @@ class StatementTests: XCTestCase {
         let statement = SQLite3.prepared(query: query)
         
         let name:  String? = nil
+        let url:   URL?    = nil
         let thumb: Data?   = nil
         
         if case .row = try! statement.step() {
@@ -560,7 +575,10 @@ class StatementTests: XCTestCase {
             XCTAssertEqual(try statement.value(at: 0), 3 as UInt64)
             
             XCTAssertEqual(try statement.value(at: 1), name)
-            XCTAssertEqual(try statement.value(at: 2), "mammal")
+            XCTAssertEqual(try statement.value(at: 2), "mammal" as String)
+            
+            XCTAssertEqual(try statement.value(at: 1), url)
+            XCTAssertEqual(try statement.value(at: 2), URL(string: "mammal"))
             
             XCTAssertEqual(try statement.value(at: 3), 4279.281 as Float)
             XCTAssertEqual(try statement.value(at: 3), 4279.281 as Double)
