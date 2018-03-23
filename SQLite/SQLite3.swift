@@ -152,24 +152,23 @@ public class SQLite3 {
     //
     @discardableResult
     public func execute(query: String, arguments: Any...) throws -> Statement.Result {
-        let statement = try self.statement(for: query, bindingTo: arguments
-        )
+        let statement = try self.statement(for: query, bindingTo: arguments)
         return try statement.step()
     }
     
-    public func execute(query: String, arguments: Any..., rowHandler: Statement.StepRowHandler? = nil) throws {
+    public func execute(query: String, arguments: Any..., rowHandler: Statement.StepRowHandler) throws {
         let statement = try self.statement(for: query, bindingTo: arguments)
         
         return try statement.stepRows { result, statement in
-            rowHandler?(result, statement)
+            rowHandler(result, statement)
         }
     }
     
-    public func execute(query: String, arguments: Any..., dictionaryHandler: Statement.StepDictionaryHandler? = nil) throws {
+    public func execute(query: String, arguments: Any..., dictionaryHandler: Statement.StepDictionaryHandler) throws {
         let statement = try self.statement(for: query, bindingTo: arguments)
         
         return try statement.stepDictionaries { result, statement in
-            dictionaryHandler?(result, statement)
+            dictionaryHandler(result, statement)
         }
     }
     
@@ -181,5 +180,25 @@ public class SQLite3 {
         }
         
         return statement
+    }
+    
+    // ----------------------------------
+    //  MARK: - Transactions -
+    //
+    public func performTransaction(_ type: Transaction = .deferred, transaction: TransactionOperation) throws -> Transaction.Result {
+        try self.execute(query: "BEGIN \(type.sqlRepresentation) TRANSACTION;")
+        do {
+            
+            let result = try transaction()
+            switch result {
+            case .commit:   try self.execute(query: "COMMIT TRANSACTION;")
+            case .rollback: try self.execute(query: "ROLLBACK TRANSACTION;")
+            }
+            return result
+            
+        } catch {
+            try self.execute(query: "ROLLBACK TRANSACTION;")
+            return .rollback
+        }
     }
 }
