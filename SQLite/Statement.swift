@@ -24,15 +24,33 @@ public class Statement {
     public var isReadOnly: Bool {
         return sqlite3_stmt_readonly(self.statement) != 0
     }
-    
-    let statement: _Statement
-    
+        
     private var isFinalized = false
+    
+    internal let statement: _Statement
     
     // ----------------------------------
     //  MARK: - Init -
     //
-    init(sqlite: SQLite, statement: _Statement) {
+    convenience init(sqlite: SQLite, query: String) throws {
+        guard query.count > 0 else {
+            throw Status.error
+        }
+        
+        let reference = UnsafeMutablePointer<_Statement?>.allocate(capacity: 1)
+        defer {
+            reference.deallocate(capacity: 1)
+        }
+        
+        let status = sqlite3_prepare_v2(sqlite.sqlite, query, Int32(query.lengthOfBytes(using: .utf8)), reference, nil).status
+        if status != .ok {
+            throw status
+        }
+        
+        self.init(sqlite: sqlite, statement: reference.pointee!)
+    }
+    
+    internal init(sqlite: SQLite, statement: _Statement) {
         self.sqlite    = sqlite
         self.statement = statement
     }

@@ -8,16 +8,13 @@
 
 import Foundation
 
-typealias _SQLite       = OpaquePointer
+typealias _SQLite        = OpaquePointer
 typealias _StringPointer = UnsafeMutablePointer<UnsafePointer<Int8>?>
 typealias _Int32Pointer  = UnsafeMutablePointer<Int32>
 
 public class SQLite {
     
     public var isCacheEnabled = false
-    
-    private let sqlite: _SQLite
-    private var cachedStatements: [String: Statement] = [:]
     
     public var lastInsertID: Int {
         get {
@@ -27,6 +24,10 @@ public class SQLite {
             sqlite3_set_last_insert_rowid(self.sqlite, sqlite3_int64(newValue))
         }
     }
+    
+    private var cachedStatements: [String: Statement] = [:]
+    
+    internal let sqlite: _SQLite
     
     // ----------------------------------
     //  MARK: - Init -
@@ -103,26 +104,12 @@ public class SQLite {
     // ----------------------------------
     //  MARK: - Statement -
     //
-    private func _prepare(query: String) throws -> _Statement {
-        let reference = UnsafeMutablePointer<_Statement?>.allocate(capacity: 1)
-        defer {
-            reference.deallocate(capacity: 1)
-        }
-        
-        let status = sqlite3_prepare_v2(self.sqlite, query, Int32(query.lengthOfBytes(using: .utf8)), reference, nil).status
-        if status != .ok {
-            throw status
-        }
-        
-        return reference.pointee!
-    }
-    
     public func prepare(query: String) throws -> Statement {
         if let cachedStatement = try self.cachedStatementFor(query), self.isCacheEnabled {
             return cachedStatement
         }
         
-        let statement = Statement(sqlite: self, statement: try self._prepare(query: query))
+        let statement = try Statement(sqlite: self, query: query)
         if self.isCacheEnabled {
             self.cacheStatement(statement, for: query)
         }

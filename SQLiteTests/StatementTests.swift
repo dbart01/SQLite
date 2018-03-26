@@ -12,6 +12,32 @@ import XCTest
 class StatementTests: XCTestCase {
     
     // ----------------------------------
+    //  MARK: - Init -
+    //
+    func testInit() {
+        XCTAssertWontThrow {
+            let sqlite    = SQLite.local()
+            let statement = try Statement(sqlite: sqlite, query: "SELECT * FROM animal")
+            
+            XCTAssertTrue(statement.sqlite === sqlite)
+        }
+    }
+    
+    func testInitEmpty() {
+        XCTAssertWillThrow(Status.error) {
+            let sqlite = SQLite.local()
+            let _ = try Statement(sqlite: sqlite, query: "")
+        }
+    }
+    
+    func testInitInvalid() {
+        XCTAssertWillThrow(Status.error) {
+            let sqlite = SQLite.local()
+            let _ = try Statement(sqlite: sqlite, query: "some-invalid-query")
+        }
+    }
+    
+    // ----------------------------------
     //  MARK: - Reference -
     //
     func testSqliteReference() {
