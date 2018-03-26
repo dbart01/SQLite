@@ -19,12 +19,8 @@
 		9A49DC571EC49A170053710B /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A49DC4D1EC49A170053710B /* SQLite.framework */; };
 		9A49DC5E1EC49A170053710B /* SQLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A49DC501EC49A170053710B /* SQLite.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9A49DC6B1EC49A5F0053710B /* SQLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A49DC501EC49A170053710B /* SQLite.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9A4C7C891EDC468B004FE2C9 /* extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4C7C841EDC468B004FE2C9 /* extensions.h */; };
-		9A4C7C8A1EDC468B004FE2C9 /* extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4C7C841EDC468B004FE2C9 /* extensions.h */; };
-		9A4C7C8B1EDC468B004FE2C9 /* extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4C7C851EDC468B004FE2C9 /* extensions.m */; };
-		9A4C7C8C1EDC468B004FE2C9 /* extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A4C7C851EDC468B004FE2C9 /* extensions.m */; };
-		9A4C7C8D1EDC468B004FE2C9 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 9A4C7C861EDC468B004FE2C9 /* sqlite3.c */; };
-		9A4C7C8E1EDC468B004FE2C9 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 9A4C7C861EDC468B004FE2C9 /* sqlite3.c */; };
+		9A4C7C8D1EDC468B004FE2C9 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 9A4C7C861EDC468B004FE2C9 /* sqlite3.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		9A4C7C8E1EDC468B004FE2C9 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 9A4C7C861EDC468B004FE2C9 /* sqlite3.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		9A4C7C8F1EDC468B004FE2C9 /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4C7C871EDC468B004FE2C9 /* sqlite3.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9A4C7C901EDC468B004FE2C9 /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4C7C871EDC468B004FE2C9 /* sqlite3.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9A4C7C911EDC468B004FE2C9 /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4C7C881EDC468B004FE2C9 /* sqlite3ext.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -92,8 +88,6 @@
 		9A49DC5D1EC49A170053710B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A49DC701EC49A5F0053710B /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A49DC711EC49A5F0053710B /* SQLite iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SQLite iOS.plist"; sourceTree = "<group>"; };
-		9A4C7C841EDC468B004FE2C9 /* extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = extensions.h; sourceTree = "<group>"; };
-		9A4C7C851EDC468B004FE2C9 /* extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = extensions.m; sourceTree = "<group>"; };
 		9A4C7C861EDC468B004FE2C9 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
 		9A4C7C871EDC468B004FE2C9 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		9A4C7C881EDC468B004FE2C9 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
@@ -217,8 +211,6 @@
 		9A4C7C831EDC468B004FE2C9 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				9A4C7C841EDC468B004FE2C9 /* extensions.h */,
-				9A4C7C851EDC468B004FE2C9 /* extensions.m */,
 				9A4C7C861EDC468B004FE2C9 /* sqlite3.c */,
 				9A4C7C871EDC468B004FE2C9 /* sqlite3.h */,
 				9A4C7C881EDC468B004FE2C9 /* sqlite3ext.h */,
@@ -264,7 +256,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A4C7C911EDC468B004FE2C9 /* sqlite3ext.h in Headers */,
-				9A4C7C891EDC468B004FE2C9 /* extensions.h in Headers */,
 				9A4C7C8F1EDC468B004FE2C9 /* sqlite3.h in Headers */,
 				9A49DC5E1EC49A170053710B /* SQLite.h in Headers */,
 			);
@@ -275,7 +266,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A4C7C921EDC468B004FE2C9 /* sqlite3ext.h in Headers */,
-				9A4C7C8A1EDC468B004FE2C9 /* extensions.h in Headers */,
 				9A4C7C901EDC468B004FE2C9 /* sqlite3.h in Headers */,
 				9A49DC6B1EC49A5F0053710B /* SQLite.h in Headers */,
 			);
@@ -423,7 +413,6 @@
 				9AD2D59B1EE038BC002E9C67 /* Destructor.swift in Sources */,
 				9ACCEB021ED30A8600DFAE41 /* Status.swift in Sources */,
 				9ACCEB041EDAF63C00DFAE41 /* Statement.swift in Sources */,
-				9A4C7C8B1EDC468B004FE2C9 /* extensions.m in Sources */,
 				9A4D04FF206929E100E00035 /* PragmaRepresentable.swift in Sources */,
 				9A616CB11EE6C6FC00827C5E /* ColumnMetadata.swift in Sources */,
 				9A0829F02062FA40005BCC20 /* SQLite3+Codable.swift in Sources */,
@@ -466,7 +455,6 @@
 				9A5C47001ED0C49E00CE3627 /* SQLite3.swift in Sources */,
 				9A4D0500206929E100E00035 /* PragmaRepresentable.swift in Sources */,
 				9A4C7C8E1EDC468B004FE2C9 /* sqlite3.c in Sources */,
-				9A4C7C8C1EDC468B004FE2C9 /* extensions.m in Sources */,
 				9A4C7C931EDC46C4004FE2C9 /* Status.swift in Sources */,
 				9A616CB81EE6D36000827C5E /* UnsafePointer+String.swift in Sources */,
 				9A4C7C941EDC46C4004FE2C9 /* Statement.swift in Sources */,
