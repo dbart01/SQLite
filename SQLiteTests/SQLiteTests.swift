@@ -229,8 +229,8 @@ class SQLiteTests: XCTestCase {
     func testTransactionThrowing() {
         let sqlite = SQLite3.local()
         
-        XCTAssertWontThrow {
-            let result = try sqlite.performTransaction(.deferred) {
+        XCTAssertWillThrow(Status.constraint) {
+            try sqlite.performTransaction(.deferred) {
                 /* -----------------------------------
                  ** id = 1 should already exist, we're
                  ** counting on this insert to fail.
@@ -238,14 +238,6 @@ class SQLiteTests: XCTestCase {
                 try sqlite.execute(query: "INSERT INTO animal (id, name, type) VALUES (?, ?, ?)", arguments: 1, "dragon", "mythical")
                 return .commit
             }
-            
-            XCTAssertEqual(result, .rollback)
-            
-            var results = 0
-            try sqlite.execute(query: "SELECT * FROM animal WHERE id = 1 AND name = 'dragon'") { (result, dictionary: [String: Any]) in
-                results += 1
-            }
-            XCTAssertEqual(results, 0)
         }
     }
     

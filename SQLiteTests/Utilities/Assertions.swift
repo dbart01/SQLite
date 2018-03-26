@@ -22,6 +22,6 @@ func XCTAssertWontThrow( _ block: () throws -> Void) {
     do {
         try block()
     } catch {
-        XCTFail()
+        XCTFail("Expected not to throw: \(error)")
     }
 }

@@ -12,7 +12,7 @@ typealias _Statement = OpaquePointer
 
 public class Statement {
 
-    public typealias StepRowHandler        = (Result, Statement) -> Void
+    public typealias StepRowHandler        = (Result, Statement) throws -> Void
     public typealias StepDictionaryHandler = (Result, [String: Any]) -> Void
     
     public private(set) weak var sqlite: SQLite3?
@@ -330,7 +330,7 @@ public class Statement {
         repeat {
             result = try self.step()
             if result == .row {
-                rowHandler(result, self)
+                try rowHandler(result, self)
             }
         } while result == .row
     }

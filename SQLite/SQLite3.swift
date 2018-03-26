@@ -148,6 +148,24 @@ public class SQLite3 {
     }
     
     // ----------------------------------
+    //  MARK: - Pragma -
+    //
+    public func get<T>(pragma: PragmaDescription<T>) throws -> T? {
+        var value: T?
+        try self.execute(query: "PRAGMA \(pragma.key);", rowHandler: { result, statement in
+            if let rawValue: T.RawValue = try statement.value(at: 0) {
+                value = T(rawValue: rawValue)
+            }
+        })
+        return value
+    }
+    
+    public func set<T>(pragma: PragmaDescription<T>, value: T) throws -> Bool {
+        let result = try self.execute(query: "PRAGMA \(pragma.key) = \(value.sqlValue);")
+        return result == .done
+    }
+    
+    // ----------------------------------
     //  MARK: - Execute -
     //
     @discardableResult
@@ -160,7 +178,7 @@ public class SQLite3 {
         let statement = try self.statement(for: query, bindingTo: arguments)
         
         return try statement.stepRows { result, statement in
-            rowHandler(result, statement)
+            try rowHandler(result, statement)
         }
     }
     
@@ -199,7 +217,9 @@ public class SQLite3 {
             
         } catch {
             try self.execute(query: "ROLLBACK TRANSACTION;")
-            return .rollback
+            throw error
         }
     }
 }
+
+

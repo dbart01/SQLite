@@ -34,6 +34,18 @@
 		9A4C7C961EDD8DEA004FE2C9 /* test.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 9A4C7C951EDD8663004FE2C9 /* test.sqlite */; };
 		9A4D04F220651A2400E00035 /* SQLite3.Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D04F120651A2400E00035 /* SQLite3.Transaction.swift */; };
 		9A4D04F420651A8700E00035 /* SQLite3.TransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D04F320651A8700E00035 /* SQLite3.TransactionTests.swift */; };
+		9A4D04FA20690FBD00E00035 /* PragmaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D04F920690FBD00E00035 /* PragmaTests.swift */; };
+		9A4D04FC20690FD500E00035 /* Pragma.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D04FB20690FD500E00035 /* Pragma.swift */; };
+		9A4D04FD20690FD500E00035 /* Pragma.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D04FB20690FD500E00035 /* Pragma.swift */; };
+		9A4D04FF206929E100E00035 /* PragmaRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D04FE206929E100E00035 /* PragmaRepresentable.swift */; };
+		9A4D0500206929E100E00035 /* PragmaRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D04FE206929E100E00035 /* PragmaRepresentable.swift */; };
+		9A4D0502206929F900E00035 /* Pragma.Boolean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D0501206929F900E00035 /* Pragma.Boolean.swift */; };
+		9A4D0503206929F900E00035 /* Pragma.Boolean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D0501206929F900E00035 /* Pragma.Boolean.swift */; };
+		9A4D050520692A1600E00035 /* PragmaRepresentableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D050420692A1600E00035 /* PragmaRepresentableTests.swift */; };
+		9A4D050720692C7A00E00035 /* Pragma.BooleanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D050620692C7A00E00035 /* Pragma.BooleanTests.swift */; };
+		9A4D050920692D4E00E00035 /* SQLite3.PragmaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D050820692D4E00E00035 /* SQLite3.PragmaTests.swift */; };
+		9A4D050C20692DD800E00035 /* Pragma.Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D050B20692DD800E00035 /* Pragma.Encoding.swift */; };
+		9A4D050E206930DF00E00035 /* Pragma.Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D050D206930DF00E00035 /* Pragma.Encoding.swift */; };
 		9A5C46FF1ED0C49E00CE3627 /* SQLite3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5C46FE1ED0C49E00CE3627 /* SQLite3.swift */; };
 		9A5C47001ED0C49E00CE3627 /* SQLite3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5C46FE1ED0C49E00CE3627 /* SQLite3.swift */; };
 		9A5EF5D01EDE3FAF00CB16A0 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5EF5CF1EDE3FAF00CB16A0 /* Value.swift */; };
@@ -88,6 +100,15 @@
 		9A4C7C951EDD8663004FE2C9 /* test.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.sqlite; sourceTree = "<group>"; };
 		9A4D04F120651A2400E00035 /* SQLite3.Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLite3.Transaction.swift; sourceTree = "<group>"; };
 		9A4D04F320651A8700E00035 /* SQLite3.TransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLite3.TransactionTests.swift; sourceTree = "<group>"; };
+		9A4D04F920690FBD00E00035 /* PragmaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PragmaTests.swift; sourceTree = "<group>"; };
+		9A4D04FB20690FD500E00035 /* Pragma.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pragma.swift; sourceTree = "<group>"; };
+		9A4D04FE206929E100E00035 /* PragmaRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PragmaRepresentable.swift; sourceTree = "<group>"; };
+		9A4D0501206929F900E00035 /* Pragma.Boolean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pragma.Boolean.swift; sourceTree = "<group>"; };
+		9A4D050420692A1600E00035 /* PragmaRepresentableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PragmaRepresentableTests.swift; sourceTree = "<group>"; };
+		9A4D050620692C7A00E00035 /* Pragma.BooleanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pragma.BooleanTests.swift; sourceTree = "<group>"; };
+		9A4D050820692D4E00E00035 /* SQLite3.PragmaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLite3.PragmaTests.swift; sourceTree = "<group>"; };
+		9A4D050B20692DD800E00035 /* Pragma.Encoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pragma.Encoding.swift; sourceTree = "<group>"; };
+		9A4D050D206930DF00E00035 /* Pragma.Encoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pragma.Encoding.swift; sourceTree = "<group>"; };
 		9A5C46FE1ED0C49E00CE3627 /* SQLite3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite3.swift; sourceTree = "<group>"; };
 		9A5EF5CF1EDE3FAF00CB16A0 /* Value.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
 		9A616CA11EE5757000827C5E /* Assertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assertions.swift; sourceTree = "<group>"; };
@@ -177,7 +198,12 @@
 				9AE5192A1EE898060038ED22 /* ColumnTypeTests.swift */,
 				9A616CB31EE6CB9800827C5E /* ColumnMetadataTests.swift */,
 				9A616CA31EE576BE00827C5E /* StatementTests.swift */,
+				9A4D050420692A1600E00035 /* PragmaRepresentableTests.swift */,
+				9A4D04F920690FBD00E00035 /* PragmaTests.swift */,
+				9A4D050620692C7A00E00035 /* Pragma.BooleanTests.swift */,
+				9A4D050D206930DF00E00035 /* Pragma.Encoding.swift */,
 				9A736DFE1ED1B8E100A0B389 /* SQLiteTests.swift */,
+				9A4D050820692D4E00E00035 /* SQLite3.PragmaTests.swift */,
 				9A4D04F320651A8700E00035 /* SQLite3.TransactionTests.swift */,
 				9A08296A2061E4D4005BCC20 /* SQLite3.LocationTests.swift */,
 				9A08296C2061E4E5005BCC20 /* SQLite3.OpenOptionsTests.swift */,
@@ -209,6 +235,10 @@
 				9AE519271EE897A60038ED22 /* ColumnType.swift */,
 				9A616CB01EE6C6FC00827C5E /* ColumnMetadata.swift */,
 				9ACCEB031EDAF63C00DFAE41 /* Statement.swift */,
+				9A4D04FE206929E100E00035 /* PragmaRepresentable.swift */,
+				9A4D04FB20690FD500E00035 /* Pragma.swift */,
+				9A4D0501206929F900E00035 /* Pragma.Boolean.swift */,
+				9A4D050B20692DD800E00035 /* Pragma.Encoding.swift */,
 				9A5C46FE1ED0C49E00CE3627 /* SQLite3.swift */,
 				9A4D04F120651A2400E00035 /* SQLite3.Transaction.swift */,
 				9A0829622061E260005BCC20 /* SQLite3.Location.swift */,
@@ -388,13 +418,17 @@
 				9A0829692061E27D005BCC20 /* SQLite3.OpenOptions.swift in Sources */,
 				9A4D04F220651A2400E00035 /* SQLite3.Transaction.swift in Sources */,
 				9A5C46FF1ED0C49E00CE3627 /* SQLite3.swift in Sources */,
+				9A4D050C20692DD800E00035 /* Pragma.Encoding.swift in Sources */,
+				9A4D04FC20690FD500E00035 /* Pragma.swift in Sources */,
 				9AD2D59B1EE038BC002E9C67 /* Destructor.swift in Sources */,
 				9ACCEB021ED30A8600DFAE41 /* Status.swift in Sources */,
 				9ACCEB041EDAF63C00DFAE41 /* Statement.swift in Sources */,
 				9A4C7C8B1EDC468B004FE2C9 /* extensions.m in Sources */,
+				9A4D04FF206929E100E00035 /* PragmaRepresentable.swift in Sources */,
 				9A616CB11EE6C6FC00827C5E /* ColumnMetadata.swift in Sources */,
 				9A0829F02062FA40005BCC20 /* SQLite3+Codable.swift in Sources */,
 				9AE519281EE897A60038ED22 /* ColumnType.swift in Sources */,
+				9A4D0502206929F900E00035 /* Pragma.Boolean.swift in Sources */,
 				9A4C7C8D1EDC468B004FE2C9 /* sqlite3.c in Sources */,
 				9A616CB71EE6D36000827C5E /* UnsafePointer+String.swift in Sources */,
 				9A5EF5D01EDE3FAF00CB16A0 /* Value.swift in Sources */,
@@ -406,13 +440,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A4D050720692C7A00E00035 /* Pragma.BooleanTests.swift in Sources */,
 				9A616CB41EE6CB9800827C5E /* ColumnMetadataTests.swift in Sources */,
 				9A616CA21EE5757000827C5E /* Assertions.swift in Sources */,
+				9A4D050E206930DF00E00035 /* Pragma.Encoding.swift in Sources */,
 				9A0829612061CC47005BCC20 /* SQLite+Database.swift in Sources */,
 				9A08296D2061E4E5005BCC20 /* SQLite3.OpenOptionsTests.swift in Sources */,
+				9A4D050520692A1600E00035 /* PragmaRepresentableTests.swift in Sources */,
 				9AE5192B1EE898060038ED22 /* ColumnTypeTests.swift in Sources */,
 				9A0829F22062FA6D005BCC20 /* SQLite3+CodableTests.swift in Sources */,
+				9A4D04FA20690FBD00E00035 /* PragmaTests.swift in Sources */,
 				9A736DFF1ED1B8E100A0B389 /* SQLiteTests.swift in Sources */,
+				9A4D050920692D4E00E00035 /* SQLite3.PragmaTests.swift in Sources */,
 				9A4D04F420651A8700E00035 /* SQLite3.TransactionTests.swift in Sources */,
 				9A616CA41EE576BE00827C5E /* StatementTests.swift in Sources */,
 				9A08296B2061E4D4005BCC20 /* SQLite3.LocationTests.swift in Sources */,
@@ -425,6 +464,7 @@
 			files = (
 				9A0829682061E27C005BCC20 /* SQLite3.OpenOptions.swift in Sources */,
 				9A5C47001ED0C49E00CE3627 /* SQLite3.swift in Sources */,
+				9A4D0500206929E100E00035 /* PragmaRepresentable.swift in Sources */,
 				9A4C7C8E1EDC468B004FE2C9 /* sqlite3.c in Sources */,
 				9A4C7C8C1EDC468B004FE2C9 /* extensions.m in Sources */,
 				9A4C7C931EDC46C4004FE2C9 /* Status.swift in Sources */,
@@ -434,7 +474,9 @@
 				9AE519291EE897A60038ED22 /* ColumnType.swift in Sources */,
 				9A616CB21EE6C6FC00827C5E /* ColumnMetadata.swift in Sources */,
 				9AF46A0C1EE71E1900513F25 /* Value.swift in Sources */,
+				9A4D0503206929F900E00035 /* Pragma.Boolean.swift in Sources */,
 				9A0829642061E266005BCC20 /* SQLite3.Location.swift in Sources */,
+				9A4D04FD20690FD500E00035 /* Pragma.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
