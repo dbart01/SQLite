@@ -12,6 +12,7 @@ public enum Pragma {
     public static let foreignKeys   = PragmaDescription(key: "foreign_keys",   type: Boolean.self)
     public static let applicationID = PragmaDescription(key: "application_id", type: Int.self)
     public static let encoding      = PragmaDescription(key: "encoding",       type: Encoding.self)
+    public static let cacheSize     = PragmaDescription(key: "cache_size",     type: CacheSize.self)
 }
 
 public struct PragmaDescription<T> where T: PragmaRepresentable {

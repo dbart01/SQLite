@@ -55,4 +55,19 @@ class SQLite_PragmaTests: XCTestCase {
             XCTAssertEqual(updatedValue, .utf8) // Can't change encoding after database is created
         }
     }
+    
+    func testPragmaCacheSize() {
+        let sqlite = SQLite.local()
+        
+        XCTAssertWontThrow {
+            let currentValue = try sqlite.get(pragma: Pragma.cacheSize)
+            XCTAssertEqual(currentValue, .kilobytes(2000))
+            
+            let result = try sqlite.set(pragma: Pragma.cacheSize, value: .pages(32))
+            XCTAssertEqual(result, true)
+            
+            let updatedValue = try sqlite.get(pragma: Pragma.cacheSize)
+            XCTAssertEqual(updatedValue, .pages(32))
+        }
+    }
 }
