@@ -1,5 +1,5 @@
 //
-//  SQLite3.swift
+//  SQLite.swift
 //  SQLite
 //
 //  Created by Dima Bart on 2017-05-20.
@@ -8,15 +8,15 @@
 
 import Foundation
 
-typealias _SQLite3       = OpaquePointer
+typealias _SQLite       = OpaquePointer
 typealias _StringPointer = UnsafeMutablePointer<UnsafePointer<Int8>?>
 typealias _Int32Pointer  = UnsafeMutablePointer<Int32>
 
-public class SQLite3 {
+public class SQLite {
     
     public var isCacheEnabled = false
     
-    private let sqlite: _SQLite3
+    private let sqlite: _SQLite
     private var cachedStatements: [String: Statement] = [:]
     
     public var lastInsertID: Int {
@@ -32,7 +32,7 @@ public class SQLite3 {
     //  MARK: - Init -
     //
     public convenience init(location: Location = .temporary, options: OpenOptions = [.readWrite, .create]) throws {
-        let reference = UnsafeMutablePointer<_SQLite3?>.allocate(capacity: 1)
+        let reference = UnsafeMutablePointer<_SQLite?>.allocate(capacity: 1)
         defer {
             reference.deallocate(capacity: 1)
         }
@@ -45,7 +45,7 @@ public class SQLite3 {
         self.init(sqlite3: reference.pointee!)
     }
     
-    internal init(sqlite3: _SQLite3) {
+    internal init(sqlite3: _SQLite) {
         self.sqlite = sqlite3
     }
     

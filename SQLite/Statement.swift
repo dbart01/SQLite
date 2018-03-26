@@ -15,7 +15,7 @@ public class Statement {
     public typealias StepRowHandler        = (Result, Statement) throws -> Void
     public typealias StepDictionaryHandler = (Result, [String: Any]) -> Void
     
-    public private(set) weak var sqlite: SQLite3?
+    public private(set) weak var sqlite: SQLite?
     
     public var isBusy: Bool {
         return sqlite3_stmt_busy(self.statement) != 0
@@ -32,7 +32,7 @@ public class Statement {
     // ----------------------------------
     //  MARK: - Init -
     //
-    init(sqlite: SQLite3, statement: _Statement) {
+    init(sqlite: SQLite, statement: _Statement) {
         self.sqlite    = sqlite
         self.statement = statement
     }

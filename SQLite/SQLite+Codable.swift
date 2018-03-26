@@ -1,5 +1,5 @@
 //
-//  SQLite3+Codable.swift
+//  SQLite+Codable.swift
 //  SQLite MacOS
 //
 //  Created by Dima Bart on 2018-03-21.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension SQLite3 {
+extension SQLite {
     
     @discardableResult
     public func insert<T: Encodable>(into table: String, value encodable: T) throws -> Statement.Result {

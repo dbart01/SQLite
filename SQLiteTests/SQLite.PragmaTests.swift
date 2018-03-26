@@ -1,5 +1,5 @@
 //
-//  SQLite3.PragmaTests.swift
+//  SQLite.PragmaTests.swift
 //  SQLiteTests
 //
 //  Created by Dima Bart on 2018-03-26.
@@ -12,7 +12,7 @@ import SQLite
 class SQLite_PragmaTests: XCTestCase {
     
     func testPragmaForeignKeys() {
-        let sqlite = SQLite3.local()
+        let sqlite = SQLite.local()
         
         XCTAssertWontThrow {
             let currentValue = try sqlite.get(pragma: Pragma.foreignKeys)
@@ -27,7 +27,7 @@ class SQLite_PragmaTests: XCTestCase {
     }
     
     func testPragmaApplicationID() {
-        let sqlite = SQLite3.local()
+        let sqlite = SQLite.local()
         
         XCTAssertWontThrow {
             let currentValue = try sqlite.get(pragma: Pragma.applicationID)
@@ -42,7 +42,7 @@ class SQLite_PragmaTests: XCTestCase {
     }
     
     func testPragmaEncoding() {
-        let sqlite = SQLite3.local()
+        let sqlite = SQLite.local()
         
         XCTAssertWontThrow {
             let currentValue = try sqlite.get(pragma: Pragma.encoding)

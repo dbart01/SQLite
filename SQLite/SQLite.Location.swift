@@ -1,5 +1,5 @@
 //
-//  SQLite3.Location.swift
+//  SQLite.Location.swift
 //  SQLiteTests
 //
 //  Created by Dima Bart on 2018-03-20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension SQLite3 {
+extension SQLite {
     public enum Location: Equatable {
         
         case disk(URL)
@@ -25,8 +25,8 @@ extension SQLite3 {
     }
 }
 
-extension SQLite3.Location {
-    public static func ==(lhs: SQLite3.Location, rhs: SQLite3.Location) -> Bool {
+extension SQLite.Location {
+    public static func ==(lhs: SQLite.Location, rhs: SQLite.Location) -> Bool {
         switch (lhs, rhs) {
         case (.disk(let lv), .disk(let rv)) where lv == rv:
             return true

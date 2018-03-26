@@ -1,5 +1,5 @@
 //
-//  SQLite3.OpenOptions.swift
+//  SQLite.OpenOptions.swift
 //  SQLiteTests
 //
 //  Created by Dima Bart on 2018-03-20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension SQLite3 {
+extension SQLite {
     public struct OpenOptions: OptionSet {
         
         public static let readOnly     = OpenOptions(rawValue: SQLITE_OPEN_READONLY)

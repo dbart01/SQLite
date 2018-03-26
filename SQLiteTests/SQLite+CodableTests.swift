@@ -1,5 +1,5 @@
 //
-//  SQLite3+CodableTests.swift
+//  SQLite+CodableTests.swift
 //  SQLiteTests
 //
 //  Created by Dima Bart on 2018-03-21.
@@ -13,7 +13,7 @@ class SQLite_CodableTests: XCTestCase {
 
     
     func testCodableInsert() {
-        let sqlite = SQLite3.inMemory()
+        let sqlite = SQLite.inMemory()
         
         let query = """
         CREATE TABLE IF NOT EXISTS animal (

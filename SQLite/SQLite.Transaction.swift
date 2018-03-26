@@ -1,5 +1,5 @@
 //
-//  SQLite3.Transaction.swift
+//  SQLite.Transaction.swift
 //  SQLite MacOS
 //
 //  Created by Dima Bart on 2018-03-23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension SQLite3 {
+extension SQLite {
     
     public typealias TransactionOperation = () throws -> Transaction.Result
     
@@ -30,7 +30,7 @@ extension SQLite3 {
 // ----------------------------------
 //  MARK: - Transaction.Result -
 //
-extension SQLite3.Transaction {
+extension SQLite.Transaction {
     public enum Result {
         case commit
         case rollback

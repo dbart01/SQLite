@@ -9,10 +9,10 @@
 import XCTest
 import SQLite
 
-extension SQLite3 {
+extension SQLite {
     
-    static func local() -> SQLite3 {
-        let sqlite = try! SQLite3(location: .memory)
+    static func local() -> SQLite {
+        let sqlite = try! SQLite(location: .memory)
         
         let query = """
         CREATE TABLE "animal" (
@@ -46,11 +46,11 @@ extension SQLite3 {
         return sqlite
     }
     
-    static func inMemory() -> SQLite3 {
-        return try! SQLite3(location: .memory)
+    static func inMemory() -> SQLite {
+        return try! SQLite(location: .memory)
     }
     
-    static func prepared(query: String, configuration: ((SQLite3) -> Void)? = nil) -> Statement {
+    static func prepared(query: String, configuration: ((SQLite) -> Void)? = nil) -> Statement {
         let sqlite = self.local()
         configuration?(sqlite)
         
