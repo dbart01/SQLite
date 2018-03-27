@@ -41,7 +41,7 @@
 		9A4D050720692C7A00E00035 /* Pragma.BooleanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D050620692C7A00E00035 /* Pragma.BooleanTests.swift */; };
 		9A4D050920692D4E00E00035 /* SQLite.PragmaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D050820692D4E00E00035 /* SQLite.PragmaTests.swift */; };
 		9A4D050C20692DD800E00035 /* Pragma.Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D050B20692DD800E00035 /* Pragma.Encoding.swift */; };
-		9A4D050E206930DF00E00035 /* Pragma.Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D050D206930DF00E00035 /* Pragma.Encoding.swift */; };
+		9A4D050E206930DF00E00035 /* Pragma.EncodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D050D206930DF00E00035 /* Pragma.EncodingTests.swift */; };
 		9A4D057E2069922800E00035 /* Pragma.CacheSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D057C2069922300E00035 /* Pragma.CacheSize.swift */; };
 		9A4D057F2069922800E00035 /* Pragma.CacheSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D057C2069922300E00035 /* Pragma.CacheSize.swift */; };
 		9A4D0581206993B400E00035 /* Pragma.CacheSizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D0580206993B400E00035 /* Pragma.CacheSizeTests.swift */; };
@@ -108,7 +108,7 @@
 		9A4D050620692C7A00E00035 /* Pragma.BooleanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pragma.BooleanTests.swift; sourceTree = "<group>"; };
 		9A4D050820692D4E00E00035 /* SQLite.PragmaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLite.PragmaTests.swift; sourceTree = "<group>"; };
 		9A4D050B20692DD800E00035 /* Pragma.Encoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pragma.Encoding.swift; sourceTree = "<group>"; };
-		9A4D050D206930DF00E00035 /* Pragma.Encoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pragma.Encoding.swift; sourceTree = "<group>"; };
+		9A4D050D206930DF00E00035 /* Pragma.EncodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pragma.EncodingTests.swift; sourceTree = "<group>"; };
 		9A4D057C2069922300E00035 /* Pragma.CacheSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pragma.CacheSize.swift; sourceTree = "<group>"; };
 		9A4D0580206993B400E00035 /* Pragma.CacheSizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pragma.CacheSizeTests.swift; sourceTree = "<group>"; };
 		9A4D0582206A57EB00E00035 /* Pragma.JournalMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pragma.JournalMode.swift; sourceTree = "<group>"; };
@@ -205,7 +205,7 @@
 				9A4D050420692A1600E00035 /* PragmaRepresentableTests.swift */,
 				9A4D04F920690FBD00E00035 /* PragmaTests.swift */,
 				9A4D050620692C7A00E00035 /* Pragma.BooleanTests.swift */,
-				9A4D050D206930DF00E00035 /* Pragma.Encoding.swift */,
+				9A4D050D206930DF00E00035 /* Pragma.EncodingTests.swift */,
 				9A4D0580206993B400E00035 /* Pragma.CacheSizeTests.swift */,
 				9A4D0586206A58B200E00035 /* Pragma.JournalModeTests.swift */,
 				9A736DFE1ED1B8E100A0B389 /* SQLiteTests.swift */,
@@ -448,7 +448,7 @@
 				9A4D050720692C7A00E00035 /* Pragma.BooleanTests.swift in Sources */,
 				9A616CB41EE6CB9800827C5E /* ColumnMetadataTests.swift in Sources */,
 				9A616CA21EE5757000827C5E /* Assertions.swift in Sources */,
-				9A4D050E206930DF00E00035 /* Pragma.Encoding.swift in Sources */,
+				9A4D050E206930DF00E00035 /* Pragma.EncodingTests.swift in Sources */,
 				9A0829612061CC47005BCC20 /* SQLite+Database.swift in Sources */,
 				9A08296D2061E4E5005BCC20 /* SQLite.OpenOptionsTests.swift in Sources */,
 				9A4D050520692A1600E00035 /* PragmaRepresentableTests.swift in Sources */,

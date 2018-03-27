@@ -1,5 +1,5 @@
 //
-//  Pragma.Encoding.swift
+//  Pragma.EncodingTests.swift
 //  SQLiteTests
 //
 //  Created by Dima Bart on 2018-03-26.
