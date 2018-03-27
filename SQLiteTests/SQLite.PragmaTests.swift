@@ -70,4 +70,19 @@ class SQLite_PragmaTests: XCTestCase {
             XCTAssertEqual(updatedValue, .pages(32))
         }
     }
+    
+    func testPragmaJournalMode() {
+        let sqlite = SQLite.local()
+        
+        XCTAssertWontThrow {
+            let currentValue = try sqlite.get(pragma: Pragma.journalMode)
+            XCTAssertEqual(currentValue, .memory)
+            
+            let result = try sqlite.set(pragma: Pragma.journalMode, value: .off)
+            XCTAssertEqual(result, true)
+            
+            let updatedValue = try sqlite.get(pragma: Pragma.journalMode)
+            XCTAssertEqual(updatedValue, .off)
+        }
+    }
 }

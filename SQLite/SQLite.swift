@@ -149,7 +149,7 @@ public class SQLite {
     
     public func set<T>(pragma: PragmaDescription<T>, value: T) throws -> Bool {
         let result = try self.execute(query: "PRAGMA \(pragma.key) = \(value.sqlValue);")
-        return result == .done
+        return result == .done || result == .row
     }
     
     // ----------------------------------

@@ -13,6 +13,7 @@ public enum Pragma {
     public static let applicationID = PragmaDescription(key: "application_id", type: Int.self)
     public static let encoding      = PragmaDescription(key: "encoding",       type: Encoding.self)
     public static let cacheSize     = PragmaDescription(key: "cache_size",     type: CacheSize.self)
+    public static let journalMode   = PragmaDescription(key: "journal_mode",   type: JournalMode.self)
 }
 
 public struct PragmaDescription<T> where T: PragmaRepresentable {
