@@ -29,10 +29,10 @@ extension Pragma {
         
         public init?(rawValue: RawValue) {
             switch rawValue {
-            case "UTF-8":    self = .utf8
-            case "UTF-16":   self = .utf16
-            case "UTF-16le": self = .utf16le
-            case "UTF-16be": self = .utf16be
+            case Encoding.utf8.rawValue:    self = .utf8
+            case Encoding.utf16.rawValue:   self = .utf16
+            case Encoding.utf16le.rawValue: self = .utf16le
+            case Encoding.utf16be.rawValue: self = .utf16be
             default:
                 return nil
             }

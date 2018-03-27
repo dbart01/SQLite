@@ -25,8 +25,8 @@ extension Pragma {
         
         public init?(rawValue: RawValue) {
             switch rawValue {
-            case 0: self = .off
-            case 1: self = .on
+            case Boolean.off.rawValue: self = .off
+            case Boolean.on.rawValue:  self = .on
             default:
                 return nil
             }
