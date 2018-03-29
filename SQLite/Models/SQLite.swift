@@ -26,7 +26,6 @@ public class SQLite {
     }
     
     private var cachedStatements: [String: Statement] = [:]
-    private let pointer: UnsafeMutablePointer<SQLite>
     
     internal let sqlite: _SQLite
     
@@ -49,17 +48,10 @@ public class SQLite {
     
     internal init(sqlite3: _SQLite) {
         self.sqlite = sqlite3
-        
-        self.pointer = UnsafeMutablePointer<SQLite>.allocate(capacity: 1)
-        self.pointer.initialize(to: self)
-        
         self.registerHooks()
     }
     
     deinit {
-        self.pointer.deinitialize()
-        self.pointer.deallocate(capacity: 1)
-        
         let status = sqlite3_close(self.sqlite).status
         if status != .ok {
             print("Failed to close database connection: \(status.description)")
@@ -84,19 +76,19 @@ public class SQLite {
                 table:    table!.string,
                 rowID:    Int(rowID)
             )
-        }, UnsafeMutableRawPointer(self.pointer))
+        }, Unmanaged.passUnretained(self).toOpaque())
     }
     
     private func registerCommitHook() {
         sqlite3_commit_hook(self.sqlite, { context in
             return context!.sqlite.didRecieveCommitHook() ? 0 : 1
-        }, UnsafeMutableRawPointer(self.pointer))
+        }, Unmanaged.passUnretained(self).toOpaque())
     }
     
     private func registerRollbackHook() {
         sqlite3_rollback_hook(self.sqlite, { context in
             context!.sqlite.didRecieveRollbackHook()
-        }, UnsafeMutableRawPointer(self.pointer))
+        }, Unmanaged.passUnretained(self).toOpaque())
     }
     
     private func registerPreupdateHook() {
@@ -108,7 +100,7 @@ public class SQLite {
                 oldRowID: Int(oldRowID),
                 newRowID: Int(newRowID)
             )
-        }, UnsafeMutableRawPointer(self.pointer))
+        }, Unmanaged.passUnretained(self).toOpaque())
     }
     
     // ----------------------------------
