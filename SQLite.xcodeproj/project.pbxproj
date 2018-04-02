@@ -19,6 +19,14 @@
 		9A115986206D707B00C5A755 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A115985206D707B00C5A755 /* Action.swift */; };
 		9A115987206D707E00C5A755 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A115985206D707B00C5A755 /* Action.swift */; };
 		9A115989206D7E3F00C5A755 /* SQLite.HookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A115988206D7E3F00C5A755 /* SQLite.HookTests.swift */; };
+		9A1414232072C546008029F2 /* SQLite.Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D04F120651A2400E00035 /* SQLite.Transaction.swift */; };
+		9A1414242072C54F008029F2 /* SQLite+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0829EF2062FA40005BCC20 /* SQLite+Codable.swift */; };
+		9A1414262072C562008029F2 /* PragmaRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D04FE206929E100E00035 /* PragmaRepresentable.swift */; };
+		9A1414272072C562008029F2 /* Pragma.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D04FB20690FD500E00035 /* Pragma.swift */; };
+		9A1414282072C562008029F2 /* Pragma.Boolean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D0501206929F900E00035 /* Pragma.Boolean.swift */; };
+		9A1414292072C562008029F2 /* Pragma.Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D050B20692DD800E00035 /* Pragma.Encoding.swift */; };
+		9A14142A2072C562008029F2 /* Pragma.CacheSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D057C2069922300E00035 /* Pragma.CacheSize.swift */; };
+		9A14142B2072C562008029F2 /* Pragma.JournalMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D0582206A57EB00E00035 /* Pragma.JournalMode.swift */; };
 		9A49DC571EC49A170053710B /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A49DC4D1EC49A170053710B /* SQLite.framework */; };
 		9A49DC5E1EC49A170053710B /* SQLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A49DC501EC49A170053710B /* SQLite.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9A49DC6B1EC49A5F0053710B /* SQLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A49DC501EC49A170053710B /* SQLite.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -35,20 +43,15 @@
 		9A4D04F420651A8700E00035 /* SQLite.TransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D04F320651A8700E00035 /* SQLite.TransactionTests.swift */; };
 		9A4D04FA20690FBD00E00035 /* PragmaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D04F920690FBD00E00035 /* PragmaTests.swift */; };
 		9A4D04FC20690FD500E00035 /* Pragma.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D04FB20690FD500E00035 /* Pragma.swift */; };
-		9A4D04FD20690FD500E00035 /* Pragma.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D04FB20690FD500E00035 /* Pragma.swift */; };
 		9A4D04FF206929E100E00035 /* PragmaRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D04FE206929E100E00035 /* PragmaRepresentable.swift */; };
-		9A4D0500206929E100E00035 /* PragmaRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D04FE206929E100E00035 /* PragmaRepresentable.swift */; };
 		9A4D0502206929F900E00035 /* Pragma.Boolean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D0501206929F900E00035 /* Pragma.Boolean.swift */; };
-		9A4D0503206929F900E00035 /* Pragma.Boolean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D0501206929F900E00035 /* Pragma.Boolean.swift */; };
 		9A4D050520692A1600E00035 /* PragmaRepresentableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D050420692A1600E00035 /* PragmaRepresentableTests.swift */; };
 		9A4D050720692C7A00E00035 /* Pragma.BooleanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D050620692C7A00E00035 /* Pragma.BooleanTests.swift */; };
 		9A4D050920692D4E00E00035 /* SQLite.PragmaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D050820692D4E00E00035 /* SQLite.PragmaTests.swift */; };
 		9A4D050C20692DD800E00035 /* Pragma.Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D050B20692DD800E00035 /* Pragma.Encoding.swift */; };
 		9A4D050E206930DF00E00035 /* Pragma.EncodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D050D206930DF00E00035 /* Pragma.EncodingTests.swift */; };
-		9A4D057E2069922800E00035 /* Pragma.CacheSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D057C2069922300E00035 /* Pragma.CacheSize.swift */; };
 		9A4D057F2069922800E00035 /* Pragma.CacheSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D057C2069922300E00035 /* Pragma.CacheSize.swift */; };
 		9A4D0581206993B400E00035 /* Pragma.CacheSizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D0580206993B400E00035 /* Pragma.CacheSizeTests.swift */; };
-		9A4D0584206A57F000E00035 /* Pragma.JournalMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D0582206A57EB00E00035 /* Pragma.JournalMode.swift */; };
 		9A4D0585206A57F000E00035 /* Pragma.JournalMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D0582206A57EB00E00035 /* Pragma.JournalMode.swift */; };
 		9A4D0587206A58B200E00035 /* Pragma.JournalModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4D0586206A58B200E00035 /* Pragma.JournalModeTests.swift */; };
 		9A523D26206BB266006DEC1E /* SQLite.Hook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A523D25206BB266006DEC1E /* SQLite.Hook.swift */; };
@@ -509,24 +512,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A0829682061E27C005BCC20 /* SQLite.OpenOptions.swift in Sources */,
+				9A1414282072C562008029F2 /* Pragma.Boolean.swift in Sources */,
+				9A1414272072C562008029F2 /* Pragma.swift in Sources */,
 				9A115987206D707E00C5A755 /* Action.swift in Sources */,
-				9A4D057E2069922800E00035 /* Pragma.CacheSize.swift in Sources */,
 				9A5C47001ED0C49E00CE3627 /* SQLite.swift in Sources */,
-				9A4D0500206929E100E00035 /* PragmaRepresentable.swift in Sources */,
 				9A4C7C8E1EDC468B004FE2C9 /* sqlite3.c in Sources */,
 				9A4C7C931EDC46C4004FE2C9 /* Status.swift in Sources */,
+				9A1414262072C562008029F2 /* PragmaRepresentable.swift in Sources */,
 				9A616CB81EE6D36000827C5E /* UnsafePointer+String.swift in Sources */,
 				9A4C7C941EDC46C4004FE2C9 /* Statement.swift in Sources */,
 				9A523D27206BB403006DEC1E /* SQLite.Hook.swift in Sources */,
 				9AF46A0B1EE71E1400513F25 /* Destructor.swift in Sources */,
-				9A4D0584206A57F000E00035 /* Pragma.JournalMode.swift in Sources */,
 				9AE519291EE897A60038ED22 /* ColumnType.swift in Sources */,
+				9A1414292072C562008029F2 /* Pragma.Encoding.swift in Sources */,
+				9A1414232072C546008029F2 /* SQLite.Transaction.swift in Sources */,
+				9A1414242072C54F008029F2 /* SQLite+Codable.swift in Sources */,
+				9A14142A2072C562008029F2 /* Pragma.CacheSize.swift in Sources */,
 				9A616CB21EE6C6FC00827C5E /* ColumnMetadata.swift in Sources */,
 				9AF46A0C1EE71E1900513F25 /* Value.swift in Sources */,
-				9A4D0503206929F900E00035 /* Pragma.Boolean.swift in Sources */,
+				9A14142B2072C562008029F2 /* Pragma.JournalMode.swift in Sources */,
 				9A0829642061E266005BCC20 /* SQLite.Location.swift in Sources */,
 				9A7F052C2072436200FBFD09 /* SQLite.Checkpoint.swift in Sources */,
-				9A4D04FD20690FD500E00035 /* Pragma.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
