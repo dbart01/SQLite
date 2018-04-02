@@ -37,7 +37,7 @@ public class SQLite {
     public convenience init(location: Location = .temporary, options: OpenOptions = [.readWrite, .create]) throws {
         let reference = UnsafeMutablePointer<_SQLite?>.allocate(capacity: 1)
         defer {
-            reference.deallocate(capacity: 1)
+            reference.deallocate()
         }
         
         let status = sqlite3_open_v2(location.path, reference, options.rawValue, nil).status
@@ -72,11 +72,11 @@ public class SQLite {
         let autoIncrementPointer = _Int32Pointer.allocate(capacity: 1)
         
         defer {
-            typePointer.deallocate(capacity: 1)
-            collationPointer.deallocate(capacity: 1)
-            notNullPointer.deallocate(capacity: 1)
-            primaryKeyPointer.deallocate(capacity: 1)
-            autoIncrementPointer.deallocate(capacity: 1)
+            typePointer.deallocate()
+            collationPointer.deallocate()
+            notNullPointer.deallocate()
+            primaryKeyPointer.deallocate()
+            autoIncrementPointer.deallocate()
         }
         
         let status = sqlite3_table_column_metadata(

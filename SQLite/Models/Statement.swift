@@ -39,7 +39,7 @@ public class Statement {
         
         let reference = UnsafeMutablePointer<_Statement?>.allocate(capacity: 1)
         defer {
-            reference.deallocate(capacity: 1)
+            reference.deallocate()
         }
         
         let status = sqlite3_prepare_v2(sqlite.sqlite, query, Int32(query.lengthOfBytes(using: .utf8)), reference, nil).status
