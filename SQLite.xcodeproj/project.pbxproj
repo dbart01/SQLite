@@ -64,6 +64,9 @@
 		9A616CB71EE6D36000827C5E /* UnsafePointer+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A616CB61EE6D36000827C5E /* UnsafePointer+String.swift */; };
 		9A616CB81EE6D36000827C5E /* UnsafePointer+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A616CB61EE6D36000827C5E /* UnsafePointer+String.swift */; };
 		9A736DFF1ED1B8E100A0B389 /* SQLiteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A736DFE1ED1B8E100A0B389 /* SQLiteTests.swift */; };
+		9A7F052B2072435D00FBFD09 /* SQLite.Checkpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F052A2072435D00FBFD09 /* SQLite.Checkpoint.swift */; };
+		9A7F052C2072436200FBFD09 /* SQLite.Checkpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F052A2072435D00FBFD09 /* SQLite.Checkpoint.swift */; };
+		9A7F052E2072574400FBFD09 /* SQLite.CheckpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7F052D2072574400FBFD09 /* SQLite.CheckpointTests.swift */; };
 		9ACCEB021ED30A8600DFAE41 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACCEB011ED30A8600DFAE41 /* Status.swift */; };
 		9ACCEB041EDAF63C00DFAE41 /* Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACCEB031EDAF63C00DFAE41 /* Statement.swift */; };
 		9AD2D59B1EE038BC002E9C67 /* Destructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD2D59A1EE038BC002E9C67 /* Destructor.swift */; };
@@ -129,6 +132,8 @@
 		9A616CB31EE6CB9800827C5E /* ColumnMetadataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColumnMetadataTests.swift; sourceTree = "<group>"; };
 		9A616CB61EE6D36000827C5E /* UnsafePointer+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UnsafePointer+String.swift"; sourceTree = "<group>"; };
 		9A736DFE1ED1B8E100A0B389 /* SQLiteTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteTests.swift; sourceTree = "<group>"; };
+		9A7F052A2072435D00FBFD09 /* SQLite.Checkpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLite.Checkpoint.swift; sourceTree = "<group>"; };
+		9A7F052D2072574400FBFD09 /* SQLite.CheckpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLite.CheckpointTests.swift; sourceTree = "<group>"; };
 		9ACCEB011ED30A8600DFAE41 /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		9ACCEB031EDAF63C00DFAE41 /* Statement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statement.swift; sourceTree = "<group>"; };
 		9AD2D59A1EE038BC002E9C67 /* Destructor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Destructor.swift; sourceTree = "<group>"; };
@@ -213,6 +218,7 @@
 				9A616CB31EE6CB9800827C5E /* ColumnMetadataTests.swift */,
 				9A616CA31EE576BE00827C5E /* StatementTests.swift */,
 				9A736DFE1ED1B8E100A0B389 /* SQLiteTests.swift */,
+				9A7F052D2072574400FBFD09 /* SQLite.CheckpointTests.swift */,
 				9A115988206D7E3F00C5A755 /* SQLite.HookTests.swift */,
 				9A4D050820692D4E00E00035 /* SQLite.PragmaTests.swift */,
 				9A4D04F320651A8700E00035 /* SQLite.TransactionTests.swift */,
@@ -259,6 +265,7 @@
 				9A616CB01EE6C6FC00827C5E /* ColumnMetadata.swift */,
 				9ACCEB031EDAF63C00DFAE41 /* Statement.swift */,
 				9A5C46FE1ED0C49E00CE3627 /* SQLite.swift */,
+				9A7F052A2072435D00FBFD09 /* SQLite.Checkpoint.swift */,
 				9A523D25206BB266006DEC1E /* SQLite.Hook.swift */,
 				9A4D04F120651A2400E00035 /* SQLite.Transaction.swift */,
 				9A0829622061E260005BCC20 /* SQLite.Location.swift */,
@@ -448,6 +455,7 @@
 			files = (
 				9A0829692061E27D005BCC20 /* SQLite.OpenOptions.swift in Sources */,
 				9A523D26206BB266006DEC1E /* SQLite.Hook.swift in Sources */,
+				9A7F052B2072435D00FBFD09 /* SQLite.Checkpoint.swift in Sources */,
 				9A4D04F220651A2400E00035 /* SQLite.Transaction.swift in Sources */,
 				9A5C46FF1ED0C49E00CE3627 /* SQLite.swift in Sources */,
 				9A115986206D707B00C5A755 /* Action.swift in Sources */,
@@ -480,6 +488,7 @@
 				9A115989206D7E3F00C5A755 /* SQLite.HookTests.swift in Sources */,
 				9A4D050E206930DF00E00035 /* Pragma.EncodingTests.swift in Sources */,
 				9A0829612061CC47005BCC20 /* SQLite+Database.swift in Sources */,
+				9A7F052E2072574400FBFD09 /* SQLite.CheckpointTests.swift in Sources */,
 				9A08296D2061E4E5005BCC20 /* SQLite.OpenOptionsTests.swift in Sources */,
 				9A4D050520692A1600E00035 /* PragmaRepresentableTests.swift in Sources */,
 				9AE5192B1EE898060038ED22 /* ColumnTypeTests.swift in Sources */,
@@ -516,6 +525,7 @@
 				9AF46A0C1EE71E1900513F25 /* Value.swift in Sources */,
 				9A4D0503206929F900E00035 /* Pragma.Boolean.swift in Sources */,
 				9A0829642061E266005BCC20 /* SQLite.Location.swift in Sources */,
+				9A7F052C2072436200FBFD09 /* SQLite.Checkpoint.swift in Sources */,
 				9A4D04FD20690FD500E00035 /* Pragma.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -191,6 +191,14 @@ public class SQLite {
     }
     
     // ----------------------------------
+    //  MARK: - Checkpoint -
+    //
+    @discardableResult
+    public func checkpoint(_ type: Checkpoint = .passive) -> Status {
+        return sqlite3_wal_checkpoint_v2(self.sqlite, nil, type.rawValue, nil, nil).status
+    }
+    
+    // ----------------------------------
     //  MARK: - Transactions -
     //
     @discardableResult
