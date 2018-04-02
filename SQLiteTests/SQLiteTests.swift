@@ -40,7 +40,7 @@ class SQLiteTests: XCTestCase {
     //  MARK: - Last Inserted ID -
     //
     func testGetLastInsertedID() {
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         
         XCTAssertEqual(sqlite.lastInsertID, 0)
         
@@ -54,7 +54,7 @@ class SQLiteTests: XCTestCase {
     }
     
     func testSetLastInsertedID() {
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         
         XCTAssertEqual(sqlite.lastInsertID, 0)
         
@@ -67,7 +67,7 @@ class SQLiteTests: XCTestCase {
     //  MARK: - Metadata -
     //
     func testMetadataWithDefaultDatabase() {
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         
         XCTAssertWontThrow {
             let columns  = ["id", "name", "type", "length", "image", "thumb"]
@@ -89,7 +89,7 @@ class SQLiteTests: XCTestCase {
     }
     
     func testMetadataWithInvalidDatabase() {
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         
         XCTAssertWillThrow(Status.error) {
             _ = try sqlite.columnMetadataFor(column: "id", table: "animal", database: "invalid_database")
@@ -100,7 +100,7 @@ class SQLiteTests: XCTestCase {
     //  MARK: - Statement -
     //
     func testPrepareValidStatement() {
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         let query  = "CREATE TABLE vehicle (id INTEGER primary key autoincrement, make TEXT, model TEXT);"
         
         XCTAssertWontThrow {
@@ -111,7 +111,7 @@ class SQLiteTests: XCTestCase {
     }
     
     func testPrepareInvalidStatement() {
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         let query  = "SELECT * FROM vehicle"
         
         XCTAssertWillThrow(Status.error) {
@@ -124,7 +124,7 @@ class SQLiteTests: XCTestCase {
     //
     func testStatementCachingEnabled() {
         let query  = "SELECT * FROM animal WHERE type = ?"
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         
         sqlite.isCacheEnabled = true
         
@@ -146,7 +146,7 @@ class SQLiteTests: XCTestCase {
     
     func testStatementCachingDisabled() {
         let query  = "SELECT * FROM animal WHERE type = ?"
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         
         sqlite.isCacheEnabled = false
         
@@ -160,7 +160,7 @@ class SQLiteTests: XCTestCase {
     //  MARK: - Execute -
     //
     func testExecuteNoReturnValue() {
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         
         XCTAssertWontThrow {
             let result = try sqlite.execute(query: "INSERT INTO animal (id, name, type) VALUES (?, ?, ?)", arguments: 99, "dragon", "mythical")
@@ -180,7 +180,7 @@ class SQLiteTests: XCTestCase {
     }
     
     func testExecuteRows() {
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         
         var ids = [Int]()
         XCTAssertWontThrow {
@@ -198,7 +198,7 @@ class SQLiteTests: XCTestCase {
     //  MARK: - Transactions -
     //
     func testTransactionSuccessful() {
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         
         let dragons = [
             "dragon-transaction-1",
@@ -227,7 +227,7 @@ class SQLiteTests: XCTestCase {
     }
     
     func testTransactionThrowing() {
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         
         XCTAssertWillThrow(Status.constraint) {
             try sqlite.performTransaction(.deferred) {
@@ -242,7 +242,7 @@ class SQLiteTests: XCTestCase {
     }
     
     func testTransactionExplicitRollback() {
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         let name   = "mythical-magical-unicorn"
         
         XCTAssertWontThrow {

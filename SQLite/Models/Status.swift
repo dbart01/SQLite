@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum Status: Error, CustomStringConvertible, CustomDebugStringConvertible {
+public enum Status: RawRepresentable, Error, CustomStringConvertible, CustomDebugStringConvertible {
     
     case ok
     case error
@@ -42,46 +42,84 @@ public enum Status: Error, CustomStringConvertible, CustomDebugStringConvertible
     case row
     case done
     
-    public init(_ code: Int32) {
-        switch code {
-        case SQLITE_OK:         self = .ok
-        case SQLITE_ERROR:      self = .error
-        case SQLITE_INTERNAL:   self = .internal
-        case SQLITE_PERM:       self = .permission
-        case SQLITE_ABORT:      self = .abort
-        case SQLITE_BUSY:       self = .busy
-        case SQLITE_LOCKED:     self = .locked
-        case SQLITE_NOMEM:      self = .noMemory
-        case SQLITE_READONLY:   self = .readOnly
-        case SQLITE_INTERRUPT:  self = .interrupt
-        case SQLITE_IOERR:      self = .ioError
-        case SQLITE_CORRUPT:    self = .corrupt
-        case SQLITE_NOTFOUND:   self = .notFound
-        case SQLITE_FULL:       self = .full
-        case SQLITE_CANTOPEN:   self = .cantOpen
-        case SQLITE_PROTOCOL:   self = .protocol
-        case SQLITE_EMPTY:      self = .empty
-        case SQLITE_SCHEMA:     self = .schema
-        case SQLITE_TOOBIG:     self = .tooBig
-        case SQLITE_CONSTRAINT: self = .constraint
-        case SQLITE_MISMATCH:   self = .mismatch
-        case SQLITE_MISUSE:     self = .misuse
-        case SQLITE_NOLFS:      self = .noLFS
-        case SQLITE_AUTH:       self = .auth
-        case SQLITE_FORMAT:     self = .format
-        case SQLITE_RANGE:      self = .range
-        case SQLITE_NOTADB:     self = .notDatabase 
-        case SQLITE_NOTICE:     self = .notice 
-        case SQLITE_WARNING:    self = .warning 
-        case SQLITE_ROW:        self = .row 
-        case SQLITE_DONE:       self = .done 
+    public typealias RawValue = Int32
+    
+    public var rawValue: RawValue {
+        switch self {
+        case .ok:          return SQLITE_OK
+        case .error:       return SQLITE_ERROR
+        case .internal:    return SQLITE_INTERNAL
+        case .permission:  return SQLITE_PERM
+        case .abort:       return SQLITE_ABORT
+        case .busy:        return SQLITE_BUSY
+        case .locked:      return SQLITE_LOCKED
+        case .noMemory:    return SQLITE_NOMEM
+        case .readOnly:    return SQLITE_READONLY
+        case .interrupt:   return SQLITE_INTERRUPT
+        case .ioError:     return SQLITE_IOERR
+        case .corrupt:     return SQLITE_CORRUPT
+        case .notFound:    return SQLITE_NOTFOUND
+        case .full:        return SQLITE_FULL
+        case .cantOpen:    return SQLITE_CANTOPEN
+        case .protocol:    return SQLITE_PROTOCOL
+        case .empty:       return SQLITE_EMPTY
+        case .schema:      return SQLITE_SCHEMA
+        case .tooBig:      return SQLITE_TOOBIG
+        case .constraint:  return SQLITE_CONSTRAINT
+        case .mismatch:    return SQLITE_MISMATCH
+        case .misuse:      return SQLITE_MISUSE
+        case .noLFS:       return SQLITE_NOLFS
+        case .auth:        return SQLITE_AUTH
+        case .format:      return SQLITE_FORMAT
+        case .range:       return SQLITE_RANGE
+        case .notDatabase: return SQLITE_NOTADB
+        case .notice:      return SQLITE_NOTICE
+        case .warning:     return SQLITE_WARNING
+        case .row:         return SQLITE_ROW
+        case .done:        return SQLITE_DONE
+        }
+    }
+    
+    public init?(rawValue: RawValue) {
+        switch rawValue {
+        case type(of: self).ok.rawValue:           self = .ok
+        case type(of: self).error.rawValue:        self = .error
+        case type(of: self).internal.rawValue:     self = .internal
+        case type(of: self).permission.rawValue:   self = .permission
+        case type(of: self).abort.rawValue:        self = .abort
+        case type(of: self).busy.rawValue:         self = .busy
+        case type(of: self).locked.rawValue:       self = .locked
+        case type(of: self).noMemory.rawValue:     self = .noMemory
+        case type(of: self).readOnly.rawValue:     self = .readOnly
+        case type(of: self).interrupt.rawValue:    self = .interrupt
+        case type(of: self).ioError.rawValue:      self = .ioError
+        case type(of: self).corrupt.rawValue:      self = .corrupt
+        case type(of: self).notFound.rawValue:     self = .notFound
+        case type(of: self).full.rawValue:         self = .full
+        case type(of: self).cantOpen.rawValue:     self = .cantOpen
+        case type(of: self).protocol.rawValue:     self = .protocol
+        case type(of: self).empty.rawValue:        self = .empty
+        case type(of: self).schema.rawValue:       self = .schema
+        case type(of: self).tooBig.rawValue:       self = .tooBig
+        case type(of: self).constraint.rawValue:   self = .constraint
+        case type(of: self).mismatch.rawValue:     self = .mismatch
+        case type(of: self).misuse.rawValue:       self = .misuse
+        case type(of: self).noLFS.rawValue:        self = .noLFS
+        case type(of: self).auth.rawValue:         self = .auth
+        case type(of: self).format.rawValue:       self = .format
+        case type(of: self).range.rawValue:        self = .range
+        case type(of: self).notDatabase .rawValue: self = .notDatabase
+        case type(of: self).notice .rawValue:      self = .notice
+        case type(of: self).warning .rawValue:     self = .warning
+        case type(of: self).row .rawValue:         self = .row
+        case type(of: self).done .rawValue:        self = .done
         default:
-            fatalError("Unrecognized SQLite error code: \(code)")
+            return nil
         }
     }
     
     public var debugDescription: String {
-        return description
+        return self.description
     }
     
     public var description: String {
@@ -123,6 +161,6 @@ public enum Status: Error, CustomStringConvertible, CustomDebugStringConvertible
 
 extension Int32 {
     var status: Status {
-        return Status(self)
+        return Status(rawValue: self)!
     }
 }

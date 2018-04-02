@@ -14,6 +14,8 @@ typealias _Int32Pointer  = UnsafeMutablePointer<Int32>
 
 public class SQLite {
     
+    public let hook: Hook
+    
     public var isCacheEnabled = false
     
     public var lastInsertID: Int {
@@ -48,7 +50,7 @@ public class SQLite {
     
     internal init(sqlite3: _SQLite) {
         self.sqlite = sqlite3
-        self.registerHooks()
+        self.hook   = Hook(sqlite: sqlite3)
     }
     
     deinit {
@@ -56,71 +58,6 @@ public class SQLite {
         if status != .ok {
             print("Failed to close database connection: \(status.description)")
         }
-    }
-    
-    // ----------------------------------
-    //  MARK: - Hooks -
-    //
-    private func registerHooks() {
-        self.registerUpdateHook()
-        self.registerCommitHook()
-        self.registerRollbackHook()
-        self.registerPreupdateHook()
-    }
-    
-    private func registerUpdateHook() {
-        sqlite3_update_hook(self.sqlite, { context, action, database, table, rowID in
-            context!.sqlite.didRecieveUpdateHook(
-                action:   action,
-                database: database!.string,
-                table:    table!.string,
-                rowID:    Int(rowID)
-            )
-        }, Unmanaged.passUnretained(self).toOpaque())
-    }
-    
-    private func registerCommitHook() {
-        sqlite3_commit_hook(self.sqlite, { context in
-            return context!.sqlite.didRecieveCommitHook() ? 0 : 1
-        }, Unmanaged.passUnretained(self).toOpaque())
-    }
-    
-    private func registerRollbackHook() {
-        sqlite3_rollback_hook(self.sqlite, { context in
-            context!.sqlite.didRecieveRollbackHook()
-        }, Unmanaged.passUnretained(self).toOpaque())
-    }
-    
-    private func registerPreupdateHook() {
-        sqlite3_preupdate_hook(self.sqlite, { (context, sqlite, action, database, table, oldRowID, newRowID) in
-            context!.sqlite.didRecievePreupdateHook(
-                action:   action,
-                database: database!.string,
-                table:    table!.string,
-                oldRowID: Int(oldRowID),
-                newRowID: Int(newRowID)
-            )
-        }, Unmanaged.passUnretained(self).toOpaque())
-    }
-    
-    // ----------------------------------
-    //  MARK: - Hook Action -
-    //
-    private func didRecieveUpdateHook(action: Int32, database: String, table: String, rowID: Int) -> Void {
-        print("Update hook: \(action) - \(database) - \(table) - \(rowID)")
-    }
-    
-    private func didRecieveCommitHook() -> Bool {
-        print("Commit hook")
-        return true
-    }
-    
-    private func didRecieveRollbackHook() -> Void {
-        print("Rollback hook")
-    }
-    
-    private func didRecievePreupdateHook(action: Int32, database: String, table: String, oldRowID: Int, newRowID: Int) -> Void {
-        print("Preupdate hook: \(action) - \(database) - \(table) - \(oldRowID) - \(newRowID)")
     }
     
     // ----------------------------------
@@ -272,15 +209,5 @@ public class SQLite {
             try self.execute(query: "ROLLBACK TRANSACTION;")
             throw error
         }
-    }
-}
-
-// ----------------------------------
-//  MARK: - UnsafeMutableRawPointer -
-//
-private extension UnsafeMutableRawPointer {
-    
-    var sqlite: SQLite {
-        return self.assumingMemoryBound(to: SQLite.self).pointee
     }
 }

@@ -16,7 +16,7 @@ class StatementTests: XCTestCase {
     //
     func testInit() {
         XCTAssertWontThrow {
-            let sqlite    = SQLite.local()
+            let sqlite    = SQLite.default()
             let statement = try Statement(sqlite: sqlite, query: "SELECT * FROM animal")
             
             XCTAssertTrue(statement.sqlite === sqlite)
@@ -25,14 +25,14 @@ class StatementTests: XCTestCase {
     
     func testInitEmpty() {
         XCTAssertWillThrow(Status.error) {
-            let sqlite = SQLite.local()
+            let sqlite = SQLite.default()
             let _ = try Statement(sqlite: sqlite, query: "")
         }
     }
     
     func testInitInvalid() {
         XCTAssertWillThrow(Status.error) {
-            let sqlite = SQLite.local()
+            let sqlite = SQLite.default()
             let _ = try Statement(sqlite: sqlite, query: "some-invalid-query")
         }
     }
@@ -41,7 +41,7 @@ class StatementTests: XCTestCase {
     //  MARK: - Reference -
     //
     func testSqliteReference() {
-        let sqlite    = SQLite.local()
+        let sqlite    = SQLite.default()
         let statement = try! sqlite.prepare(query: "SELECT * FROM animal")
         
         XCTAssertTrue(statement.sqlite === sqlite)

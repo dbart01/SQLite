@@ -12,7 +12,7 @@ import SQLite
 class SQLite_PragmaTests: XCTestCase {
     
     func testPragmaForeignKeys() {
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         
         XCTAssertWontThrow {
             let currentValue = try sqlite.get(pragma: Pragma.foreignKeys)
@@ -27,7 +27,7 @@ class SQLite_PragmaTests: XCTestCase {
     }
     
     func testPragmaApplicationID() {
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         
         XCTAssertWontThrow {
             let currentValue = try sqlite.get(pragma: Pragma.applicationID)
@@ -42,7 +42,7 @@ class SQLite_PragmaTests: XCTestCase {
     }
     
     func testPragmaEncoding() {
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         
         XCTAssertWontThrow {
             let currentValue = try sqlite.get(pragma: Pragma.encoding)
@@ -57,7 +57,7 @@ class SQLite_PragmaTests: XCTestCase {
     }
     
     func testPragmaCacheSize() {
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         
         XCTAssertWontThrow {
             let currentValue = try sqlite.get(pragma: Pragma.cacheSize)
@@ -72,7 +72,7 @@ class SQLite_PragmaTests: XCTestCase {
     }
     
     func testPragmaJournalMode() {
-        let sqlite = SQLite.local()
+        let sqlite = SQLite.default()
         
         XCTAssertWontThrow {
             let currentValue = try sqlite.get(pragma: Pragma.journalMode)
