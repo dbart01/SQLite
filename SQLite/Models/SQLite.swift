@@ -59,42 +59,46 @@ public class SQLite {
     //
     public func columnMetadataFor(column: String, table: String, database: String? = nil) throws -> ColumnMetadata {
         
-        let typePointer          = _StringPointer.allocate(capacity: 1)
-        let collationPointer     = _StringPointer.allocate(capacity: 1)
-        let notNullPointer       = _Int32Pointer.allocate(capacity: 1)
-        let primaryKeyPointer    = _Int32Pointer.allocate(capacity: 1)
-        let autoIncrementPointer = _Int32Pointer.allocate(capacity: 1)
+        var type:          UnsafePointer<Int8>?
+        var collation:     UnsafePointer<Int8>?
+        var notNull:       Int32 = -1
+        var primaryKey:    Int32 = -1
+        var autoIncrement: Int32 = -1
         
-        defer {
-            typePointer.deallocate()
-            collationPointer.deallocate()
-            notNullPointer.deallocate()
-            primaryKeyPointer.deallocate()
-            autoIncrementPointer.deallocate()
+        var status = Status.abort
+        
+        withUnsafeMutablePointer(to: &type) { type in
+            withUnsafeMutablePointer(to: &collation) { collation in
+                withUnsafeMutablePointer(to: &notNull) { notNull in
+                    withUnsafeMutablePointer(to: &primaryKey) { primaryKey in
+                        withUnsafeMutablePointer(to: &autoIncrement) { autoIncrement in
+                            status = sqlite3_table_column_metadata(
+                                self.sqlite,
+                                database,
+                                table,
+                                column,
+                                type,
+                                collation,
+                                notNull,
+                                primaryKey,
+                                autoIncrement
+                            ).status
+                        }
+                    }
+                }
+            }
         }
-        
-        let status = sqlite3_table_column_metadata(
-            self.sqlite,
-            database,
-            table,
-            column,
-            typePointer,
-            collationPointer,
-            notNullPointer,
-            primaryKeyPointer,
-            autoIncrementPointer
-        ).status
         
         guard status == .ok else {
             throw status
         }
         
         return ColumnMetadata(
-            type:            typePointer.pointee!.string,
-            collation:       collationPointer.pointee!.string,
-            isNotNull:       notNullPointer.pointee > 0,
-            isPrimaryKey:    primaryKeyPointer.pointee > 0,
-            isAutoIncrement: autoIncrementPointer.pointee > 0
+            type:            type!.string,
+            collation:       collation!.string,
+            isNotNull:       notNull > 0,
+            isPrimaryKey:    primaryKey > 0,
+            isAutoIncrement: autoIncrement > 0
         )
     }
     
