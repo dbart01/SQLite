@@ -191,6 +191,20 @@ public class SQLite {
     }
     
     // ----------------------------------
+    //  MARK: - Blob -
+    //
+    public func open(table: String, column: String, rowID: Int, mode: Blob.Mode) throws -> Blob {
+        return try Blob(
+            sqlite:   self.sqlite,
+            database: "main",
+            table:    table,
+            column:   column,
+            rowID:    rowID,
+            mode:     mode
+        )
+    }
+    
+    // ----------------------------------
     //  MARK: - Checkpoint -
     //
     @discardableResult
