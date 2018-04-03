@@ -37,17 +37,3 @@ extension Pragma {
         }
     }
 }
-
-extension Pragma.CacheSize {
-    
-    public static func ==(lhs: Pragma.CacheSize, rhs: Pragma.CacheSize) -> Bool {
-        switch (lhs, rhs) {
-        case (.pages(let lv), .pages(let rv)) where lv == rv:
-            return true
-        case (.kilobytes(let lv), .kilobytes(let rv)) where lv == rv:
-            return true
-        default:
-            return false
-        }
-    }
-}

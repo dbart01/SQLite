@@ -26,19 +26,6 @@ public enum ValueType: Equatable {
     }
 }
 
-extension ValueType {
-    public static func ==(lhs: ValueType, rhs: ValueType) -> Bool {
-        switch (lhs, rhs) {
-        case (.integer, .integer): return true
-        case (.double, .double):   return true
-        case (.text, .text):       return true
-        case (.blob, .blob):       return true
-        default:
-            return false
-        }
-    }
-}
-
 public enum CollationSequence: Equatable {
     case binary
     case nocase
@@ -51,20 +38,6 @@ public enum CollationSequence: Equatable {
         case "NOCASE": self = .nocase
         case "RTRIM":  self = .rtrim
         default:       self = .custom(sequence)
-        }
-    }
-}
-
-extension CollationSequence {
-    public static func ==(lhs: CollationSequence, rhs: CollationSequence) -> Bool {
-        switch (lhs, rhs) {
-        case (.binary, .binary): return true
-        case (.nocase, .nocase): return true
-        case (.rtrim, .rtrim):   return true
-        case (.custom(let lv), .custom(let rv)) where lv == rv:
-            return true
-        default:
-            return false
         }
     }
 }
@@ -82,15 +55,5 @@ public struct ColumnMetadata: Equatable {
         self.isNotNull       = isNotNull
         self.isPrimaryKey    = isPrimaryKey
         self.isAutoIncrement = isAutoIncrement
-    }
-}
-
-extension ColumnMetadata {
-    public static func ==(lhs: ColumnMetadata, rhs: ColumnMetadata) -> Bool {
-        return lhs.type     == rhs.type &&
-        lhs.collation       == rhs.collation &&
-        lhs.isNotNull       == rhs.isNotNull &&
-        lhs.isPrimaryKey    == rhs.isPrimaryKey &&
-        lhs.isAutoIncrement == rhs.isAutoIncrement
     }
 }

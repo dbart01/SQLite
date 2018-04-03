@@ -24,18 +24,3 @@ extension SQLite {
         }
     }
 }
-
-extension SQLite.Location {
-    public static func ==(lhs: SQLite.Location, rhs: SQLite.Location) -> Bool {
-        switch (lhs, rhs) {
-        case (.disk(let lv), .disk(let rv)) where lv == rv:
-            return true
-        case (.memory, .memory):
-            return true
-        case (.temporary, .temporary):
-            return true
-        default:
-            return false
-        }
-    }
-}
