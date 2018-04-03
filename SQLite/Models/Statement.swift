@@ -37,17 +37,11 @@ public class Statement {
             throw Status.error
         }
         
-        let reference = UnsafeMutablePointer<_Statement?>.allocate(capacity: 1)
-        defer {
-            reference.deallocate()
+        let statement = try initialize(_Statement.self) {
+            sqlite3_prepare_v2(sqlite.sqlite, query, Int32(query.lengthOfBytes(using: .utf8)), $0, nil).status
         }
         
-        let status = sqlite3_prepare_v2(sqlite.sqlite, query, Int32(query.lengthOfBytes(using: .utf8)), reference, nil).status
-        if status != .ok {
-            throw status
-        }
-        
-        self.init(sqlite: sqlite, statement: reference.pointee!)
+        self.init(sqlite: sqlite, statement: statement)
     }
     
     internal init(sqlite: SQLite, statement: _Statement) {

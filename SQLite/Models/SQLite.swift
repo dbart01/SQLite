@@ -35,22 +35,16 @@ public class SQLite {
     //  MARK: - Init -
     //
     public convenience init(location: Location = .temporary, options: OpenOptions = [.readWrite, .create]) throws {
-        let reference = UnsafeMutablePointer<_SQLite?>.allocate(capacity: 1)
-        defer {
-            reference.deallocate()
+        let sqlite = try initialize(_SQLite.self) {
+            sqlite3_open_v2(location.path, $0, options.rawValue, nil).status
         }
         
-        let status = sqlite3_open_v2(location.path, reference, options.rawValue, nil).status
-        guard status == .ok else {
-            throw status
-        }
-        
-        self.init(sqlite3: reference.pointee!)
+        self.init(sqlite: sqlite)
     }
     
-    internal init(sqlite3: _SQLite) {
-        self.sqlite = sqlite3
-        self.hook   = Hook(sqlite: sqlite3)
+    internal init(sqlite: _SQLite) {
+        self.sqlite = sqlite
+        self.hook   = Hook(sqlite: sqlite)
     }
     
     deinit {

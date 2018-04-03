@@ -24,17 +24,11 @@ extension SQLite {
         //  MARK: - Init -
         //
         internal convenience init(sqlite: _SQLite, database: String, table: String, column: String, rowID: Int, mode: Mode) throws {
-            let reference = UnsafeMutablePointer<_Blob?>.allocate(capacity: 1)
-            defer {
-                reference.deallocate()
+            let blob = try initialize(_Blob.self) {
+                sqlite3_blob_open(sqlite, database, table, column, sqlite3_int64(rowID), mode.rawValue, $0).status
             }
             
-            let status = sqlite3_blob_open(sqlite, database, table, column, sqlite3_int64(rowID), mode.rawValue, reference).status
-            guard status == .ok else {
-                throw status
-            }
-            
-            self.init(sqlite: sqlite, blob: reference.pointee!)
+            self.init(sqlite: sqlite, blob: blob)
         }
         
         internal init(sqlite: _SQLite, blob: _Blob) {
