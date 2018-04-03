@@ -129,19 +129,34 @@ class SQLiteTests: XCTestCase {
         sqlite.isCacheEnabled = true
         
         let statement1 = try! sqlite.prepare(query: query)
-        try! statement1.bind(string: "feline", to: 0)
-        try! statement1.step()
+        let statement2 = try! sqlite.prepare(query: query)
         
-        XCTAssertTrue(statement1.isBusy)
-        
-        let statement1Query = statement1.expandedQuery
-        
-        let statement2      = try! sqlite.prepare(query: query)
-        let statement2Query = statement2.expandedQuery
-        
-        XCTAssertFalse(statement2.isBusy)
         XCTAssertTrue(statement1 === statement2)
-        XCTAssertNotEqual(statement1Query, statement2Query)
+        XCTAssertEqual(statement1.query, statement2.query)
+        
+        sqlite.isCacheEnabled = false
+        
+        let statement3 = try! sqlite.prepare(query: query)
+        
+        XCTAssertFalse(statement2 === statement3)
+        XCTAssertEqual(statement2.query, statement3.query)
+        
+        /* -----------------------------------
+         ** The expectation is that any cached
+         ** statements should be cleared when
+         ** isCachedEnabled is set to `false`.
+         ** Otherwise, facilities don't exist
+         ** for clearing out stale prepared
+         ** statements that may be invalid.
+         */
+        
+        sqlite.isCacheEnabled = true
+        
+        let statement4 = try! sqlite.prepare(query: query)
+        
+        XCTAssertFalse(statement2 === statement4)
+        XCTAssertFalse(statement3 === statement4)
+        XCTAssertEqual(statement2.query, statement4.query)
     }
     
     func testStatementCachingDisabled() {

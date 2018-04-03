@@ -16,7 +16,13 @@ public class SQLite {
     
     public let hook: Hook
     
-    public var isCacheEnabled = false
+    public var isCacheEnabled = false {
+        willSet(enabled) {
+            if !enabled && self.isCacheEnabled {
+                self.cachedStatements.removeAll()
+            }
+        }
+    }
     
     public var lastInsertID: Int {
         get {
