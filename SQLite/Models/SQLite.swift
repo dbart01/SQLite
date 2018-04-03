@@ -33,6 +33,14 @@ public class SQLite {
         }
     }
     
+    public var changeCount: Int {
+        return Int(sqlite3_changes(self.sqlite))
+    }
+    
+    public var totalChangeCount: Int {
+        return Int(sqlite3_total_changes(self.sqlite))
+    }
+    
     private var cachedStatements: [String: Statement] = [:]
     
     internal let sqlite: _SQLite

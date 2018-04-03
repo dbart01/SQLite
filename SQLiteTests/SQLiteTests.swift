@@ -64,6 +64,38 @@ class SQLiteTests: XCTestCase {
     }
     
     // ----------------------------------
+    //  MARK: - Changes -
+    //
+    func testChangeCount() {
+        let sqlite = SQLite.default()
+        
+        XCTAssertEqual(sqlite.changeCount, 1)
+        
+        try! sqlite.execute(query: "DELETE FROM animal WHERE id < 10")
+        
+        XCTAssertEqual(sqlite.changeCount, 9)
+    }
+    
+    func testTotalChangeCount() {
+        let sqlite = SQLite.default()
+        
+        XCTAssertEqual(sqlite.totalChangeCount, 12)
+        
+        try! sqlite.execute(query: "INSERT INTO animal (id, name, type) VALUES (700, 'owl', 'bird')")
+        try! sqlite.execute(query: "INSERT INTO animal (id, name, type) VALUES (701, 'hawk', 'bird')")
+        
+        XCTAssertEqual(sqlite.totalChangeCount, 14)
+        
+        try! sqlite.performTransaction {
+            try sqlite.execute(query: "INSERT INTO animal (id, name, type) VALUES (702, 'eagle', 'bird')")
+            try sqlite.execute(query: "INSERT INTO animal (id, name, type) VALUES (703, 'vulture', 'bird')")
+            return .commit
+        }
+        
+        XCTAssertEqual(sqlite.totalChangeCount, 16)
+    }
+    
+    // ----------------------------------
     //  MARK: - Metadata -
     //
     func testMetadataWithDefaultDatabase() {
