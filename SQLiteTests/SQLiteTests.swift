@@ -254,4 +254,22 @@ class SQLiteTests: XCTestCase {
             XCTAssertEqual(ids, [4, 5, 6])
         }
     }
+    
+    // ----------------------------------
+    //  MARK: - Backup -
+    //
+    func testBackup() {
+        let source      = SQLite.default()
+        let destination = SQLite.emptyInMemory()
+
+        XCTAssertWontThrow {
+            let backup = try source.backup(from: "temp", to: destination, database: "temp")
+            
+            XCTAssertTrue(backup.sourceSqlite      === source)
+            XCTAssertTrue(backup.destinationSqlite === destination)
+            
+            XCTAssertEqual(backup.sourceName,      "temp")
+            XCTAssertEqual(backup.destinationName, "temp")
+        }
+    }
 }

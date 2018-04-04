@@ -26,8 +26,8 @@ extension SQLite {
         return sqlite
     }
     
-    static func emptyInMemory() -> SQLite {
-        return try! SQLite(location: .memory)
+    static func emptyInMemory(options: OpenOptions = [.readWrite, .create]) -> SQLite {
+        return try! SQLite(location: .memory, options: options)
     }
     
     static func prepared(query: String, configuration: ((SQLite) -> Void)? = nil) -> Statement {

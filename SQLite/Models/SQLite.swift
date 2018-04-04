@@ -252,4 +252,16 @@ public class SQLite {
             throw error
         }
     }
+    
+    // ----------------------------------
+    //  MARK: - Backup -
+    //
+    public func backup(from sourceName: String = "main", to destination: SQLite, database destinationName: String = "main") throws -> Backup {
+        return try Backup(
+            from:            self,
+            sourceName:      sourceName,
+            to:              destination,
+            destinationName: destinationName
+        )
+    }
 }
