@@ -13,7 +13,7 @@ class SQLite_CodableTests: XCTestCase {
 
     
     func testCodableInsert() {
-        let sqlite = SQLite.inMemory()
+        let sqlite = SQLite.emptyInMemory()
         
         let query = """
         CREATE TABLE IF NOT EXISTS animal (

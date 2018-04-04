@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import SQLite
+@testable import SQLite
 
 class SQLiteTests: XCTestCase {
     
@@ -61,6 +61,20 @@ class SQLiteTests: XCTestCase {
         sqlite.lastInsertID = 64
         
         XCTAssertEqual(sqlite.lastInsertID, 64)
+    }
+    
+    // ----------------------------------
+    //  MARK: - Errors -
+    //
+    func testErrorReporting() {
+        let sqlite = SQLite.default()
+        
+        XCTAssertWillThrow(Status.error) {
+            try sqlite.execute(query: "SELECT images FROM animal")
+        }
+        
+        XCTAssertEqual(sqlite.errorStatus, .error)
+        XCTAssertEqual(sqlite.errorMessage, "no such column: images")
     }
     
     // ----------------------------------

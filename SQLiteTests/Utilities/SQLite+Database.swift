@@ -26,7 +26,7 @@ extension SQLite {
         return sqlite
     }
     
-    static func inMemory() -> SQLite {
+    static func emptyInMemory() -> SQLite {
         return try! SQLite(location: .memory)
     }
     

@@ -12,7 +12,7 @@ import SQLite
 func XCTAssertWillThrow<T>(_ expectedError: T, _ block: () throws -> Void) where T: Error, T: Equatable {
     do {
         try block()
-        XCTFail()
+        XCTFail("Expected to throw: \(expectedError)")
     } catch {
         XCTAssertEqual(error as? T, expectedError)
     }

@@ -43,6 +43,14 @@ public class SQLite {
     
     private var cachedStatements: [String: Statement] = [:]
     
+    internal var errorMessage: String {
+        return sqlite3_errmsg(self.sqlite).string
+    }
+    
+    internal var errorStatus: Status {
+        return sqlite3_errcode(self.sqlite).status
+    }
+    
     internal let sqlite: _SQLite
     
     // ----------------------------------
