@@ -158,6 +158,13 @@ public class SQLite {
     }
     
     // ----------------------------------
+    //  MARK: - Functions -
+    //
+    func register() {
+        
+    }
+    
+    // ----------------------------------
     //  MARK: - Pragma -
     //
     public func get<T>(pragma: PragmaDescription<T>) throws -> T? {

@@ -470,31 +470,3 @@ extension Decimal {
         self.init(string: string)
     }
 }
-
-// ----------------------------------
-//  MARK: - OptionalProtocol -
-//
-private protocol OptionalProtocol {
-    var hasSome: Bool { get }
-    var some:    Any  { get }
-}
-
-// TODO: Extract and write tests
-extension Optional: OptionalProtocol {
-    
-    var hasSome: Bool {
-        switch self {
-        case .some: return true
-        case .none: return false
-        }
-    }
-    
-    var some: Any {
-        switch self {
-        case .some(let value):
-            return value
-        case .none:
-            return self!
-        }
-    }
-}

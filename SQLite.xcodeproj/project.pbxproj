@@ -35,6 +35,28 @@
 		9A14143F20741AC8008029F2 /* SQLite.Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A14143E20741AC8008029F2 /* SQLite.Backup.swift */; };
 		9A14144020741AC8008029F2 /* SQLite.Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A14143E20741AC8008029F2 /* SQLite.Backup.swift */; };
 		9A14144220744ED7008029F2 /* SQLite.BackupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A14144120744ED7008029F2 /* SQLite.BackupTests.swift */; };
+		9A154C472076783700A95252 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C462076783700A95252 /* Function.swift */; };
+		9A154C482076783700A95252 /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C462076783700A95252 /* Function.swift */; };
+		9A154C4A2076787600A95252 /* Function.Scalar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C492076787600A95252 /* Function.Scalar.swift */; };
+		9A154C4B2076787600A95252 /* Function.Scalar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C492076787600A95252 /* Function.Scalar.swift */; };
+		9A154C4D2076788D00A95252 /* Function.Aggregate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C4C2076788D00A95252 /* Function.Aggregate.swift */; };
+		9A154C4E2076788D00A95252 /* Function.Aggregate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C4C2076788D00A95252 /* Function.Aggregate.swift */; };
+		9A154C50207678A700A95252 /* Function.Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C4F207678A700A95252 /* Function.Description.swift */; };
+		9A154C51207678A700A95252 /* Function.Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C4F207678A700A95252 /* Function.Description.swift */; };
+		9A154C53207678BC00A95252 /* Function.Kind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C52207678BC00A95252 /* Function.Kind.swift */; };
+		9A154C54207678BC00A95252 /* Function.Kind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C52207678BC00A95252 /* Function.Kind.swift */; };
+		9A154C56207678D400A95252 /* Function.Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C55207678D400A95252 /* Function.Value.swift */; };
+		9A154C57207678D400A95252 /* Function.Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C55207678D400A95252 /* Function.Value.swift */; };
+		9A154C59207678ED00A95252 /* Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C58207678ED00A95252 /* Encoding.swift */; };
+		9A154C5A207678ED00A95252 /* Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C58207678ED00A95252 /* Encoding.swift */; };
+		9A154C5C2076791900A95252 /* Function.Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C5B2076791900A95252 /* Function.Context.swift */; };
+		9A154C5D2076791900A95252 /* Function.Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C5B2076791900A95252 /* Function.Context.swift */; };
+		9A154C5F2076793C00A95252 /* Function.ArgCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C5E2076793C00A95252 /* Function.ArgCount.swift */; };
+		9A154C602076793C00A95252 /* Function.ArgCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C5E2076793C00A95252 /* Function.ArgCount.swift */; };
+		9A154C632076885900A95252 /* OptionalProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C622076885900A95252 /* OptionalProtocol.swift */; };
+		9A154C642076885900A95252 /* OptionalProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154C622076885900A95252 /* OptionalProtocol.swift */; };
+		9A29B89E2078010B004D9A72 /* Aggregatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29B89D2078010B004D9A72 /* Aggregatable.swift */; };
+		9A29B89F20780122004D9A72 /* Aggregatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A29B89D2078010B004D9A72 /* Aggregatable.swift */; };
 		9A49DC571EC49A170053710B /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A49DC4D1EC49A170053710B /* SQLite.framework */; };
 		9A49DC5E1EC49A170053710B /* SQLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A49DC501EC49A170053710B /* SQLite.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9A49DC6B1EC49A5F0053710B /* SQLite.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A49DC501EC49A170053710B /* SQLite.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -113,6 +135,17 @@
 		9A1414312073C69F008029F2 /* Initialize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initialize.swift; sourceTree = "<group>"; };
 		9A14143E20741AC8008029F2 /* SQLite.Backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLite.Backup.swift; sourceTree = "<group>"; };
 		9A14144120744ED7008029F2 /* SQLite.BackupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLite.BackupTests.swift; sourceTree = "<group>"; };
+		9A154C462076783700A95252 /* Function.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
+		9A154C492076787600A95252 /* Function.Scalar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.Scalar.swift; sourceTree = "<group>"; };
+		9A154C4C2076788D00A95252 /* Function.Aggregate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.Aggregate.swift; sourceTree = "<group>"; };
+		9A154C4F207678A700A95252 /* Function.Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.Description.swift; sourceTree = "<group>"; };
+		9A154C52207678BC00A95252 /* Function.Kind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.Kind.swift; sourceTree = "<group>"; };
+		9A154C55207678D400A95252 /* Function.Value.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.Value.swift; sourceTree = "<group>"; };
+		9A154C58207678ED00A95252 /* Encoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encoding.swift; sourceTree = "<group>"; };
+		9A154C5B2076791900A95252 /* Function.Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.Context.swift; sourceTree = "<group>"; };
+		9A154C5E2076793C00A95252 /* Function.ArgCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.ArgCount.swift; sourceTree = "<group>"; };
+		9A154C622076885900A95252 /* OptionalProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalProtocol.swift; sourceTree = "<group>"; };
+		9A29B89D2078010B004D9A72 /* Aggregatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aggregatable.swift; sourceTree = "<group>"; };
 		9A49DC4D1EC49A170053710B /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A49DC501EC49A170053710B /* SQLite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SQLite.h; sourceTree = "<group>"; };
 		9A49DC511EC49A170053710B /* SQLite MacOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SQLite MacOS.plist"; sourceTree = "<group>"; };
@@ -192,6 +225,30 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		9A154C452076780E00A95252 /* Function */ = {
+			isa = PBXGroup;
+			children = (
+				9A29B89D2078010B004D9A72 /* Aggregatable.swift */,
+				9A154C462076783700A95252 /* Function.swift */,
+				9A154C492076787600A95252 /* Function.Scalar.swift */,
+				9A154C4C2076788D00A95252 /* Function.Aggregate.swift */,
+				9A154C52207678BC00A95252 /* Function.Kind.swift */,
+				9A154C5E2076793C00A95252 /* Function.ArgCount.swift */,
+				9A154C4F207678A700A95252 /* Function.Description.swift */,
+				9A154C55207678D400A95252 /* Function.Value.swift */,
+				9A154C5B2076791900A95252 /* Function.Context.swift */,
+			);
+			path = Function;
+			sourceTree = "<group>";
+		};
+		9A154C612076884500A95252 /* Optional Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				9A154C622076885900A95252 /* OptionalProtocol.swift */,
+			);
+			path = "Optional Protocol";
+			sourceTree = "<group>";
+		};
 		9A49DC431EC49A170053710B = {
 			isa = PBXGroup;
 			children = (
@@ -216,8 +273,10 @@
 			children = (
 				9A49DC501EC49A170053710B /* SQLite.h */,
 				9A4C7C831EDC468B004FE2C9 /* lib */,
+				9A154C612076884500A95252 /* Optional Protocol */,
 				9A4D058D206A5D8100E00035 /* Extensions */,
 				9A4D058C206A5D6E00E00035 /* Pragma */,
+				9A154C452076780E00A95252 /* Function */,
 				9A4D058B206A5D5B00E00035 /* Models */,
 				9A49DC511EC49A170053710B /* SQLite MacOS.plist */,
 				9A49DC711EC49A5F0053710B /* SQLite iOS.plist */,
@@ -276,6 +335,7 @@
 			isa = PBXGroup;
 			children = (
 				9AD2D59A1EE038BC002E9C67 /* Destructor.swift */,
+				9A154C58207678ED00A95252 /* Encoding.swift */,
 				9ACCEB011ED30A8600DFAE41 /* Status.swift */,
 				9A115985206D707B00C5A755 /* Action.swift */,
 				9A5EF5CF1EDE3FAF00CB16A0 /* Value.swift */,
@@ -475,6 +535,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A0829692061E27D005BCC20 /* SQLite.OpenOptions.swift in Sources */,
+				9A154C5F2076793C00A95252 /* Function.ArgCount.swift in Sources */,
 				9A523D26206BB266006DEC1E /* SQLite.Hook.swift in Sources */,
 				9A7F052B2072435D00FBFD09 /* SQLite.Checkpoint.swift in Sources */,
 				9A4D04F220651A2400E00035 /* SQLite.Transaction.swift in Sources */,
@@ -483,19 +544,29 @@
 				9A115986206D707B00C5A755 /* Action.swift in Sources */,
 				9A14143F20741AC8008029F2 /* SQLite.Backup.swift in Sources */,
 				9A14142D2072C590008029F2 /* SQLite.Blob.swift in Sources */,
+				9A154C53207678BC00A95252 /* Function.Kind.swift in Sources */,
 				9A4D050C20692DD800E00035 /* Pragma.Encoding.swift in Sources */,
 				9A4D04FC20690FD500E00035 /* Pragma.swift in Sources */,
 				9AD2D59B1EE038BC002E9C67 /* Destructor.swift in Sources */,
+				9A154C56207678D400A95252 /* Function.Value.swift in Sources */,
 				9A4D0585206A57F000E00035 /* Pragma.JournalMode.swift in Sources */,
+				9A154C50207678A700A95252 /* Function.Description.swift in Sources */,
 				9ACCEB021ED30A8600DFAE41 /* Status.swift in Sources */,
+				9A154C59207678ED00A95252 /* Encoding.swift in Sources */,
 				9ACCEB041EDAF63C00DFAE41 /* Statement.swift in Sources */,
 				9A4D04FF206929E100E00035 /* PragmaRepresentable.swift in Sources */,
 				9A616CB11EE6C6FC00827C5E /* ColumnMetadata.swift in Sources */,
+				9A154C472076783700A95252 /* Function.swift in Sources */,
+				9A29B89E2078010B004D9A72 /* Aggregatable.swift in Sources */,
 				9A4D057F2069922800E00035 /* Pragma.CacheSize.swift in Sources */,
 				9A0829F02062FA40005BCC20 /* SQLite+Codable.swift in Sources */,
 				9AE519281EE897A60038ED22 /* ColumnType.swift in Sources */,
+				9A154C4A2076787600A95252 /* Function.Scalar.swift in Sources */,
+				9A154C632076885900A95252 /* OptionalProtocol.swift in Sources */,
 				9A4D0502206929F900E00035 /* Pragma.Boolean.swift in Sources */,
+				9A154C5C2076791900A95252 /* Function.Context.swift in Sources */,
 				9A4C7C8D1EDC468B004FE2C9 /* sqlite3.c in Sources */,
+				9A154C4D2076788D00A95252 /* Function.Aggregate.swift in Sources */,
 				9A616CB71EE6D36000827C5E /* UnsafePointer+String.swift in Sources */,
 				9A5EF5D01EDE3FAF00CB16A0 /* Value.swift in Sources */,
 				9A0829652061E267005BCC20 /* SQLite.Location.swift in Sources */,
@@ -535,6 +606,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A0829682061E27C005BCC20 /* SQLite.OpenOptions.swift in Sources */,
+				9A154C602076793C00A95252 /* Function.ArgCount.swift in Sources */,
 				9A1414282072C562008029F2 /* Pragma.Boolean.swift in Sources */,
 				9A1414272072C562008029F2 /* Pragma.swift in Sources */,
 				9A115987206D707E00C5A755 /* Action.swift in Sources */,
@@ -543,19 +615,29 @@
 				9A4C7C8E1EDC468B004FE2C9 /* sqlite3.c in Sources */,
 				9A14144020741AC8008029F2 /* SQLite.Backup.swift in Sources */,
 				9A14142E2072C590008029F2 /* SQLite.Blob.swift in Sources */,
+				9A154C54207678BC00A95252 /* Function.Kind.swift in Sources */,
 				9A4C7C931EDC46C4004FE2C9 /* Status.swift in Sources */,
 				9A1414262072C562008029F2 /* PragmaRepresentable.swift in Sources */,
 				9A616CB81EE6D36000827C5E /* UnsafePointer+String.swift in Sources */,
+				9A154C57207678D400A95252 /* Function.Value.swift in Sources */,
 				9A4C7C941EDC46C4004FE2C9 /* Statement.swift in Sources */,
+				9A154C51207678A700A95252 /* Function.Description.swift in Sources */,
 				9A523D27206BB403006DEC1E /* SQLite.Hook.swift in Sources */,
+				9A154C5A207678ED00A95252 /* Encoding.swift in Sources */,
 				9AF46A0B1EE71E1400513F25 /* Destructor.swift in Sources */,
 				9AE519291EE897A60038ED22 /* ColumnType.swift in Sources */,
 				9A1414292072C562008029F2 /* Pragma.Encoding.swift in Sources */,
+				9A154C482076783700A95252 /* Function.swift in Sources */,
+				9A29B89F20780122004D9A72 /* Aggregatable.swift in Sources */,
 				9A1414232072C546008029F2 /* SQLite.Transaction.swift in Sources */,
 				9A1414242072C54F008029F2 /* SQLite+Codable.swift in Sources */,
 				9A14142A2072C562008029F2 /* Pragma.CacheSize.swift in Sources */,
+				9A154C4B2076787600A95252 /* Function.Scalar.swift in Sources */,
+				9A154C642076885900A95252 /* OptionalProtocol.swift in Sources */,
 				9A616CB21EE6C6FC00827C5E /* ColumnMetadata.swift in Sources */,
+				9A154C5D2076791900A95252 /* Function.Context.swift in Sources */,
 				9AF46A0C1EE71E1900513F25 /* Value.swift in Sources */,
+				9A154C4E2076788D00A95252 /* Function.Aggregate.swift in Sources */,
 				9A14142B2072C562008029F2 /* Pragma.JournalMode.swift in Sources */,
 				9A0829642061E266005BCC20 /* SQLite.Location.swift in Sources */,
 				9A7F052C2072436200FBFD09 /* SQLite.Checkpoint.swift in Sources */,
