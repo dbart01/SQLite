@@ -9,7 +9,7 @@
 import Foundation
 
 extension Function {
-    public enum ArgCount: Equatable {
+    public enum ArgCount: Hashable {
         
         case infinite
         case none

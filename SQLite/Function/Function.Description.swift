@@ -9,7 +9,7 @@
 import Foundation
 
 extension Function {
-    public struct Description: Equatable {
+    public struct Description: Hashable {
         
         public let name:          String
         public let arguments:     ArgCount

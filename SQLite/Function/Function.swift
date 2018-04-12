@@ -16,7 +16,7 @@ open class Function {
     // ----------------------------------
     //  MARK: - Init -
     //
-    internal init(sqlite: SQLite, description: Description) throws {
+    public required init(sqlite: SQLite, description: Description) throws {
         self.sqlite      = sqlite
         self.description = description
     }

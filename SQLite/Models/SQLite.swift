@@ -43,6 +43,8 @@ public class SQLite {
     
     private var cachedStatements: [String: Statement] = [:]
     
+    internal var registeredFunctions: [Function.Description: Function] = [:]
+    
     internal var errorMessage: String {
         return sqlite3_errmsg(self.sqlite).string
     }
@@ -160,8 +162,19 @@ public class SQLite {
     // ----------------------------------
     //  MARK: - Functions -
     //
-    func register() {
-        
+    func register(_ functionType: Function.Type, using description: Function.Description) throws {
+        let function = try functionType.init(sqlite: self, description: description)
+        self.register(function)
+    }
+    
+    func register(_ function: Function) {
+        self.registeredFunctions[function.description] = function
+    }
+    
+    func unregister(functionMatching description: Function.Description) {
+        if let _ = self.registeredFunctions[description] {
+            self.registeredFunctions.removeValue(forKey: description)
+        }
     }
     
     // ----------------------------------

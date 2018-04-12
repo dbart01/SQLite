@@ -23,6 +23,10 @@ class BlockFunction: Function.Scalar {
         try super.init(sqlite: sqlite, description: description)
     }
     
+    required init(sqlite: SQLite, description: Function.Description) throws {
+        fatalError()
+    }
+    
     // ----------------------------------
     //  MARK: - Scalar -
     //

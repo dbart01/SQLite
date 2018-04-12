@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum Encoding: Equatable, RawRepresentable {
+public enum Encoding: Hashable, RawRepresentable {
     case utf8
     case utf16
     case utf16le

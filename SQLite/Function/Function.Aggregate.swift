@@ -14,7 +14,7 @@ extension Function {
         // ----------------------------------
         //  MARK: - Init -
         //
-        internal override init(sqlite: SQLite, description: Description) throws {
+        public required init(sqlite: SQLite, description: Description) throws {
             try super.init(sqlite: sqlite, description: description)
             
             let status = sqlite3_create_function_v2(

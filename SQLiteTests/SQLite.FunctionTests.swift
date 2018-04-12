@@ -10,85 +10,36 @@ import XCTest
 @testable import SQLite
 
 class SQLite_FunctionTests: XCTestCase {
-
+    
     // ----------------------------------
-    //  MARK: - Init -
+    //  MARK: - Registration -
     //
-    func testInitScalar() {
+    func testRegisterType() {
         let sqlite      = SQLite.default()
         let description = Function.Description(
-            name:          "double",
+            name:          "xct_func",
             arguments:     .finite(1),
             encoding:      .utf8,
             deterministic: true
         )
         
         XCTAssertWontThrow {
-            let function = try DoubleFunction(
-                sqlite:      sqlite,
-                description: description
-            )
-//            XCTAssertEqual(function.kind,        .scalar)
-            XCTAssertEqual(function.description, description)
+            XCTAssertEqual(sqlite.registeredFunctions.count, 0)
+            
+            try sqlite.register(DoubleFunction.self, using: description)
+            
+            XCTAssertEqual(sqlite.registeredFunctions.count, 1)
         }
+        
+        try! sqlite.execute(query: "SELECT xct_func(6.5) as result", dictionaryHandler: { result, dictionary in
+            XCTAssertEqual(dictionary["result"] as! Double, 13)
+        })
     }
     
-    func testInitAggregate() {
+    func testRegisterFunction() {
         let sqlite      = SQLite.default()
         let description = Function.Description(
-            name:          "sum",
-            arguments:     .finite(1),
-            encoding:      .utf8,
-            deterministic: true
-        )
-        
-        XCTAssertWontThrow {
-            let function = try SumFunction(
-                sqlite:      sqlite,
-                description: description
-            )
-//            XCTAssertEqual(function.kind,        .aggregate)
-            XCTAssertEqual(function.description, description)
-        }
-    }
-    
-    // ----------------------------------
-    //  MARK: - Execute -
-    //
-    func testExecute() {
-        let sqlite      = SQLite.default()
-        let description = Function.Description(
-            name:          "abc_double",
-            arguments:     .finite(1),
-            encoding:      .utf8,
-            deterministic: true
-        )
-        
-        let function = try! SumFunction(
-            sqlite:      sqlite,
-            description: description
-        )
-        
-        try! sqlite.execute(query: "SELECT abc_double(id) as theThing FROM animal WHERE id = 10", dictionaryHandler: { result, dictionary in
-            print(dictionary)
-        })
-        
-        try! sqlite.execute(query: "SELECT abc_double(id) as theThing FROM animal WHERE id < 5", dictionaryHandler: { result, dictionary in
-            print(dictionary)
-        })
-        
-        try! sqlite.execute(query: "SELECT abc_double(id) as theThing FROM animal WHERE id = 800", dictionaryHandler: { result, dictionary in
-            print(dictionary)
-        })
-        
-        // TODO: SQLite **must** hold a strong reference to the SQLite.Function object for the pointer to the function to stay valid.
-        print(function)
-    }
-    
-    func testExecute2() {
-        let sqlite      = SQLite.default()
-        let description = Function.Description(
-            name:          "abc_double",
+            name:          "xct_func",
             arguments:     .finite(1),
             encoding:      .utf8,
             deterministic: true
@@ -99,48 +50,38 @@ class SQLite_FunctionTests: XCTestCase {
             description: description
         )
         
-        try! sqlite.execute(query: "SELECT abc_double(id) as theThing FROM animal WHERE id = 10", dictionaryHandler: { result, dictionary in
-            print(dictionary)
-        })
+        XCTAssertWontThrow {
+            XCTAssertEqual(sqlite.registeredFunctions.count, 0)
+            
+            sqlite.register(function)
+            
+            XCTAssertEqual(sqlite.registeredFunctions.count, 1)
+        }
         
-        // TODO: SQLite **must** hold a strong reference to the SQLite.Function object for the pointer to the function to stay valid.
-        print(function)
+        try! sqlite.execute(query: "SELECT xct_func(6.5) as result", dictionaryHandler: { result, dictionary in
+            XCTAssertEqual(dictionary["result"] as! Double, 13)
+        })
     }
     
-    func testExecute3() {
+    func testUnregister() {
         let sqlite      = SQLite.default()
         let description = Function.Description(
-            name:          "abc_double",
+            name:          "xct_func",
             arguments:     .finite(1),
             encoding:      .utf8,
             deterministic: true
         )
         
-        let function = try! CountFunction(
-            sqlite:      sqlite,
-            description: description
-        )
+        try! sqlite.register(DoubleFunction.self, using: description)
         
-        try! sqlite.execute(query: "SELECT abc_double(id) as theThing FROM animal WHERE id = 10", dictionaryHandler: { result, dictionary in
-            print(dictionary)
-        })
+        XCTAssertEqual(sqlite.registeredFunctions.count, 1)
+        sqlite.unregister(functionMatching: description)
+        XCTAssertEqual(sqlite.registeredFunctions.count, 0)
         
-        try! sqlite.execute(query: "SELECT abc_double(id) as theThing FROM animal WHERE id < 5", dictionaryHandler: { result, dictionary in
-            print(dictionary)
-        })
-        
-        try! sqlite.execute(query: "SELECT abc_double(id) as theThing FROM animal WHERE id = 800", dictionaryHandler: { result, dictionary in
-            print(dictionary)
-        })
-        
-        // TODO: SQLite **must** hold a strong reference to the SQLite.Function object for the pointer to the function to stay valid.
-        print(function)
+        XCTAssertWillThrow(Status.error) {
+            try sqlite.execute(query: "SELECT xct_func(6.5) as result", dictionaryHandler: { result, dictionary in
+                XCTAssertEqual(dictionary["result"] as! Double, 13)
+            })
+        }
     }
 }
-
-// ----------------------------------
-//  MARK: - Private -
-//
-
-
-

@@ -11,6 +11,6 @@
 class DoubleFunction: Function.Scalar {
 
     override func main(context: Context, arguments: [Value]) {
-        context.bind(Double(arguments[0].integer * 2))
+        context.bind(Double(arguments[0].double * 2.0))
     }
 }
