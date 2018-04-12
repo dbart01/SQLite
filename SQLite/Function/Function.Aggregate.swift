@@ -14,8 +14,8 @@ extension Function {
         // ----------------------------------
         //  MARK: - Init -
         //
-        internal override init(description: Description, sqlite: SQLite) throws {
-            try super.init(description: description, sqlite: sqlite)
+        internal override init(sqlite: SQLite, description: Description) throws {
+            try super.init(sqlite: sqlite, description: description)
             
             let status = sqlite3_create_function_v2(
                 /* 1 */ sqlite.sqlite,
@@ -66,7 +66,7 @@ extension Function {
         }
         
         private var isObjectContainer: Bool {
-            return Container.self is AnyObject
+            return Container.self is AnyObject.Type
         }
         
         // ----------------------------------
@@ -106,7 +106,8 @@ private extension UnsafeMutableRawPointer {
         let pointer = self.assumingMemoryBound(to: Optional<T>.self)
         if pointer.pointee == nil {
             let container = T.initialize() as AnyObject
-            pointer.pointee = (Unmanaged.passUnretained(container).takeUnretainedValue() as! T)
+            let unmanaged = (Unmanaged.passUnretained(container).takeUnretainedValue() as! T)
+            pointer.initialize(to: unmanaged)
         }
         let raw = UnsafeMutableRawPointer(pointer)
         return raw.assumingMemoryBound(to: T.self)
@@ -115,7 +116,7 @@ private extension UnsafeMutableRawPointer {
     func createScalarContainer<T>(typed type: T.Type) -> UnsafeMutablePointer<T> where T: Aggregatable {
         let pointer = self.mutablePointer(typed: type)
         if pointer.pointee == nil {
-            pointer.pointee = T.initialize()
+            pointer.initialize(to: T.initialize())
         }
         let raw = UnsafeMutableRawPointer(pointer)
         return raw.assumingMemoryBound(to: T.self)

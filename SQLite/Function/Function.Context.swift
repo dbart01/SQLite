@@ -157,7 +157,7 @@ extension Function {
 //  MARK: - Error -
 //
 extension Function.Context {
-    public enum Error {
+    public enum Error: Equatable {
         case message(String)
         case tooBig
         case noMemory

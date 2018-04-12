@@ -10,15 +10,15 @@ import Foundation
 
 open class Function {
         
-    public let description: Description
     public let sqlite:      SQLite
+    public let description: Description
     
     // ----------------------------------
     //  MARK: - Init -
     //
-    internal init(description: Description, sqlite: SQLite) throws {
-        self.description = description
+    internal init(sqlite: SQLite, description: Description) throws {
         self.sqlite      = sqlite
+        self.description = description
     }
     
     deinit {
