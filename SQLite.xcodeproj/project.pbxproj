@@ -278,6 +278,74 @@
 			path = "Optional Protocol";
 			sourceTree = "<group>";
 		};
+		9A3FEC332080C32600F7413E /* Column Metadata */ = {
+			isa = PBXGroup;
+			children = (
+				9AE519271EE897A60038ED22 /* ColumnType.swift */,
+				9A616CB01EE6C6FC00827C5E /* ColumnMetadata.swift */,
+			);
+			path = "Column Metadata";
+			sourceTree = "<group>";
+		};
+		9A3FEC342080C33800F7413E /* Statement */ = {
+			isa = PBXGroup;
+			children = (
+				9ACCEB031EDAF63C00DFAE41 /* Statement.swift */,
+			);
+			path = Statement;
+			sourceTree = "<group>";
+		};
+		9A3FEC352080C34500F7413E /* SQLite */ = {
+			isa = PBXGroup;
+			children = (
+				9A5C46FE1ED0C49E00CE3627 /* SQLite.swift */,
+				9A14143E20741AC8008029F2 /* SQLite.Backup.swift */,
+				9A14142C2072C590008029F2 /* SQLite.Blob.swift */,
+				9A7F052A2072435D00FBFD09 /* SQLite.Checkpoint.swift */,
+				9A523D25206BB266006DEC1E /* SQLite.Hook.swift */,
+				9A4D04F120651A2400E00035 /* SQLite.Transaction.swift */,
+				9A0829622061E260005BCC20 /* SQLite.Location.swift */,
+				9A0829662061E277005BCC20 /* SQLite.OpenOptions.swift */,
+				9A0829EF2062FA40005BCC20 /* SQLite+Codable.swift */,
+			);
+			path = SQLite;
+			sourceTree = "<group>";
+		};
+		9A3FEC362080C35B00F7413E /* Column Metadata */ = {
+			isa = PBXGroup;
+			children = (
+				9AE5192A1EE898060038ED22 /* ColumnTypeTests.swift */,
+				9A616CB31EE6CB9800827C5E /* ColumnMetadataTests.swift */,
+			);
+			path = "Column Metadata";
+			sourceTree = "<group>";
+		};
+		9A3FEC372080C36400F7413E /* Statement */ = {
+			isa = PBXGroup;
+			children = (
+				9A616CA31EE576BE00827C5E /* StatementTests.swift */,
+			);
+			path = Statement;
+			sourceTree = "<group>";
+		};
+		9A3FEC382080C36F00F7413E /* SQLite */ = {
+			isa = PBXGroup;
+			children = (
+				9A736DFE1ED1B8E100A0B389 /* SQLiteTests.swift */,
+				9A8943B5207635F50041E3A2 /* SQLite.FunctionTests.swift */,
+				9A14144120744ED7008029F2 /* SQLite.BackupTests.swift */,
+				9A14142F207393BA008029F2 /* SQLite.BlobTests.swift */,
+				9A7F052D2072574400FBFD09 /* SQLite.CheckpointTests.swift */,
+				9A115988206D7E3F00C5A755 /* SQLite.HookTests.swift */,
+				9A4D050820692D4E00E00035 /* SQLite.PragmaTests.swift */,
+				9A4D04F320651A8700E00035 /* SQLite.TransactionTests.swift */,
+				9A08296A2061E4D4005BCC20 /* SQLite.LocationTests.swift */,
+				9A08296C2061E4E5005BCC20 /* SQLite.OpenOptionsTests.swift */,
+				9A0829F12062FA6D005BCC20 /* SQLite+CodableTests.swift */,
+			);
+			path = SQLite;
+			sourceTree = "<group>";
+		};
 		9A49DC431EC49A170053710B = {
 			isa = PBXGroup;
 			children = (
@@ -306,7 +374,10 @@
 				9A4D058D206A5D8100E00035 /* Extensions */,
 				9A4D058C206A5D6E00E00035 /* Pragma */,
 				9A154C452076780E00A95252 /* Function */,
+				9A3FEC332080C32600F7413E /* Column Metadata */,
+				9A3FEC342080C33800F7413E /* Statement */,
 				9A4D058B206A5D5B00E00035 /* Models */,
+				9A3FEC352080C34500F7413E /* SQLite */,
 				9A49DC511EC49A170053710B /* SQLite MacOS.plist */,
 				9A49DC711EC49A5F0053710B /* SQLite iOS.plist */,
 			);
@@ -319,20 +390,9 @@
 				9A08295F2061CC30005BCC20 /* Utilities */,
 				9A4D0589206A5D2900E00035 /* Pragma */,
 				9A9082C6207CCEA100BE67F1 /* Function */,
-				9AE5192A1EE898060038ED22 /* ColumnTypeTests.swift */,
-				9A616CB31EE6CB9800827C5E /* ColumnMetadataTests.swift */,
-				9A616CA31EE576BE00827C5E /* StatementTests.swift */,
-				9A736DFE1ED1B8E100A0B389 /* SQLiteTests.swift */,
-				9A8943B5207635F50041E3A2 /* SQLite.FunctionTests.swift */,
-				9A14144120744ED7008029F2 /* SQLite.BackupTests.swift */,
-				9A14142F207393BA008029F2 /* SQLite.BlobTests.swift */,
-				9A7F052D2072574400FBFD09 /* SQLite.CheckpointTests.swift */,
-				9A115988206D7E3F00C5A755 /* SQLite.HookTests.swift */,
-				9A4D050820692D4E00E00035 /* SQLite.PragmaTests.swift */,
-				9A4D04F320651A8700E00035 /* SQLite.TransactionTests.swift */,
-				9A08296A2061E4D4005BCC20 /* SQLite.LocationTests.swift */,
-				9A08296C2061E4E5005BCC20 /* SQLite.OpenOptionsTests.swift */,
-				9A0829F12062FA6D005BCC20 /* SQLite+CodableTests.swift */,
+				9A3FEC362080C35B00F7413E /* Column Metadata */,
+				9A3FEC372080C36400F7413E /* Statement */,
+				9A3FEC382080C36F00F7413E /* SQLite */,
 				9A4C7C951EDD8663004FE2C9 /* test.sqlite */,
 				9A49DC5D1EC49A170053710B /* Info.plist */,
 			);
@@ -370,18 +430,6 @@
 				9ACCEB011ED30A8600DFAE41 /* Status.swift */,
 				9A115985206D707B00C5A755 /* Action.swift */,
 				9A5EF5CF1EDE3FAF00CB16A0 /* Value.swift */,
-				9AE519271EE897A60038ED22 /* ColumnType.swift */,
-				9A616CB01EE6C6FC00827C5E /* ColumnMetadata.swift */,
-				9ACCEB031EDAF63C00DFAE41 /* Statement.swift */,
-				9A5C46FE1ED0C49E00CE3627 /* SQLite.swift */,
-				9A14143E20741AC8008029F2 /* SQLite.Backup.swift */,
-				9A14142C2072C590008029F2 /* SQLite.Blob.swift */,
-				9A7F052A2072435D00FBFD09 /* SQLite.Checkpoint.swift */,
-				9A523D25206BB266006DEC1E /* SQLite.Hook.swift */,
-				9A4D04F120651A2400E00035 /* SQLite.Transaction.swift */,
-				9A0829622061E260005BCC20 /* SQLite.Location.swift */,
-				9A0829662061E277005BCC20 /* SQLite.OpenOptions.swift */,
-				9A0829EF2062FA40005BCC20 /* SQLite+Codable.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
