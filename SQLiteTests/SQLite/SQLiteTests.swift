@@ -256,6 +256,21 @@ class SQLiteTests: XCTestCase {
     }
     
     // ----------------------------------
+    //  MARK: - Sequence -
+    //
+    func testSequence() {
+        let sqlite = SQLite.default()
+        let query  = "SELECT * FROM animal where id < 10"
+        
+        XCTAssertWontThrow {
+            let resultSet = try sqlite.sequence(for: query)
+            for (index, result) in resultSet.enumerated() {
+                XCTAssertEqual(result["id"] as! Int, index + 1)
+            }
+        }
+    }
+    
+    // ----------------------------------
     //  MARK: - Backup -
     //
     func testBackup() {

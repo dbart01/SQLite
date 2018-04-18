@@ -231,6 +231,15 @@ public class SQLite {
     }
     
     // ----------------------------------
+    //  MARK: - Sequence -
+    //
+    public func sequence(for query: String, arguments: Any...) throws -> ResultSet {
+        return ResultSet(
+            statement: try self.statement(for: query, bindingTo: arguments)
+        )
+    }
+    
+    // ----------------------------------
     //  MARK: - Blob -
     //
     public func open(table: String, column: String, rowID: Int, mode: Blob.Mode) throws -> Blob {

@@ -349,29 +349,31 @@ public class Statement {
     
     public func stepDictionaries(using dictionaryHandler: StepDictionaryHandler) throws {
         try self.stepRows { result, statement in
-            
-            var dictionary = [String: Any]()
-            for index in 0..<statement.columnCount {
-                
-                let type = statement.columnType(at: index)!
-                let name = statement.columnName(at: index)
-                
-                switch type {
-                case .integer:
-                    dictionary[name] = statement.integer(at: index)
-                case .float:
-                    dictionary[name] = statement.double(at: index)
-                case .text:
-                    dictionary[name] = statement.string(at: index)
-                case .blob:
-                    dictionary[name] = statement.blob(at: index)
-                case .null:
-                    break
-                }
-            }
-            
-            dictionaryHandler(result, dictionary)
+            dictionaryHandler(result, self.dictionaryRepresentationForRow())
         }
+    }
+    
+    internal func dictionaryRepresentationForRow() -> [String: Any] {
+        var dictionary = [String: Any]()
+        for index in 0..<self.columnCount {
+            
+            let type = self.columnType(at: index)!
+            let name = self.columnName(at: index)
+            
+            switch type {
+            case .integer:
+                dictionary[name] = self.integer(at: index)
+            case .float:
+                dictionary[name] = self.double(at: index)
+            case .text:
+                dictionary[name] = self.string(at: index)
+            case .blob:
+                dictionary[name] = self.blob(at: index)
+            case .null:
+                break
+            }
+        }
+        return dictionary
     }
     
     // ----------------------------------
