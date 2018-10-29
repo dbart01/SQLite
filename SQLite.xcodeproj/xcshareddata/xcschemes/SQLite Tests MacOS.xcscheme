@@ -9,20 +9,6 @@
          <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9A49DC4C1EC49A170053710B"
-               BuildableName = "SQLite.framework"
-               BlueprintName = "SQLite MacOS"
-               ReferencedContainer = "container:SQLite.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
             buildForAnalyzing = "NO">
@@ -54,15 +40,6 @@
             </BuildableReference>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9A49DC4C1EC49A170053710B"
-            BuildableName = "SQLite.framework"
-            BlueprintName = "SQLite MacOS"
-            ReferencedContainer = "container:SQLite.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -79,9 +56,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9A49DC4C1EC49A170053710B"
-            BuildableName = "SQLite.framework"
-            BlueprintName = "SQLite MacOS"
+            BlueprintIdentifier = "9A49DC551EC49A170053710B"
+            BuildableName = "SQLiteTests MacOS.xctest"
+            BlueprintName = "SQLiteTests MacOS"
             ReferencedContainer = "container:SQLite.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -97,9 +74,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9A49DC4C1EC49A170053710B"
-            BuildableName = "SQLite.framework"
-            BlueprintName = "SQLite MacOS"
+            BlueprintIdentifier = "9A49DC551EC49A170053710B"
+            BuildableName = "SQLiteTests MacOS.xctest"
+            BlueprintName = "SQLiteTests MacOS"
             ReferencedContainer = "container:SQLite.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

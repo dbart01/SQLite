@@ -1,9 +1,15 @@
-language: objective-c
-osx_image: xcode8.3
+language: swift
+osx_image: xcode10
+  
 
-script:
-- set -o pipefail
-- ./Scripts/test
+script: set -o pipefail
 
+jobs:
+  include:
+    - script: "./Scripts/test_macos"
+      name: "Test SQLite MacOS"
+    - script: "./Scripts/test_ios"
+      name: "Test SQLite iOS"
+      
 after_success:
 - bash <(curl -s https://codecov.io/bash)

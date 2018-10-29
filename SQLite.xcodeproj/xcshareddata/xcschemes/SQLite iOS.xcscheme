@@ -22,15 +22,15 @@
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "NO"
+            buildForRunning = "YES"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9A49DC551EC49A170053710B"
-               BuildableName = "SQLiteTests.xctest"
-               BlueprintName = "SQLiteTests"
+               BlueprintIdentifier = "9A656D3021879F8000D3A41C"
+               BuildableName = "SQLiteTests iOS.xctest"
+               BlueprintName = "SQLiteTests iOS"
                ReferencedContainer = "container:SQLite.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9A49DC551EC49A170053710B"
-               BuildableName = "SQLiteTests.xctest"
-               BlueprintName = "SQLiteTests"
+               BlueprintIdentifier = "9A656D3021879F8000D3A41C"
+               BuildableName = "SQLiteTests iOS.xctest"
+               BlueprintName = "SQLiteTests iOS"
                ReferencedContainer = "container:SQLite.xcodeproj">
             </BuildableReference>
          </TestableReference>
