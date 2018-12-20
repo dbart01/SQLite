@@ -1162,6 +1162,7 @@
 				);
 				INFOPLIST_FILE = "SQLite/SQLite iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300";
@@ -1192,6 +1193,7 @@
 				);
 				INFOPLIST_FILE = "SQLite/SQLite iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300";
