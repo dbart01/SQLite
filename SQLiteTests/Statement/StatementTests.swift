@@ -409,7 +409,7 @@ class StatementTests: XCTestCase {
         let statement = SQLite.prepared(query: "SELECT * FROM animal WHERE id = 3")
         
         XCTAssertWontThrow {
-            var dictionaries = [[String: Any]]()
+            var dictionaries = [[String: Any?]]()
             try statement.stepDictionaries { result, dictionary in
                 dictionaries.append(dictionary)
             }

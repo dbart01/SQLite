@@ -13,7 +13,7 @@ typealias _Statement = OpaquePointer
 public class Statement {
 
     public typealias StepRowHandler        = (Result, Statement) throws -> Void
-    public typealias StepDictionaryHandler = (Result, [String: Any]) -> Void
+    public typealias StepDictionaryHandler = (Result, [String: Any?]) -> Void
     
     public private(set) weak var sqlite: SQLite?
     
@@ -353,8 +353,8 @@ public class Statement {
         }
     }
     
-    internal func dictionaryRepresentationForRow() -> [String: Any] {
-        var dictionary = [String: Any]()
+    internal func dictionaryRepresentationForRow() -> [String: Any?] {
+        var dictionary = [String: Any?]()
         for index in 0..<self.columnCount {
             
             let type = self.columnType(at: index)!
@@ -370,7 +370,7 @@ public class Statement {
             case .blob:
                 dictionary[name] = self.blob(at: index)
             case .null:
-                break
+                dictionary[name] = nil
             }
         }
         return dictionary

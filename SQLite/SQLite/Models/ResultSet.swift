@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias Row = [String : Any]
+public typealias Row = [String : Any?]
 
 public class ResultSet: Sequence {
     

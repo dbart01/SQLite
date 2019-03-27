@@ -184,7 +184,7 @@ class Function_ContextTests: XCTestCase {
         })
         
         try! sqlite.execute(query: "SELECT xct_func(1) as result", dictionaryHandler: { result, dictionary in
-            handler(dictionary["result"])
+            handler(dictionary["result"] ?? nil)
         })
         
         _ = function
