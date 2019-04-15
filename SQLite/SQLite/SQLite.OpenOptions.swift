@@ -23,7 +23,7 @@ extension SQLite {
         
         public let rawValue: Int32
         
-        public init(rawValue: RawValue) {
+        public init(rawValue: Int32) {
             self.rawValue = rawValue
         }
     }
