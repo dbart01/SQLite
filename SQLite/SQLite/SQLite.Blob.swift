@@ -48,8 +48,8 @@ extension SQLite {
         //
         public func read(count: Int, at offset: Int = 0) throws -> Data {
             var buffer = Data(count: count)
-            try buffer.withUnsafeMutableBytes { (bytes: UnsafeMutablePointer<UInt8>) in
-                let status = sqlite3_blob_read(self.blob, bytes, Int32(count), Int32(offset)).status
+            try buffer.withUnsafeMutableBytes { bytes in
+                let status = sqlite3_blob_read(self.blob, bytes.baseAddress, Int32(count), Int32(offset)).status
                 if status != .ok {
                     throw status
                 }
@@ -59,8 +59,8 @@ extension SQLite {
         }
         
         public func write(_ data: Data, at offset: Int = 0) throws {
-            try data.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) in
-                let status = sqlite3_blob_write(self.blob, bytes, Int32(data.count), Int32(offset)).status
+            try data.withUnsafeBytes { bytes in
+                let status = sqlite3_blob_write(self.blob, bytes.baseAddress, Int32(data.count), Int32(offset)).status
                 if status != .ok {
                     throw status
                 }

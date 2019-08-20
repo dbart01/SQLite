@@ -128,7 +128,7 @@ extension Function {
             }
             
             blob.withUnsafeBytes { bytes in
-                sqlite3_result_blob(self.context, bytes, Int32(blob.count), Destructor.transient)
+                sqlite3_result_blob(self.context, bytes.baseAddress, Int32(blob.count), Destructor.transient)
             }
         }
         

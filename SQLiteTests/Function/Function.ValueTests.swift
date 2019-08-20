@@ -92,7 +92,7 @@ class Function_ValueTests: XCTestCase {
         let id    = self.functionValueForID()
         let image = self.functionValueForImage()
         
-        XCTAssertEqual(try! id.typed(), Data(bytes: [0x31, 0x30]))
+        XCTAssertEqual(try! id.typed(), Data([0x31, 0x30]))
         XCTAssertEqual(try! image.typed(), Optional<Data>.none)
     }
     
@@ -134,7 +134,7 @@ class Function_ValueTests: XCTestCase {
     func testBlobValue() {
         let value = self.functionValueForID()
         
-        XCTAssertEqual(value.blob, Data(bytes: [0x31, 0x30]))
+        XCTAssertEqual(value.blob, Data([0x31, 0x30]))
     }
     
     func testBlobValueNull() {

@@ -69,7 +69,7 @@ class Function_ContextTests: XCTestCase {
     }
     
     func testGenericData() {
-        let blob = Data(bytes: [0xFE, 0xED, 0xBE, 0xEF])
+        let blob = Data([0xFE, 0xED, 0xBE, 0xEF])
         self.execute(function: { $0.bind(blob) }, handler: { XCTAssertEqual($0 as! Data, blob) })
     }
     
@@ -140,7 +140,7 @@ class Function_ContextTests: XCTestCase {
     }
     
     func testBlob() {
-        let blob = Data(bytes: [0xFE, 0xED, 0xBE, 0xEF])
+        let blob = Data([0xFE, 0xED, 0xBE, 0xEF])
         self.execute(function: { context in
             context.bind(blob: blob)
         }, handler: { result in

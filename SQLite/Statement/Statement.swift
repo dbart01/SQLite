@@ -213,7 +213,7 @@ public class Statement {
         }
         
         let status = blob.withUnsafeBytes { bytes in
-            return sqlite3_bind_blob(self.statement, self.convert(toOneBased: column), bytes, Int32(blob.count), Destructor.transient).status
+            return sqlite3_bind_blob(self.statement, self.convert(toOneBased: column), bytes.baseAddress, Int32(blob.count), Destructor.transient).status
         }
         guard status == .ok else {
             throw status

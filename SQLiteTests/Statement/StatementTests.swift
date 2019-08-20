@@ -420,7 +420,7 @@ class StatementTests: XCTestCase {
             XCTAssertEqual(dictionary["id"]     as! Int,    3)
             XCTAssertEqual(dictionary["type"]   as! String, "mammal")
             XCTAssertEqual(dictionary["length"] as! Double, 4279.281)
-            XCTAssertEqual(dictionary["image"]  as! Data,   Data(bytes: [0xfe, 0xed, 0xbe, 0xef]))
+            XCTAssertEqual(dictionary["image"]  as! Data,   Data([0xfe, 0xed, 0xbe, 0xef]))
             
         }
     }
@@ -569,7 +569,7 @@ class StatementTests: XCTestCase {
             XCTAssertEqual(statement.string(at: 1),  nil)
             XCTAssertEqual(statement.string(at: 2),  "mammal")
             XCTAssertEqual(statement.double(at: 3),  4279.281)
-            XCTAssertEqual(statement.blob(at: 4),    Data(bytes: [0xfe, 0xed, 0xbe, 0xef])) // feedbeef
+            XCTAssertEqual(statement.blob(at: 4),    Data([0xfe, 0xed, 0xbe, 0xef])) // feedbeef
             XCTAssertEqual(statement.blob(at: 5),    nil)
         } else {
             XCTFail()
@@ -610,7 +610,7 @@ class StatementTests: XCTestCase {
             XCTAssertEqual(try statement.value(at: 3), 4279.281 as Double)
             XCTAssertEqual(try statement.value(at: 3), 4279.281 as Decimal)
             
-            XCTAssertEqual(try statement.value(at: 4), Data(bytes: [0xfe, 0xed, 0xbe, 0xef])) // feedbeef
+            XCTAssertEqual(try statement.value(at: 4), Data([0xfe, 0xed, 0xbe, 0xef])) // feedbeef
             XCTAssertEqual(try statement.value(at: 5), thumb)
         } else {
             XCTFail()
