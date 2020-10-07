@@ -12,9 +12,8 @@ import sqlite3
 extension Function {
     open class Aggregate<Container>: Function where Container: Aggregatable {
         
-        // ----------------------------------
-        //  MARK: - Init -
-        //
+        // MARK: - Init -
+
         public required init(sqlite: SQLite, description: Description) throws {
             try super.init(sqlite: sqlite, description: description)
             
@@ -44,9 +43,8 @@ extension Function {
             }
         }
         
-        // ----------------------------------
-        //  MARK: - Private -
-        //
+        // MARK: - Private -
+
         private func _step(context: Context, arguments: [Value]) {
             let bufferSize = Int32(MemoryLayout<Container>.stride)
             let buffer     = sqlite3_aggregate_context(context.context, bufferSize)!
@@ -70,9 +68,8 @@ extension Function {
             return Container.self is AnyObject.Type
         }
         
-        // ----------------------------------
-        //  MARK: - API -
-        //
+        // MARK: - API -
+
         open func step(context: Context, arguments: [Value], container: inout Container) {
             // Subclass override
         }
@@ -83,9 +80,8 @@ extension Function {
     }
 }
 
-// ----------------------------------
-//  MARK: - Placeholder -
-//
+// MARK: - Placeholder -
+
 private final class Placeholder: Aggregatable {
     static func initialize() -> Placeholder {
         return Placeholder()
@@ -94,9 +90,8 @@ private final class Placeholder: Aggregatable {
     init() {}
 }
 
-// ----------------------------------
-//  MARK: - Function.Container -
-//
+// MARK: - Function.Container -
+
 private extension UnsafeMutableRawPointer {
     
     private func mutablePointer<T>(typed type: T.Type) -> UnsafeMutablePointer<T?> {
@@ -132,9 +127,8 @@ private extension UnsafeMutableRawPointer {
     }
 }
 
-// ----------------------------------
-//  MARK: - Function -
-//
+// MARK: - Function -
+
 private extension UnsafeMutableRawPointer {
     func function<T>(typed: T.Type) -> Function.Aggregate<T> where T: Aggregatable, T: AnyObject {
         return Unmanaged<Function.Aggregate<T>>.fromOpaque(self).takeUnretainedValue()

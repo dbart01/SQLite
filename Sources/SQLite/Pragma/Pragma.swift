@@ -21,9 +21,8 @@ public struct PragmaDescription<T> where T: PragmaRepresentable {
     public let key:  String
     public let type: T.Type
     
-    // ----------------------------------
-    //  MARK: - Init -
-    //
+    // MARK: - Init -
+
     fileprivate init(key: String, type: T.Type) {
         self.key  = key
         self.type = type

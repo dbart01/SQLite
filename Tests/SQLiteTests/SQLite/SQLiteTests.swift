@@ -13,9 +13,8 @@ class SQLiteTests: XCTestCase {
     
     private let fileManager = FileManager.default
     
-    // ----------------------------------
-    //  MARK: - Open -
-    //
+    // MARK: - Open -
+
     func testOpenValidConnection() {
         XCTAssertWontThrow {
             let localURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("test.sqlite")
@@ -36,9 +35,8 @@ class SQLiteTests: XCTestCase {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - Last Inserted ID -
-    //
+    // MARK: - Last Inserted ID -
+
     func testGetLastInsertedID() {
         let sqlite = SQLite.default()
         
@@ -63,9 +61,8 @@ class SQLiteTests: XCTestCase {
         XCTAssertEqual(sqlite.lastInsertID, 64)
     }
     
-    // ----------------------------------
-    //  MARK: - Errors -
-    //
+    // MARK: - Errors -
+
     func testErrorReporting() {
         let sqlite = SQLite.default()
         
@@ -77,9 +74,8 @@ class SQLiteTests: XCTestCase {
         XCTAssertEqual(sqlite.errorMessage, "no such column: images")
     }
     
-    // ----------------------------------
-    //  MARK: - Changes -
-    //
+    // MARK: - Changes -
+
     func testChangeCount() {
         let sqlite = SQLite.default()
         
@@ -109,9 +105,8 @@ class SQLiteTests: XCTestCase {
         XCTAssertEqual(sqlite.totalChangeCount, 16)
     }
     
-    // ----------------------------------
-    //  MARK: - Metadata -
-    //
+    // MARK: - Metadata -
+
     func testMetadataWithDefaultDatabase() {
         let sqlite = SQLite.default()
         
@@ -142,9 +137,8 @@ class SQLiteTests: XCTestCase {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - Statement -
-    //
+    // MARK: - Statement -
+
     func testPrepareValidStatement() {
         let sqlite = SQLite.default()
         let query  = "CREATE TABLE vehicle (id INTEGER primary key autoincrement, make TEXT, model TEXT);"
@@ -165,9 +159,8 @@ class SQLiteTests: XCTestCase {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - Statement Cache -
-    //
+    // MARK: - Statement Cache -
+
     func testStatementCachingEnabled() {
         let query  = "SELECT * FROM animal WHERE type = ?"
         let sqlite = SQLite.default()
@@ -217,9 +210,8 @@ class SQLiteTests: XCTestCase {
         XCTAssertFalse(statement1 === statement2)
     }
     
-    // ----------------------------------
-    //  MARK: - Execute -
-    //
+    // MARK: - Execute -
+
     func testExecuteNoReturnValue() {
         let sqlite = SQLite.default()
         
@@ -255,9 +247,8 @@ class SQLiteTests: XCTestCase {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - Sequence -
-    //
+    // MARK: - Sequence -
+
     func testSequence() {
         let sqlite = SQLite.default()
         let query  = "SELECT * FROM animal where id < 10"
@@ -270,9 +261,8 @@ class SQLiteTests: XCTestCase {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - Backup -
-    //
+    // MARK: - Backup -
+
     func testBackup() {
         let source      = SQLite.default()
         let destination = SQLite.emptyInMemory()

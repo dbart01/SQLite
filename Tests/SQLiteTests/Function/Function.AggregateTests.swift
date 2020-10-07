@@ -11,9 +11,8 @@ import XCTest
 
 class Function_AggregateTests: XCTestCase {
     
-    // ----------------------------------
-    //  MARK: - Aggregate Reference -
-    //
+    // MARK: - Aggregate Reference -
+
     func testAggregateWithReferenceContainer() {
         let sqlite      = SQLite.default()
         let description = Function.Description(
@@ -74,9 +73,8 @@ class Function_AggregateTests: XCTestCase {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - Invalid -
-    //
+    // MARK: - Invalid -
+
     func testAggregateInvalid() {
         let sqlite      = SQLite.default()
         let description = Function.Description(

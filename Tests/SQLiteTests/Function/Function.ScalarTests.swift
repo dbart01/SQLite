@@ -11,9 +11,8 @@ import XCTest
 
 class Function_ScalarTests: XCTestCase {
     
-    // ----------------------------------
-    //  MARK: - Scalar -
-    //
+    // MARK: - Scalar -
+
     func testScalar() {
         let sqlite      = SQLite.default()
         let description = Function.Description(
@@ -34,9 +33,8 @@ class Function_ScalarTests: XCTestCase {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - Invalid -
-    //
+    // MARK: - Invalid -
+
     func testScalarInvalid() {
         let sqlite      = SQLite.default()
         let description = Function.Description(

@@ -11,9 +11,8 @@ import XCTest
 
 class Pragma_BooleanTests: XCTestCase {
 
-    // ----------------------------------
-    //  MARK: - PragmaRepresentable -
-    //
+    // MARK: - PragmaRepresentable -
+
     func testInit() {
         XCTAssertEqual(Pragma.Boolean(rawValue: 1), .on)
         XCTAssertEqual(Pragma.Boolean(rawValue: 0), .off)

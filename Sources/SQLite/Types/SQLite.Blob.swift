@@ -21,9 +21,8 @@ extension SQLite {
             return Int(sqlite3_blob_bytes(self.blob))
         }
         
-        // ----------------------------------
-        //  MARK: - Init -
-        //
+        // MARK: - Init -
+
         internal convenience init(sqlite: _SQLite, database: String, table: String, column: String, rowID: Int, mode: Mode) throws {
             let blob = try initialize(_Blob.self) {
                 sqlite3_blob_open(sqlite, database, table, column, sqlite3_int64(rowID), mode.rawValue, $0).status
@@ -44,9 +43,8 @@ extension SQLite {
             }
         }
         
-        // ----------------------------------
-        //  MARK: - I/O -
-        //
+        // MARK: - I/O -
+
         public func read(count: Int, at offset: Int = 0) throws -> Data {
             var buffer = Data(count: count)
             try buffer.withUnsafeMutableBytes { bytes in
@@ -77,9 +75,8 @@ extension SQLite {
     }
 }
 
-// ----------------------------------
-//  MARK: - Mode -
-//
+// MARK: - Mode -
+
 extension SQLite.Blob {
     public enum Mode: RawRepresentable {
         

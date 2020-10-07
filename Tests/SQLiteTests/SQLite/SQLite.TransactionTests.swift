@@ -11,18 +11,16 @@ import XCTest
 
 class SQLite_TransactionTests: XCTestCase {
 
-    // ----------------------------------
-    //  MARK: - Values -
-    //
+    // MARK: - Values -
+
     func testValues() {
         XCTAssertEqual(SQLite.Transaction.deferred.sqlRepresentation, "DEFERRED")
         XCTAssertEqual(SQLite.Transaction.immediate.sqlRepresentation, "IMMEDIATE")
         XCTAssertEqual(SQLite.Transaction.exclusive.sqlRepresentation, "EXCLUSIVE")
     }
     
-    // ----------------------------------
-    //  MARK: - Transactions -
-    //
+    // MARK: - Transactions -
+
     func testTransactionSuccessful() {
         let sqlite = SQLite.default()
         

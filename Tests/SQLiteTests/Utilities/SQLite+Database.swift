@@ -38,9 +38,8 @@ extension SQLite {
     }
 }
 
-// ----------------------------------
-//  MARK: - Test Schema -
-//
+// MARK: - Test Schema -
+
 private extension SQLite {
     
     func populate() {

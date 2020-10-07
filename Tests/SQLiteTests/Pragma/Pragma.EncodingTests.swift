@@ -11,9 +11,8 @@ import XCTest
 
 class Pragma_EncodingTests: XCTestCase {
     
-    // ----------------------------------
-    //  MARK: - PragmaRepresentable -
-    //
+    // MARK: - PragmaRepresentable -
+
     func testInit() {
         XCTAssertEqual(Pragma.Encoding(rawValue: "UTF-8"),    .utf8)
         XCTAssertEqual(Pragma.Encoding(rawValue: "UTF-16"),   .utf16)

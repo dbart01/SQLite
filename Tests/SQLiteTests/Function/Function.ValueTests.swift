@@ -24,26 +24,23 @@ class Function_ValueTests: XCTestCase {
         return try! DoubleFunction(sqlite: self.sqlite, description: description)
     }()
     
-    // ----------------------------------
-    //  MARK: - Setup -
-    //
+    // MARK: - Setup -
+
     override func setUp() {
         super.setUp()
         
         _ = self.function
     }
     
-    // ----------------------------------
-    //  MARK: - Init -
-    //
+    // MARK: - Init -
+
     func testCollectionInit() {
         let values = Function.Value.collection(argc: 1, argv: self.valueForID())
         XCTAssertEqual(values.count, 1)
     }
     
-    // ----------------------------------
-    //  MARK: - Generic Values -
-    //
+    // MARK: - Generic Values -
+
     func testGenericBool() {
         let id = self.functionValueForID()
         
@@ -105,9 +102,8 @@ class Function_ValueTests: XCTestCase {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - Values -
-    //
+    // MARK: - Values -
+
     func testIntegerValue() {
         let value = self.functionValueForID()
         
@@ -143,9 +139,8 @@ class Function_ValueTests: XCTestCase {
         XCTAssertEqual(value.blob, nil)
     }
     
-    // ----------------------------------
-    //  MARK: - Utilities -
-    //
+    // MARK: - Utilities -
+
     private func functionValueForID() -> Function.Value {
         return Function.Value.collection(argc: 1, argv: self.valueForID()).first!
     }

@@ -17,16 +17,14 @@ public class ResultSet: Sequence {
     
     internal let statement: Statement
     
-    // ----------------------------------
-    //  MARK: - Init -
-    //
+    // MARK: - Init -
+
     internal init(statement: Statement) {
         self.statement = statement
     }
     
-    // ----------------------------------
-    //  MARK: - Sequence -
-    //
+    // MARK: - Sequence -
+
     public func makeIterator() -> AnyIterator<Row> {
         do {
             try self.statement.reset()
@@ -41,24 +39,21 @@ public class ResultSet: Sequence {
     }
 }
 
-// ----------------------------------
-//  MARK: - SequentialIterator -
-//
+// MARK: - SequentialIterator -
+
 extension ResultSet {
     internal struct SequentialIterator: IteratorProtocol {
         
         let statement: Statement
         
-        // ----------------------------------
-        //  MARK: - Init -
-        //
+        // MARK: - Init -
+
         internal init(statement: Statement) {
             self.statement = statement
         }
         
-        // ----------------------------------
-        //  MARK: - IteratorProtocol -
-        //
+        // MARK: - IteratorProtocol -
+
         typealias Element = Row
         
         mutating func next() -> Element? {

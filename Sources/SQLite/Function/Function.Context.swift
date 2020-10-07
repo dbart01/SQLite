@@ -16,16 +16,14 @@ extension Function {
         
         internal let context: _Context
         
-        // ----------------------------------
-        //  MARK: - Init -
-        //
+        // MARK: - Init -
+
         internal init(context: _Context) {
             self.context = context
         }
         
-        // ----------------------------------
-        //  MARK: - Bind -
-        //
+        // MARK: - Bind -
+
         public func bind<T>(_ value: T?) {
             guard let value = value else {
                 return self.bindNull()
@@ -154,9 +152,8 @@ extension Function {
     }
 }
 
-// ----------------------------------
-//  MARK: - Error -
-//
+// MARK: - Error -
+
 extension Function.Context {
     public enum Error: Equatable {
         case message(String)

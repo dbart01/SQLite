@@ -30,9 +30,8 @@ public class Statement {
     
     internal let statement: _Statement
     
-    // ----------------------------------
-    //  MARK: - Init -
-    //
+    // MARK: - Init -
+
     convenience init(sqlite: SQLite, query: String) throws {
         guard query.count > 0 else {
             throw Status.error
@@ -55,9 +54,8 @@ public class Statement {
         try? finalize()
     }
     
-    // ----------------------------------
-    //  MARK: - Query -
-    //
+    // MARK: - Query -
+
     public var query: String {
         return sqlite3_sql(self.statement).string
     }
@@ -66,9 +64,8 @@ public class Statement {
         return sqlite3_expanded_sql(self.statement).string
     }
     
-    // ----------------------------------
-    //  MARK: - Parameters -
-    //
+    // MARK: - Parameters -
+
     public var parameterCount: Int {
         return Int(sqlite3_bind_parameter_count(self.statement))
     }
@@ -88,9 +85,8 @@ public class Statement {
         return nil
     }
     
-    // ----------------------------------
-    //  MARK: - Index Conversion -
-    //
+    // MARK: - Index Conversion -
+
     private func convert(toZeroBased index: Int32) -> Int {
         return Int(index - 1)
     }
@@ -99,9 +95,8 @@ public class Statement {
         return Int32(index + 1)
     }
     
-    // ----------------------------------
-    //  MARK: - Bind -
-    //
+    // MARK: - Bind -
+
     public func bind<T>(_ value: T?, to column: Int) throws {
         guard let value = value else {
             return try self.bindNull(to: column)
@@ -228,9 +223,8 @@ public class Statement {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - Columns -
-    //
+    // MARK: - Columns -
+
     public var dataCount: Int {
         return Int(sqlite3_data_count(self.statement))
     }
@@ -251,9 +245,8 @@ public class Statement {
         return Int(sqlite3_column_bytes(self.statement, Int32(column)))
     }
     
-    // ----------------------------------
-    //  MARK: - Values -
-    //
+    // MARK: - Values -
+
     public func value<T>(at column: Int) throws -> T? {
         
         if T.self == Bool.self   { return (self.integer(at: column).boolValue as! T) }
@@ -322,9 +315,8 @@ public class Statement {
         return nil
     }
     
-    // ----------------------------------
-    //  MARK: - Step -
-    //
+    // MARK: - Step -
+
     @discardableResult
     public func step() throws -> Result {
         let status = sqlite3_step(self.statement).status
@@ -377,9 +369,8 @@ public class Statement {
         return dictionary
     }
     
-    // ----------------------------------
-    //  MARK: - Reset -
-    //
+    // MARK: - Reset -
+
     internal func finalize() throws {
         guard !self.isFinalized else {
             return
@@ -410,7 +401,7 @@ public class Statement {
 #if SQLITE_ENABLE_COLUMN_METADATA
 
 // --------------------------------------
-//  MARK: - Column Metadata Extension -
+// MARK: - Column Metadata Extension -
 //
 extension Statement {
     public func columnTableName(at column: Int) -> String? {
@@ -437,18 +428,16 @@ extension Statement {
     
 #endif
 
-// ----------------------------------
-//  MARK: - Error -
-//
+// MARK: - Error -
+
 extension Statement {
     public enum Error: Swift.Error {
         case invalidType
     }
 }
 
-// ----------------------------------
-//  MARK: - Result -
-//
+// MARK: - Result -
+
 extension Statement {
     public enum Result {
         case done
@@ -456,9 +445,8 @@ extension Statement {
     }
 }
 
-// ----------------------------------
-//  MARK: - Private -
-//
+// MARK: - Private -
+
 extension Int {
     var boolValue: Bool {
         return self > 0

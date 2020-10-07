@@ -14,9 +14,8 @@ class BlockFunction: Function.Scalar {
     
     let block: Block
     
-    // ----------------------------------
-    //  MARK: - Init -
-    //
+    // MARK: - Init -
+
     init(sqlite: SQLite, description: Function.Description, block: @escaping Block) throws {
         self.block = block
         
@@ -27,9 +26,8 @@ class BlockFunction: Function.Scalar {
         fatalError()
     }
     
-    // ----------------------------------
-    //  MARK: - Scalar -
-    //
+    // MARK: - Scalar -
+
     override func main(context: Context, arguments: [Value]) {
         self.block(context, arguments)
     }

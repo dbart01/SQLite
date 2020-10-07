@@ -24,9 +24,8 @@ extension SQLite {
 
         private let backup: _Backup
         
-        // ----------------------------------
-        //  MARK: - Init -
-        //
+        // MARK: - Init -
+
         public init(from sourceSqlite: SQLite, sourceName: String = "main", to destinationSqlite: SQLite, destinationName: String = "main") throws {
             self.sourceSqlite      = sourceSqlite
             self.destinationSqlite = destinationSqlite
@@ -47,9 +46,8 @@ extension SQLite {
             }
         }
         
-        // ----------------------------------
-        //  MARK: - Copy -
-        //
+        // MARK: - Copy -
+
         public func copy(pages: Int, progressHandler: ProgressHandler? = nil) throws -> Status {
             let status = sqlite3_backup_step(self.backup, Int32(pages)).status
             guard status == .ok || status == .done else {

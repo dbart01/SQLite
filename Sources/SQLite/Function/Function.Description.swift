@@ -16,9 +16,8 @@ extension Function {
         public let encoding:      Encoding
         public let deterministic: Bool
         
-        // ----------------------------------
-        //  MARK: - Init -
-        //
+        // MARK: - Init -
+
         public init(name: String, arguments: ArgCount, encoding: Encoding = .utf8, deterministic: Bool = true) {
             self.name          = name
             self.arguments     = arguments

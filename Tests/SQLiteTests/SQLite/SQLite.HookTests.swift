@@ -11,9 +11,8 @@ import XCTest
 
 class SQLite_HookTests: XCTestCase {
 
-    // ----------------------------------
-    //  MARK: - Init -
-    //
+    // MARK: - Init -
+
     func testInit() {
         let sqlite = SQLite.default()
         
@@ -24,9 +23,8 @@ class SQLite_HookTests: XCTestCase {
         XCTAssertNil(sqlite.hook.wal)
     }
     
-    // ----------------------------------
-    //  MARK: - Hooks -
-    //
+    // MARK: - Hooks -
+
     func testUpdateHook() {
         let sqlite = SQLite.default()
         let e = self.expectation(description: "Should call update hook")

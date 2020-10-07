@@ -11,9 +11,8 @@ import XCTest
 
 class FunctionTests: XCTestCase {
     
-    // ----------------------------------
-    //  MARK: - Init -
-    //
+    // MARK: - Init -
+
     func testInit() {
         let sqlite      = SQLite.default()
         let description = Function.Description(

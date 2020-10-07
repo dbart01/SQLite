@@ -18,9 +18,8 @@ class Function_ContextTests: XCTestCase {
         deterministic: true
     )
 
-    // ----------------------------------
-    //  MARK: - Init -
-    //
+    // MARK: - Init -
+
     func testInit() {
         let sqlite   = SQLite.default()
         let function = try! BlockFunction(sqlite: sqlite, description: self.functionDescription, block: { ctx, args in
@@ -32,9 +31,8 @@ class Function_ContextTests: XCTestCase {
         _ = function
     }
     
-    // ----------------------------------
-    //  MARK: - Generic -
-    //
+    // MARK: - Generic -
+
     func testGenericBool() {
         self.execute(function: { $0.bind(true)  }, handler: { XCTAssertEqual($0 as! Int, 1) })
         self.execute(function: { $0.bind(false) }, handler: { XCTAssertEqual($0 as! Int, 0) })
@@ -88,9 +86,8 @@ class Function_ContextTests: XCTestCase {
         self.execute(function: { $0.bind(anyBear)  }, handler: { XCTAssertEqual($0 as? String, nil)     })
     }
     
-    // ----------------------------------
-    //  MARK: - Bind -
-    //
+    // MARK: - Bind -
+
     func testInteger() {
         self.execute(function: { context in
             context.bind(integer: 13)
@@ -174,9 +171,8 @@ class Function_ContextTests: XCTestCase {
         }, expecting: .busy)
     }
     
-    // ----------------------------------
-    //  MARK: - Utilities -
-    //
+    // MARK: - Utilities -
+
     private func execute(function: @escaping (Function.Context) -> Void, handler: @escaping (Any?) -> Void) {
         let sqlite   = SQLite.default()
         let function = try! BlockFunction(sqlite: sqlite, description: self.functionDescription, block: { context, args in

@@ -16,9 +16,8 @@ extension Function {
         
         private let value: _Value
         
-        // ----------------------------------
-        //  MARK: - Init -
-        //
+        // MARK: - Init -
+
         internal static func collection(argc: Int, argv: UnsafeMutablePointer<_Value?>) -> [Value] {
             var container: [Value] = []
             for i in 0..<argc {
@@ -32,9 +31,8 @@ extension Function {
             self.value = value
         }
         
-        // ----------------------------------
-        //  MARK: - Values -
-        //
+        // MARK: - Values -
+
         public func typed<T>() throws -> T? {
             
             if T.self == Bool.self   { return (self.integer.boolValue as! T) }
@@ -106,9 +104,8 @@ extension Function {
     }
 }
 
-// ----------------------------------
-//  MARK: - Error -
-//
+// MARK: - Error -
+
 extension Function.Value {
     public enum Error: Swift.Error {
         case invalidType

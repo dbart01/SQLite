@@ -27,9 +27,8 @@ extension SQLite {
     }
 }
 
-// ----------------------------------
-//  MARK: - Transaction.Result -
-//
+// MARK: - Transaction.Result -
+
 extension SQLite.Transaction {
     public enum Result {
         case commit

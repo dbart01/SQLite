@@ -60,9 +60,8 @@ public class SQLite {
     
     internal let sqlite: _SQLite
     
-    // ----------------------------------
-    //  MARK: - Init -
-    //
+    // MARK: - Init -
+
     public convenience init(location: Location = .temporary, options: OpenOptions = [.readWrite, .create]) throws {
         let sqlite = try initialize(_SQLite.self) {
             sqlite3_open_v2(location.path, $0, options.rawValue, nil).status
@@ -83,9 +82,8 @@ public class SQLite {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - Metadata -
-    //
+    // MARK: - Metadata -
+
     public func columnMetadataFor(column: String, table: String, database: String? = nil) throws -> ColumnMetadata {
         
         var type:          UnsafePointer<Int8>?
@@ -131,9 +129,8 @@ public class SQLite {
         )
     }
     
-    // ----------------------------------
-    //  MARK: - Statement -
-    //
+    // MARK: - Statement -
+
     public func prepare(query: String) throws -> Statement {
         if let cachedStatement = try self.cachedStatementFor(query), self.isCacheEnabled {
             return cachedStatement
@@ -147,9 +144,8 @@ public class SQLite {
         return statement
     }
     
-    // ----------------------------------
-    //  MARK: - Statement Cache -
-    //
+    // MARK: - Statement Cache -
+
     private func cachedStatementFor(_ key: String) throws -> Statement? {
         if let statement = self.cachedStatements[key] {
             try statement.reset()
@@ -164,9 +160,8 @@ public class SQLite {
         self.cachedStatements[key] = statement
     }
     
-    // ----------------------------------
-    //  MARK: - Functions -
-    //
+    // MARK: - Functions -
+
     func register(_ functionType: Function.Type, using description: Function.Description) throws {
         let function = try functionType.init(sqlite: self, description: description)
         self.register(function)
@@ -182,9 +177,8 @@ public class SQLite {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - Pragma -
-    //
+    // MARK: - Pragma -
+
     public func get<T>(pragma: PragmaDescription<T>) throws -> T? {
         var value: T?
         try self.execute(query: "PRAGMA \(pragma.key);", rowHandler: { result, statement in
@@ -201,9 +195,8 @@ public class SQLite {
         return result == .done || result == .row
     }
     
-    // ----------------------------------
-    //  MARK: - Execute -
-    //
+    // MARK: - Execute -
+
     @discardableResult
     public func execute(query: String, arguments: Any...) throws -> Statement.Result {
         let statement = try self.statement(for: query, bindingTo: arguments)
@@ -236,18 +229,16 @@ public class SQLite {
         return statement
     }
     
-    // ----------------------------------
-    //  MARK: - Sequence -
-    //
+    // MARK: - Sequence -
+
     public func sequence(for query: String, arguments: Any...) throws -> ResultSet {
         return ResultSet(
             statement: try self.statement(for: query, bindingTo: arguments)
         )
     }
     
-    // ----------------------------------
-    //  MARK: - Blob -
-    //
+    // MARK: - Blob -
+
     public func open(table: String, column: String, rowID: Int, mode: Blob.Mode) throws -> Blob {
         return try Blob(
             sqlite:   self.sqlite,
@@ -259,17 +250,15 @@ public class SQLite {
         )
     }
     
-    // ----------------------------------
-    //  MARK: - Checkpoint -
-    //
+    // MARK: - Checkpoint -
+
     @discardableResult
     public func checkpoint(_ type: Checkpoint = .passive) -> Status {
         return sqlite3_wal_checkpoint_v2(self.sqlite, nil, type.rawValue, nil, nil).status
     }
     
-    // ----------------------------------
-    //  MARK: - Transactions -
-    //
+    // MARK: - Transactions -
+
     @discardableResult
     public func performTransaction(_ type: Transaction = .deferred, transaction: TransactionOperation) throws -> Transaction.Result {
         try self.execute(query: "BEGIN \(type.sqlRepresentation) TRANSACTION;")
@@ -288,9 +277,8 @@ public class SQLite {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - Backup -
-    //
+    // MARK: - Backup -
+
     public func backup(from sourceName: String = "main", to destination: SQLite, database destinationName: String = "main") throws -> Backup {
         return try Backup(
             from:            self,

@@ -11,9 +11,8 @@ import XCTest
 
 class Pragma_PageSizeTests: XCTestCase {
 
-    // ----------------------------------
-    //  MARK: - PragmaRepresentable -
-    //
+    // MARK: - PragmaRepresentable -
+
     func testInit() {
         XCTAssertEqual(Pragma.CacheSize(rawValue: 200),   .pages(200))
         XCTAssertEqual(Pragma.CacheSize(rawValue: -1024), .kilobytes(1024))
@@ -29,9 +28,8 @@ class Pragma_PageSizeTests: XCTestCase {
         XCTAssertEqual(Pragma.CacheSize.kilobytes(1024).sqlValue, "-1024")
     }
     
-    // ----------------------------------
-    //  MARK: - Equality -
-    //
+    // MARK: - Equality -
+
     func testEquality() {
         XCTAssertEqual(Pragma.CacheSize.pages(200),    Pragma.CacheSize.pages(200))
         XCTAssertNotEqual(Pragma.CacheSize.pages(200), Pragma.CacheSize.pages(100))

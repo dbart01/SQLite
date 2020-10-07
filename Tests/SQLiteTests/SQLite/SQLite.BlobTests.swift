@@ -29,9 +29,8 @@ class SQLite_BlobTests: XCTestCase {
         0xCD, 0xCD, 0xCD, 0xCD, 0xCD, 0xCD, 0xCD, 0xCD,
     ])
     
-    // ----------------------------------
-    //  MARK: - Init -
-    //
+    // MARK: - Init -
+
     func testInitSuccess() {
         let sqlite = self.seededDatabase()
         
@@ -50,9 +49,8 @@ class SQLite_BlobTests: XCTestCase {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - I/O -
-    //
+    // MARK: - I/O -
+
     func testRead() {
         let blob = self.openBlob()
         
@@ -143,9 +141,8 @@ class SQLite_BlobTests: XCTestCase {
         }
     }
 
-    // ----------------------------------
-    //  MARK: - Mode -
-    //
+    // MARK: - Mode -
+
     func testModeInit() {
         XCTAssertEqual(SQLite.Blob.Mode(rawValue: 0),   .readOnly)
         XCTAssertEqual(SQLite.Blob.Mode(rawValue: 1),   .readWrite)
@@ -159,9 +156,8 @@ class SQLite_BlobTests: XCTestCase {
         XCTAssertEqual(SQLite.Blob.Mode.readWrite.rawValue, 1)
     }
     
-    // ----------------------------------
-    //  MARK: - Utilities -
-    //
+    // MARK: - Utilities -
+
     private func openBlob() -> SQLite.Blob {
         let sqlite = self.seededDatabase()
         return try! sqlite.open(table: "animal", column: "image", rowID: 900, mode: .readWrite)

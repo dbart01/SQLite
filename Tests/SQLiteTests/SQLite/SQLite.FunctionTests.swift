@@ -11,9 +11,8 @@ import XCTest
 
 class SQLite_FunctionTests: XCTestCase {
     
-    // ----------------------------------
-    //  MARK: - Registration -
-    //
+    // MARK: - Registration -
+
     func testRegisterType() {
         let sqlite      = SQLite.default()
         let description = Function.Description(

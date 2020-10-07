@@ -14,9 +14,8 @@ open class Function {
     public let sqlite:      SQLite
     public let description: Description
     
-    // ----------------------------------
-    //  MARK: - Init -
-    //
+    // MARK: - Init -
+
     public required init(sqlite: SQLite, description: Description) throws {
         self.sqlite      = sqlite
         self.description = description

@@ -20,9 +20,8 @@ extension SQLite {
         
         private let sqlite: _SQLite
         
-        // ----------------------------------
-        //  MARK: - Init -
-        //
+        // MARK: - Init -
+
         internal init(sqlite: _SQLite) {
             self.sqlite = sqlite
         }
@@ -35,9 +34,8 @@ extension SQLite {
             self.wal       = nil
         }
         
-        // ----------------------------------
-        //  MARK: - Hooks -
-        //
+        // MARK: - Hooks -
+
         public var update: Handler<Update>? {
             didSet {
                 if let _ = self.update {
@@ -88,9 +86,8 @@ extension SQLite {
             }
         }
         
-        // ----------------------------------
-        //  MARK: - Registration -
-        //
+        // MARK: - Registration -
+
         private func registerUpdateHook() {
             sqlite3_update_hook(self.sqlite, { context, action, database, table, rowID in
                 context!.hook.update!.callback(action.action, database!.string, table!.string, Int(rowID))
@@ -121,9 +118,8 @@ extension SQLite {
             }, self.pointer)
         }
         
-        // ----------------------------------
-        //  MARK: - Registration -
-        //
+        // MARK: - Registration -
+
         private func unregisterUpdateHook() {
             sqlite3_update_hook(self.sqlite, nil, nil)
         }
@@ -146,18 +142,16 @@ extension SQLite {
     }
 }
 
-// ----------------------------------
-//  MARK: - Handler -
-//
+// MARK: - Handler -
+
 extension SQLite.Hook {
     public struct Handler<T> {
         let callback: T
     }
 }
 
-// ----------------------------------
-//  MARK: - UnsafeMutableRawPointer -
-//
+// MARK: - UnsafeMutableRawPointer -
+
 private extension UnsafeMutableRawPointer {
     var hook: SQLite.Hook {
         return Unmanaged<SQLite.Hook>.fromOpaque(self).takeUnretainedValue()

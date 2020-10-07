@@ -11,17 +11,15 @@ import XCTest
 
 class ResultSetTests: XCTestCase {
 
-    // ----------------------------------
-    //  MARK: - Init -
-    //
+    // MARK: - Init -
+
     func testInit() {
         let resultSet = self.resultSet()
         XCTAssertNotNil(resultSet)
     }
     
-    // ----------------------------------
-    //  MARK: - Iteration -
-    //
+    // MARK: - Iteration -
+
     func testMakeIterator() {
         let resultSet = self.resultSet()
         let iterator = resultSet.makeIterator()
@@ -94,9 +92,8 @@ class ResultSetTests: XCTestCase {
         self.wait(for: [e], timeout: 2.0)
     }
     
-    // ----------------------------------
-    //  MARK: - Utilities -
-    //
+    // MARK: - Utilities -
+
     private func resultSet() -> ResultSet {
         let sqlite    = SQLite.default()
         let statement = try! Statement(sqlite: sqlite, query: "SELECT * FROM animal WHERE id < 10")
@@ -104,9 +101,8 @@ class ResultSetTests: XCTestCase {
     }
 }
 
-// ----------------------------------
-//  MARK: - TestResultSet -
-//
+// MARK: - TestResultSet -
+
 private class TestResultSet: ResultSet {
     
     var resetFailedHandler: (() -> Void)?

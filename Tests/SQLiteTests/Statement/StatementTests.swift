@@ -11,9 +11,8 @@ import XCTest
 
 class StatementTests: XCTestCase {
     
-    // ----------------------------------
-    //  MARK: - Init -
-    //
+    // MARK: - Init -
+
     func testInit() {
         XCTAssertWontThrow {
             let sqlite    = SQLite.default()
@@ -37,9 +36,8 @@ class StatementTests: XCTestCase {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - Reference -
-    //
+    // MARK: - Reference -
+
     func testSqliteReference() {
         let sqlite    = SQLite.default()
         let statement = try! sqlite.prepare(query: "SELECT * FROM animal")
@@ -47,9 +45,8 @@ class StatementTests: XCTestCase {
         XCTAssertTrue(statement.sqlite === sqlite)
     }
     
-    // ----------------------------------
-    //  MARK: - State -
-    //
+    // MARK: - State -
+
     func testIsBusy() {
         let statement = SQLite.prepared(query: "SELECT * FROM animal")
         
@@ -68,9 +65,8 @@ class StatementTests: XCTestCase {
         XCTAssertFalse(statement2.isReadOnly)
     }
 
-    // ----------------------------------
-    //  MARK: - Parameters -
-    //
+    // MARK: - Parameters -
+
     func testParameters() {
         let query     = "SELECT * FROM animal WHERE name = :name AND type = :type"
         let statement = SQLite.prepared(query: query)
@@ -353,9 +349,8 @@ class StatementTests: XCTestCase {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - Step -
-    //
+    // MARK: - Step -
+
     func testStepResultRow() {
         let query     = "SELECT * FROM animal"
         let statement = SQLite.prepared(query: query)
@@ -425,9 +420,8 @@ class StatementTests: XCTestCase {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - Reset -
-    //
+    // MARK: - Reset -
+
     func testReset() {
         let query     = "SELECT id FROM animal WHERE id = 1 OR id = 2"
         let statement = SQLite.prepared(query: query)
@@ -492,9 +486,8 @@ class StatementTests: XCTestCase {
         }
     }
 
-    // ----------------------------------
-    //  MARK: - Columns -
-    //
+    // MARK: - Columns -
+
     func testDataCount() {
         let query     = "SELECT * FROM animal WHERE id = 99"
         let statement = SQLite.prepared(query: query)
@@ -632,9 +625,8 @@ class StatementTests: XCTestCase {
     
     #if SQLITE_ENABLE_COLUMN_METADATA
     
-    // ----------------------------------
-    //  MARK: - Column Metadata -
-    //
+    // MARK: - Column Metadata -
+
     func testColumnMetadata() {
         let query     = "SELECT id as identifier FROM animal WHERE id = 3"
         let statement = SQLite.prepared(query: query)

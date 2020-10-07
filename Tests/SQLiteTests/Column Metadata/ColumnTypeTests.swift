@@ -12,9 +12,8 @@ import sqlite3
 
 class ColumnTypeTests: XCTestCase {
     
-    // ----------------------------------
-    //  MARK: - Init -
-    //
+    // MARK: - Init -
+
     func testValidColumnTypes() {
         XCTAssertEqual(ColumnType(type: SQLITE_INTEGER), .integer)
         XCTAssertEqual(ColumnType(type: SQLITE_FLOAT),   .float)
@@ -28,9 +27,8 @@ class ColumnTypeTests: XCTestCase {
         XCTAssertNil(ColumnType(type: 234))
     }
     
-    // ----------------------------------
-    //  MARK: - Conversion -
-    //
+    // MARK: - Conversion -
+
     func testColumnTypeFromInt() {
         let type = SQLITE_FLOAT
         XCTAssertEqual(type.columnType, .float)

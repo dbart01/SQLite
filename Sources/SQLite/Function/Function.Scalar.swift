@@ -12,9 +12,8 @@ import sqlite3
 extension Function {
     open class Scalar: Function {
         
-        // ----------------------------------
-        //  MARK: - Init -
-        //
+        // MARK: - Init -
+
         public required init(sqlite: SQLite, description: Description) throws {
             try super.init(sqlite: sqlite, description: description)
             
@@ -40,18 +39,16 @@ extension Function {
             }
         }
         
-        // ----------------------------------
-        //  MARK: - API -
-        //
+        // MARK: - API -
+
         open func main(context: Context, arguments: [Value]) {
             // Subclass override
         }
     }
 }
 
-// ----------------------------------
-//  MARK: - Function -
-//
+// MARK: - Function -
+
 private extension UnsafeMutableRawPointer {
     var function: Function.Scalar {
         return Unmanaged<Function.Scalar>.fromOpaque(self).takeUnretainedValue()

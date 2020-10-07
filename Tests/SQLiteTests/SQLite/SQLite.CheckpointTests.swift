@@ -12,9 +12,8 @@ import sqlite3
 
 class SQLite_CheckpointTests: XCTestCase {
 
-    // ----------------------------------
-    //  MARK: - Values -
-    //
+    // MARK: - Values -
+
     func testInit() {
         XCTAssertEqual(SQLite.Checkpoint(rawValue: SQLITE_CHECKPOINT_PASSIVE),  .passive)
         XCTAssertEqual(SQLite.Checkpoint(rawValue: SQLITE_CHECKPOINT_FULL),     .full)
@@ -30,9 +29,8 @@ class SQLite_CheckpointTests: XCTestCase {
         XCTAssertEqual(SQLite.Checkpoint.truncate.rawValue, SQLITE_CHECKPOINT_TRUNCATE)
     }
     
-    // ----------------------------------
-    //  MARK: - Checkpoint -
-    //
+    // MARK: - Checkpoint -
+
     func testCheckpoint() {
         let sqlite     = SQLite.local()
         let walEnabled = try! sqlite.set(pragma: Pragma.journalMode, value: .wal)

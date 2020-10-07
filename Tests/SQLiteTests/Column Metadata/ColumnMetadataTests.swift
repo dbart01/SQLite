@@ -11,9 +11,8 @@ import SQLite
 
 class ColumnMetadataTests: XCTestCase {
 
-    // ----------------------------------
-    //  MARK: - ValueType -
-    //
+    // MARK: - ValueType -
+
     func testValidValueType() {
         XCTAssertEqual(ValueType(type: "INTEGER"), .integer)
         XCTAssertEqual(ValueType(type: "REAL"),    .double)
@@ -34,9 +33,8 @@ class ColumnMetadataTests: XCTestCase {
         XCTAssertNotEqual(int1, double)
     }
     
-    // ----------------------------------
-    //  MARK: - CollationSequence -
-    //
+    // MARK: - CollationSequence -
+
     func testCollationSequence() {
         XCTAssertEqual(CollationSequence(sequence: "BINARY"), .binary)
         XCTAssertEqual(CollationSequence(sequence: "NOCASE"), .nocase)
@@ -55,9 +53,8 @@ class ColumnMetadataTests: XCTestCase {
         XCTAssertNotEqual(binary1, custom)
     }
     
-    // ----------------------------------
-    //  MARK: - Metadata -
-    //
+    // MARK: - Metadata -
+
     func testMetadataInit() {
         let metadata = ColumnMetadata(
             type:            "INTEGER",

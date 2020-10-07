@@ -11,9 +11,8 @@ import XCTest
 
 class SQLite_BackupTests: XCTestCase {
 
-    // ----------------------------------
-    //  MARK: - Init -
-    //
+    // MARK: - Init -
+
     func testInit() {
         let source      = SQLite.default()
         let destination = SQLite.emptyInMemory()
@@ -49,9 +48,8 @@ class SQLite_BackupTests: XCTestCase {
         }
     }
     
-    // ----------------------------------
-    //  MARK: - Copy -
-    //
+    // MARK: - Copy -
+
     func testCopy() {
         let source      = SQLite.default()
         let destination = SQLite.emptyInMemory()

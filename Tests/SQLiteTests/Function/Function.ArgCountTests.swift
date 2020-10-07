@@ -11,9 +11,8 @@ import XCTest
 
 class Function_ArgCountTests: XCTestCase {
 
-    // ----------------------------------
-    //  MARK: - Values -
-    //
+    // MARK: - Values -
+
     func testIntegerValue() {
         XCTAssertEqual(Function.ArgCount.infinite.integerValue,  -1)
         XCTAssertEqual(Function.ArgCount.none.integerValue,       0)

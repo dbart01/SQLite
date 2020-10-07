@@ -11,9 +11,8 @@ import XCTest
 
 class Pragma_JournalModeTests: XCTestCase {
     
-    // ----------------------------------
-    //  MARK: - PragmaRepresentable -
-    //
+    // MARK: - PragmaRepresentable -
+
     func testInit() {
         XCTAssertEqual(Pragma.JournalMode(rawValue: "OFF"),      .off)
         XCTAssertEqual(Pragma.JournalMode(rawValue: "DELETE"),   .delete)

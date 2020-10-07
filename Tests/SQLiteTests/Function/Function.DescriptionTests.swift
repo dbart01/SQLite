@@ -11,9 +11,8 @@ import XCTest
 
 class Function_DescriptionTests: XCTestCase {
 
-    // ----------------------------------
-    //  MARK: - Init -
-    //
+    // MARK: - Init -
+
     func testInit() {
         let description = Function.Description(
             name:          "count",

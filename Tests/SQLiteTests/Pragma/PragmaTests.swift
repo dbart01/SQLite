@@ -11,9 +11,8 @@ import XCTest
 
 class PragmaTests: XCTestCase {
     
-    // ----------------------------------
-    //  MARK: - Description -
-    //
+    // MARK: - Description -
+
     func testPragmaDescriptions() {
         XCTAssertEqual(Pragma.foreignKeys.key, "foreign_keys")
         XCTAssertTrue(Pragma.foreignKeys.type == Pragma.Boolean.self)
