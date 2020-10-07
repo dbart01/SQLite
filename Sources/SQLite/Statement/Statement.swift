@@ -39,7 +39,7 @@ public class Statement {
         }
         
         let statement = try initialize(_Statement.self) {
-            sqlite3_prepare_v2(sqlite.sqlite, query, Int32(query.lengthOfBytes(using: .utf8)), $0, nil).status
+            sqlite3_prepare_v3(sqlite.sqlite, query, Int32(query.lengthOfBytes(using: .utf8)), 0/* prep flags */, $0, nil).status
         }
         
         self.init(sqlite: sqlite, statement: statement)

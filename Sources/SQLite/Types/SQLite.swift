@@ -15,6 +15,10 @@ typealias _Int32Pointer  = UnsafeMutablePointer<Int32>
 
 public class SQLite {
     
+    public static let version: String = SQLITE_VERSION
+    
+    public static let versionNumber: Int = Int(SQLITE_VERSION_NUMBER)
+    
     public let hook: Hook
     
     public var isCacheEnabled = false {

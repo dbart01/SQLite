@@ -143,7 +143,7 @@ class SQLite_HookTests: XCTestCase {
         sqlite.hook.wal = .init { database, pageCount in
             e.fulfill()
             XCTAssertEqual(database, "main")
-            XCTAssertEqual(pageCount, 2)
+            XCTAssertEqual(pageCount, 1)
             return .ok
         }
         
@@ -164,11 +164,11 @@ class SQLite_HookTests: XCTestCase {
         sqlite.hook.wal = .init { database, pageCount in
             e.fulfill()
             XCTAssertEqual(database, "main")
-            XCTAssertEqual(pageCount, 2)
+            XCTAssertEqual(pageCount, 1)
             return .abort
         }
         
-        XCTAssertWillThrow(Status.abort) {
+        XCTAssertWillThrow(Status.error) {
             try sqlite.execute(query: "INSERT INTO animal (id, name, type) VALUES (800, 'goat', 'mamal')")
         }
         

@@ -3,6 +3,12 @@
 
 import PackageDescription
 
+let cSettings: [CSetting] = [
+    .define("SQLITE_ENABLE_COLUMN_METADATA"),
+    .define("SQLITE_ENABLE_PREUPDATE_HOOK"),
+    .define("SQLITE_ENABLE_FTS5"),
+]
+
 let package = Package(
     name: "SQLite",
     products: [
@@ -16,18 +22,12 @@ let package = Package(
         .target(
             name: "SQLite",
             dependencies: ["sqlite3"],
-            cSettings: [
-                .define("SQLITE_ENABLE_COLUMN_METADATA"),
-                .define("SQLITE_ENABLE_PREUPDATE_HOOK"),
-            ]
+            cSettings: cSettings
         ),
         .target(
             name: "sqlite3",
             dependencies: [],
-            cSettings: [
-                .define("SQLITE_ENABLE_COLUMN_METADATA"),
-                .define("SQLITE_ENABLE_PREUPDATE_HOOK"),
-            ]
+            cSettings: cSettings
         ),
         .testTarget(
             name: "SQLiteTests",
